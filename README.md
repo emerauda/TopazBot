@@ -16,8 +16,16 @@ A strong focus on reliability and predictable behaviour
 Horizontal scalability and libraries other than discord.js are supported with custom adapters
 A robust audio processing system that can handle a wide range of audio sources
 
-**Useful links:**
+**About TopazChat:**
 
+TopazChat's audio and video stream transfer costs is paid by the author @TyounanMOTI, to maintain the instance and transfer.
+Please make a donation at FANBOX.
+https://tyounanmoti.fanbox.cc/
+All sponsors of TopazChat are listed in the SPONSORS.txt file.
+
+
+**Useful links:**
+- [TopazChat](https://booth.pm/ja/items/1752066)
 - [Documentation](https://discordjs.github.io/voice)
 - [Examples](https://github.com/discordjs/voice/tree/main/examples)
 - [GitHub Discussions](https://github.com/discordjs/voice/discussions)
