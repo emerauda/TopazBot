@@ -42,6 +42,8 @@ categories shown below. The dependencies are listed in order of
 preference for performance. If you can't install one of the options,
 try installing another.
 
+for Debian or Ubuntu...
+
 **node & npm:**
 
 - `node`: >>14.0.0
