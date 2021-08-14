@@ -96,6 +96,9 @@ $ npm install
 # Set a bot token (see example.env)
 $ vi .env
 
+# Regist command
+$ node register.js
+
 # Start the bot
 $ node index.js
 
