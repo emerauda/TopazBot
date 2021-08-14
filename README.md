@@ -19,7 +19,7 @@ A robust audio processing system that can handle a wide range of audio sources
 **About TopazChat:**
 
 [TopazChat](https://booth.pm/ja/items/1752066)
-TopazChat is a high quality, low latency RTSP server. It is free for personal use.
+is a high quality, low latency RTSP server. It is free for personal use.
 TopazChat's audio and video stream transfer costs is paid by the author [@TyounanMOTI](https://github.com/TyounanMOTI), to maintain the instance and data transfer.
 Please make a donation at FANBOX.
 https://tyounanmoti.fanbox.cc/
