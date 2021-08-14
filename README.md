@@ -75,7 +75,6 @@ If you're looking to make your own music bot that is fairly simple, this example
 $ git clone https://github.com/ROZ-MOFUMOFU-ME/TopazBot topazbot
 $ cd topazbot
 $ npm i discord.js@dev @discordjs/voice @discordjs/opus sodium ffmpeg-static dotenv
-$ node index.js
 
 # Open this example and install dependencies
 $ cd topazbot
@@ -85,7 +84,7 @@ $ npm install
 $ vi .env
 
 # Start the bot
-$ npm start
+$ node index.js
 
 # Start the bot with pm2
 $ pm2 start index.js --name TopazBot
