@@ -60,7 +60,7 @@ try installing another.
 
 - `dotenv`: ^10.0.0
 
-# Music Bot Example
+# TopazBot Example
 
 This is an example of how to create a music bot using @discordjs/voice alongside [discord.js](https://github.com/discordjs/discord.js).
 
@@ -89,6 +89,9 @@ $ npm start
 
 # Start the bot with pm2
 $ pm2 start index.js --name TopazBot
+
+# Play music at Discord
+$ /play StreamKey
 ```
 
 ## Code structure
