@@ -1,7 +1,13 @@
 
-# TopazBot
+# TopazBot - TopazChat RTSP Music bot 
 
 ![49b54ba526ab1540bafd1bea6e593542](https://user-images.githubusercontent.com/35634920/129456355-da650b6d-37e1-4da0-a362-f056eebea238.png)
+
+## Community
+-------
+
+- TopazChat Discord
+join: https://discord.com/invite/fCMcJ8A
 
 ## About
 -------
