@@ -13,6 +13,9 @@ join: https://discord.com/invite/fCMcJ8A
 -------
 A TopazChat RTSP specific implementation of the Discord Voice API for Node.js, written in Javacript.
 
+**Attention!!**
+This software (TopazBot) is under the MIT license, but **TopazChat is not for commercial use.**
+
 **Features:**
 
 Send and receive* audio in Discord voice-based channels
