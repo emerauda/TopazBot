@@ -10,7 +10,6 @@
 join: https://discord.com/invite/fCMcJ8A
 
 ## About
--------
 A TopazChat RTSP specific implementation of the Discord Voice API for Node.js, written in Javacript.
 
 **Attention!!**
@@ -42,7 +41,6 @@ All sponsors of TopazChat are listed in the SPONSORS.txt.
 - [Repository](https://github.com/discordjs/voice)
 
 ## Dependencies
--------
 This library has several optional dependencies to support a variety
 of different platforms. Install one dependency from each of the
 categories shown below. The dependencies are listed in order of
@@ -96,7 +94,6 @@ The example explores error recovery, reconnection logic and implementation of a 
 If you're looking to make your own TopazBot that is fairly simple, this example is a great place to start.
 
 ## Usage
--------
 
 ```bash
 # Clone the main repository
@@ -127,24 +124,20 @@ $ /play StreamKey
 ```
 
 ## Code structure
--------
 The code for the bot is specific to TopazChat.
 
 Here is the code I used for reference
 https://scrapbox.io/discordjs-japan/%E9%9F%B3%E5%A3%B0%E3%82%92%E5%86%8D%E7%94%9F%E3%81%99%E3%82%8B
 
 ## Contribution
--------
 See [Contributing Guide](https://github.com/ROZ-MOFUMOFU-ME/topazbot/blob/main/.github/CONTRIBUTING.md).
 
 ## Donations
--------
 Donations for development are greatly appreciated!
  
 * TopazChat [FANBOX](https://tyounanmoti.fanbox.cc/)
 
 ## Credits
--------
 ### TopazBot
  
 * Aoi Emerauda [ROZ-MOFUMOFU-ME](https://github.com/ROZ-MOFUMOFU-ME)
@@ -154,5 +147,4 @@ Donations for development are greatly appreciated!
 * Hirotoshi Yoshitaka [@TyounanMOTI](https://github.com/TyounanMOTI)
 
 ## License
--------
 Released under the MIT License. See LICENSE file.
