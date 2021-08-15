@@ -13,7 +13,7 @@ Node.js—p‚ÌDiscord Voice API‚ÌTopazChat RTSPê—p‚ÌŽÀ‘•‚ÅAJavacript‚Å‘‚©‚ê‚Ä‚¢‚
 
 **’ˆÓ!!**
 
-*uTopazBotv‚ÍMITƒ‰ƒCƒZƒ“ƒX‰º‚É‚ ‚è‚Ü‚·‚ªAuTopazChatv‚Í¤—p—˜—p‹ÖŽ~‚Å‚·*
+*uTopazBotv‚ÍMITƒ‰ƒCƒZƒ“ƒX‰º‚É‚ ‚è‚Ü‚·‚ªAuTopazChatv‚Í¤—p—˜—p‹ÖŽ~‚Å‚·B*
 
 **TopazBot‚Ì“Á’¥:**
 
