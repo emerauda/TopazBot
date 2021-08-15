@@ -123,12 +123,12 @@ $ /play StreamKey
 ## Code structure
 このボットのコードはTopazChat専用です。
 
-私が参考にしたコード [Discord.js Japan user Group](https://scrapbox.io/discordjs-japan/]
+私が参考にしたコード [Discord.js Japan user Group](https://scrapbox.io/discordjs-japan/)
 
 [discordjs-japan/音声を再生する](https://scrapbox.io/discordjs-japan/%E9%9F%B3%E5%A3%B0%E3%82%92%E5%86%8D%E7%94%9F%E3%81%99%E3%82%8B)
 
 ## コントリビューション
-こちらをご覧下さい [Contributing Guide](https://github.com/ROZ-MOFUMOFU-ME/topazbot/blob/main/.github/CONTRIBUTING.md).
+こちらをご覧下さい [Contributing Guide](https://github.com/ROZ-MOFUMOFU-ME/topazbot/blob/main/.github/CONTRIBUTING.md)
 
 ## 寄付
 TopazChatのサーバー維持費やデータ転送料を、開発者のよしたかさんがカンパを募っています。
