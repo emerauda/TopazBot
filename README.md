@@ -141,7 +141,7 @@ Donations for development are greatly appreciated!
 ## Credits
 ### TopazBot
  
-* Aoi Emerauda [ROZ-MOFUMOFU-ME](https://github.com/ROZ-MOFUMOFU-ME)
+* Aoi Emerauda [@ROZ-MOFUMOFU-ME](https://github.com/ROZ-MOFUMOFU-ME)
 
 ### TopazChat
 
