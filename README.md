@@ -1,12 +1,10 @@
-![49b54ba526ab1540bafd1bea6e593542](https://user-images.githubusercontent.com/35634920/129456355-da650b6d-37e1-4da0-a362-f056eebea238.png)
+
 # TopazBot
 
-<p>
-https://github.com/ROZ-MOFUMOFU-ME/TopazBot
-</p>
+![49b54ba526ab1540bafd1bea6e593542](https://user-images.githubusercontent.com/35634920/129456355-da650b6d-37e1-4da0-a362-f056eebea238.png)
 
 ## About
-
+-------
 A TopazChat RTSP specific implementation of the Discord Voice API for Node.js, written in Javacript.
 
 **Features:**
@@ -20,7 +18,7 @@ A robust audio processing system that can handle a wide range of audio sources
 
 [TopazChat](https://booth.pm/ja/items/1752066)
 is a high quality, low latency RTSP server. It is free for personal use.
-TopazChat's costs is paid by the author [@TyounanMOTI](https://github.com/TyounanMOTI), 
+TopazChat's costs is paid by the author Hirotoshi Yoshitaka [@TyounanMOTI](https://github.com/TyounanMOTI), 
 to maintain the instance and audio and video stream data transfer.
 Please make a donation! at [FANBOX](https://tyounanmoti.fanbox.cc/).
 All sponsors of TopazChat are listed in the SPONSORS.txt.
@@ -35,18 +33,19 @@ All sponsors of TopazChat are listed in the SPONSORS.txt.
 - [Repository](https://github.com/discordjs/voice)
 
 ## Dependencies
-
+-------
 This library has several optional dependencies to support a variety
 of different platforms. Install one dependency from each of the
 categories shown below. The dependencies are listed in order of
 preference for performance. If you can't install one of the options,
 try installing another.
 
-for Debian or Ubuntu...
+### Debian or Ubuntu
 
 **node & npm:**
 
-- `node`: >>14.0.0
+- `node`: >=14
+- `npm`: >=6
 
 **discord.js:**
 
@@ -73,15 +72,22 @@ for Debian or Ubuntu...
 
 - `dotenv`: ^10.0.0
 
+**pm2 (npm install): [Optional]**
+
+- `pm2`
+
 # TopazBot Example
 
-This is an example of how to create a music bot using @discordjs/voice alongside [discord.js](https://github.com/discordjs/discord.js).
+This is an example of how to create a TopazBot using @discordjs/voice alongside [discord.js](https://github.com/discordjs/discord.js).
 
-The focus of this example is on how to create a robust music system using this library. The example explores error recovery, reconnection logic and implementation of a queue that won't lock up.
+The focus of this example is on how to create a robust music system using this library. 
 
-If you're looking to make your own music bot that is fairly simple, this example is a great place to start.
+The example explores error recovery, reconnection logic and implementation of a queue that won't lock up.
+
+If you're looking to make your own TopazBot that is fairly simple, this example is a great place to start.
 
 ## Usage
+-------
 
 ```bash
 # Clone the main repository
@@ -101,9 +107,10 @@ $ node register.js
 $ npm start
 
 # Start the bot with pm2
+$ sudo npm i pm2 -g
 $ pm2 start index.js --name TopazBot
 
-# Summon TopazBot to Discord Server
+# Summon TopazBot to your Discord Server
 $ https://discord.com/oauth2/authorize?client_id=<Application_ID>&permissions=105263402240&scope=bot%20applications.commands
 
 # Play music at Discord
@@ -111,12 +118,32 @@ $ /play StreamKey
 ```
 
 ## Code structure
-
+-------
 The code for the bot is specific to TopazChat.
 
 Here is the code I used for reference
 https://scrapbox.io/discordjs-japan/%E9%9F%B3%E5%A3%B0%E3%82%92%E5%86%8D%E7%94%9F%E3%81%99%E3%82%8B
 
 ## Contribution
-
+-------
 See [Contributing Guide](https://github.com/ROZ-MOFUMOFU-ME/topazbot/blob/main/.github/CONTRIBUTING.md).
+
+## Donations
+-------
+Donations for development are greatly appreciated!
+ 
+* TopazChat [FANBOX](https://tyounanmoti.fanbox.cc/)
+
+## Credits
+-------
+### TopazBot
+ 
+* Aoi Emerauda [ROZ-MOFUMOFU-ME](https://github.com/ROZ-MOFUMOFU-ME)
+
+### TopazChat
+
+* Hirotoshi Yoshitaka [@TyounanMOTI](https://github.com/TyounanMOTI)
+
+## License
+-------
+Released under the MIT License. See LICENSE file.
