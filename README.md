@@ -4,16 +4,15 @@
 ![49b54ba526ab1540bafd1bea6e593542](https://user-images.githubusercontent.com/35634920/129456355-da650b6d-37e1-4da0-a362-f056eebea238.png)
 
 ## Community
--------
-
 - TopazChat Discord
+
 join: https://discord.com/invite/fCMcJ8A
 
 ## About
 A TopazChat RTSP specific implementation of the Discord Voice API for Node.js, written in Javacript.
 
-**Attention!!**
-This software (TopazBot) is under the MIT license, but **TopazChat is not for commercial use.**
+*Attention!!*
+**TopazBot is under the MIT license, but TopazChat is not for commercial use.**
 
 **Features:**
 
@@ -126,7 +125,8 @@ $ /play StreamKey
 ## Code structure
 The code for the bot is specific to TopazChat.
 
-Here is the code I used for reference
+Here is the code I used for reference. Created by [Discord.js Japan user Group](https://scrapbox.io/discordjs-japan/]
+
 https://scrapbox.io/discordjs-japan/%E9%9F%B3%E5%A3%B0%E3%82%92%E5%86%8D%E7%94%9F%E3%81%99%E3%82%8B
 
 ## Contribution
