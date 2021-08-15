@@ -20,10 +20,10 @@ A robust audio processing system that can handle a wide range of audio sources
 
 [TopazChat](https://booth.pm/ja/items/1752066)
 is a high quality, low latency RTSP server. It is free for personal use.
-TopazChat's audio and video stream transfer costs is paid by the author [@TyounanMOTI](https://github.com/TyounanMOTI), to maintain the instance and data transfer.
-Please make a donation at FANBOX.
-https://tyounanmoti.fanbox.cc/
-All sponsors of TopazChat are listed in the SPONSORS.txt file.
+TopazChat's costs is paid by the author [@TyounanMOTI](https://github.com/TyounanMOTI), 
+to maintain the instance and audio and video stream data transfer.
+Please make a donation! at [FANBOX](https://tyounanmoti.fanbox.cc/).
+All sponsors of TopazChat are listed in the SPONSORS.txt.
 
 
 **Useful links:**
@@ -84,10 +84,8 @@ If you're looking to make your own music bot that is fairly simple, this example
 ## Usage
 
 ```bash
-# Clone the main repository, and then run:
+# Clone the main repository
 $ git clone https://github.com/ROZ-MOFUMOFU-ME/TopazBot topazbot
-$ cd topazbot
-$ npm i discord.js@dev @discordjs/voice @discordjs/opus sodium ffmpeg-static dotenv
 
 # Open this example and install dependencies
 $ cd topazbot
@@ -100,10 +98,13 @@ $ vi .env
 $ node register.js
 
 # Start the bot
-$ node index.js
+$ npm start
 
 # Start the bot with pm2
 $ pm2 start index.js --name TopazBot
+
+# Summon TopazBot to Discord Server
+$ https://discord.com/oauth2/authorize?client_id=<Application_ID>&permissions=105263402240&scope=bot%20applications.commands
 
 # Play music at Discord
 $ /play StreamKey
