@@ -21,7 +21,7 @@ Discord‚Ì‰¹ºƒ`ƒƒƒ“ƒlƒ‹‚ÅƒI[ƒfƒBƒI‚ð‘—ŽóM‚·‚éM—Š«‚Æ—\‘ª‰Â”\‚È“®ì‚Éd“_‚ð’u‚
 …•½•ûŒü‚ÌŠg’£«Adiscord.jsˆÈŠO‚Ìƒ‰ƒCƒuƒ‰ƒŠ‚àƒJƒXƒ^ƒ€ƒAƒ_ƒvƒ^‚ÅƒTƒ|[ƒg‚µ‚Ü‚·B
 —lX‚ÈƒI[ƒfƒBƒIƒ\[ƒX‚É‘Î‰ž‰Â”\‚ÈˆÀ’è‚µ‚½‚ÈƒI[ƒfƒBƒIˆ—ƒVƒXƒeƒ€‚Å‚·B
 
-**TopazCha‚É‚Â‚¢‚Ät:**
+**TopazChat‚É‚Â‚¢‚Ä:**
 
 [TopazChat](https://booth.pm/ja/items/1752066)
 ‚ÍA‚•iŽ¿E’á’x‰„‚ÌRTSPƒT[ƒo‚Å‚·BŒÂl‚Å‚Ì—˜—p‚Í–³—¿‚Å‚·B
