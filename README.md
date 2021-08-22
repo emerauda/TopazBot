@@ -11,7 +11,7 @@
 join: https://discord.com/invite/fCMcJ8A
 
 ## About
-A TopazChat RTSP specific implementation of the Discord Voice API for Node.js, written in Javacript.
+A TopazChat RTSP specific implementation of the Discord Voice API for Node.js, written in JavaScript.
 
 **Attention!!**
 

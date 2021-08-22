@@ -1,29 +1,32 @@
 require('dotenv').config();
+const interactions = require("discord-slash-commands-client");
 const { joinVoiceChannel, entersState, VoiceConnectionStatus, createAudioResource, StreamType, createAudioPlayer, AudioPlayerStatus, NoSubscriberBehavior, generateDependencyReport } = require("@discordjs/voice");
 console.log(generateDependencyReport());
 const Discord = require("discord.js");
 const client = new Discord.Client({
     intents: Discord.Intents.FLAGS.GUILDS | Discord.Intents.FLAGS.GUILD_VOICE_STATES
 });
+var StreamKey = null;
+let connection = null;
 async function play(interaction) {
     const guild = interaction.guild;
     const member = await guild.members.fetch(interaction.member.id);
     const memberVC = member.voice.channel;
     if (!memberVC) {
         return interaction.reply({
-            content: "接続先のVCが見つかりません。",
+            content: "Voice channel is not found to connect.",
             ephemeral: true,
         });
     }
     if (!memberVC.joinable) {
         return interaction.reply({
-            content: "VCに接続できません。",
+            content: "Voice channel is inaccessible.",
             ephemeral: true,
         });
     }
     if (!memberVC.speakable) {
         return interaction.reply({
-            content: "VCで音声を再生する権限がありません。",
+            content: "Bot do not have permission to play audio in Voice channel.",
             ephemeral: true,
         });
     }
@@ -37,7 +40,7 @@ async function play(interaction) {
         selfMute: false,
     });
     // Extract the video URL from the command
-    const StreamKey = interaction.options.get('streamkey').value;
+    if (StreamKey === null) { StreamKey = interaction.options.get('streamkey').value }
     const resource = createAudioResource("rtsp://topaz.chat/live/" + StreamKey,
         {
             inputType: StreamType.Arbitrary,
@@ -50,7 +53,6 @@ async function play(interaction) {
     player.play(resource);
     console.log(StreamKey + " is playing!");
     const promises = [];
-
     promises.push(entersState(connection, VoiceConnectionStatus.Ready, 1000 * 10).then(() => status[0] += "Done!"));
     promises.push(entersState(player, AudioPlayerStatus.AutoPaused, 1000 * 10).then(() => status[1] += "Done!"));
     await Promise.race(promises);
@@ -60,16 +62,59 @@ async function play(interaction) {
     await entersState(player, AudioPlayerStatus.Playing, 100);
 
     await interaction.editReply("Playing " + StreamKey);
-    await entersState(player, AudioPlayerStatus.Idle, 2 ** 31 - 1);
-    await interaction.editReply("End");
-    connection.destroy();
-
-    async function stop(interaction) {
-        player.stop();
-        console.log(StreamKey + " is stopped!");
-        await interaction.editReply("Stopped " + StreamKey);
-    }
+    await entersState(player, AudioPlayerStatus.Idle, 2 ** 31 - 1)
+    await interaction.editReply("Stopped");
+    console.log(StreamKey + " is stopped!");
+    return {
+        connection: connection,
+        player: player,
+        StreamKey: StreamKey,
+        resource: resource,
+        p: p,
+        status: status,
+    };
 }
+/**
+ *
+ * @param {CommandInteraction} interaction
+ */
+function resync(interaction) {
+    const Data = play(interaction);
+    const player = createAudioPlayer({
+        behaviors: {
+            noSubscriber: NoSubscriberBehavior.Pause,
+        },
+    });
+    console.log(Data.StreamKey + " is resyncing...");
+    player.play(Data.resource);
+    console.log(Data.StreamKey + " is resynced!");
+    const promises = [];
+    promises.push(entersState(connection, VoiceConnectionStatus.Ready, 1000 * 10).then(() => Data.status[0] += "Done!"));
+    promises.push(entersState(player, AudioPlayerStatus.AutoPaused, 1000 * 10).then(() => Data.status[1] += "Done!"));
+};
+/**
+ *
+ * @param {CommandInteraction} interaction
+ */
+async function stop(interaction) {
+    const Data = play(interaction);
+    const guild = interaction.guild;
+    const member = await guild.members.fetch(interaction.member.id);
+    const memberVC = member.voice.channel;
+    const status = Data.status
+    const p = Data.p
+    if (!connection) {
+        connection = joinVoiceChannel({
+            guildId: guild.id,
+            channelId: memberVC.id,
+            adapterCreator: guild.voiceAdapterCreator,
+            selfMute: false,
+        });
+    };
+    console.log(Data.StreamKey + " is destroyed!");
+    connection.destroy();
+}
+
 /**
  *
  * @param {Discord.CommandInteraction} interaction
@@ -79,20 +124,27 @@ async function onPlay(interaction) {
         await play(interaction);
     } catch (err) {
         if (interaction.replied) {
-            interaction.editReply("エラーが発生しました。").catch(() => { });
+            interaction.editReply("An error has occurred.").catch(() => { });
         } else {
-            interaction.reply("エラーが発生しました。").catch(() => { });
+            interaction.reply("An error has occurred.").catch(() => { });
         }
         throw err;
     }
 }
+
 /**
  *
- * @param {Discord.CommandInteraction} interaction
+ *@param {Discord.CommandInteraction} interaction
  */
 async function onCommandInteraction(interaction) {
     if (interaction.commandName === "play") {
         return onPlay(interaction);
+    }
+    if (interaction.commandName === "resync") {
+        return resync(interaction);
+    }
+    if (interaction.commandName === "stop") {
+        return stop(interaction);
     }
 }
 /**
@@ -105,5 +157,6 @@ async function onInteraction(interaction) {
     }
 }
 client.on("interactionCreate", interaction => onInteraction(interaction).catch(err => console.error(err)));
+process.on("unhandledRejection", error => console.error("Promise rejection:", error));
 console.log('TopazBot client ready...');
 client.login(process.env.DISCORD_TOKEN)

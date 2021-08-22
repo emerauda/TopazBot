@@ -16,7 +16,7 @@ async function register(client, commands, guildID) {
 }
 const ping = {
     name: "play",
-    description: "play TopazChat music",
+    description: "Play TopazChat music",
     options: [
         {
             name: 'streamkey',
@@ -26,7 +26,16 @@ const ping = {
         },
     ],
 };
-const commands = [ping];
+const pingResync = {
+    name: "resync",
+    description: "Resync TopazChat music",
+};
+
+const pingStop = {
+    name: "stop",
+    description: "Stop TopazChat music",
+};
+const commands = [ping, pingResync, pingStop];
 const client = new Client({
     intents: 0,
 });
