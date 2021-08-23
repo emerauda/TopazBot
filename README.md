@@ -3,7 +3,7 @@
 
 ![49b54ba526ab1540bafd1bea6e593542](https://user-images.githubusercontent.com/35634920/129456355-da650b6d-37e1-4da0-a362-f056eebea238.png)
 
-[“ú–{ŒêREADME](./README-JP.md)
+[æ—¥æœ¬èªREADME](./README-JP.md)
 
 ## Community
 - TopazChat Discord
@@ -135,7 +135,7 @@ $ /stop
 ## Code structure
 The code for the bot is specific to TopazChat.
 
-Here is the code I used for reference. [discordjs-japan/‰¹º‚ğÄ¶‚·‚é](https://scrapbox.io/discordjs-japan/%E9%9F%B3%E5%A3%B0%E3%82%92%E5%86%8D%E7%94%9F%E3%81%99%E3%82%8B)
+Here is the code I used for reference. [discordjs-japan/â€°Â¹ÂÂºâ€šÃ°ÂÃ„ÂÂ¶â€šÂ·â€šÃ©](https://scrapbox.io/discordjs-japan/%E9%9F%B3%E5%A3%B0%E3%82%92%E5%86%8D%E7%94%9F%E3%81%99%E3%82%8B)
 
 Created by [Discord.js Japan user Group](https://scrapbox.io/discordjs-japan/
 
