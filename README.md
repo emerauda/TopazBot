@@ -135,7 +135,7 @@ $ /stop
 ## Code structure
 The code for the bot is specific to TopazChat.
 
-Here is the code I used for reference. [discordjs-japan/音声を再生する](https://scrapbox.io/discordjs-japan/%E9%9F%B3%E5%A3%B0%E3%82%92%E5%86%8D%E7%94%9F%E3%81%99%E3%82%8B)
+Here is the code I used for reference. [discordjs-japan/voiceを使用して音声を再生する](https://scrapbox.io/discordjs-japan/%E9%9F%B3%E5%A3%B0%E3%82%92%E5%86%8D%E7%94%9F%E3%81%99%E3%82%8B)
 
 Created by [Discord.js Japan user Group](https://scrapbox.io/discordjs-japan/
 
