@@ -1,5 +1,4 @@
 require('dotenv').config();
-const interactions = require("discord-slash-commands-client");
 const { joinVoiceChannel, entersState, VoiceConnectionStatus, createAudioResource, StreamType, createAudioPlayer, AudioPlayerStatus, NoSubscriberBehavior, generateDependencyReport } = require("@discordjs/voice");
 console.log(generateDependencyReport());
 const Discord = require("discord.js");
