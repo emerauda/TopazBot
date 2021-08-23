@@ -143,11 +143,23 @@ Created by [Discord.js Japan user Group](https://scrapbox.io/discordjs-japan/)
 See [Contributing Guide](https://github.com/ROZ-MOFUMOFU-ME/topazbot/blob/main/.github/CONTRIBUTING.md).
 
 ## Donations
+
+Donations for development are greatly appreciated!
+
+### TopazBot
+
+Please make a donation to help maintain the public TopazBot server.
+
+* TopazBot [GitHub Sponsors](https://github.com/sponsors/ROZ-MOFUMOFU-ME?o=sd&sc=t)
+
+### TopazChat
+
 TopazChat's author Hirotoshi Yoshitaka is asking for donations to cover the costs of maintaining the server and transferring data.
  
 * TopazChat [FANBOX](https://tyounanmoti.fanbox.cc/)
 
 ## Credits
+
 ### TopazBot
  
 * Aoi Emerauda [@ROZ-MOFUMOFU-ME](https://github.com/ROZ-MOFUMOFU-ME)

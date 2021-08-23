@@ -136,6 +136,15 @@ $ /stop
 こちらをご覧下さい [Contributing Guide](https://github.com/ROZ-MOFUMOFU-ME/topazbot/blob/main/.github/CONTRIBUTING.md)
 
 ## 寄付
+
+### TopazBot
+
+公開TopazBotサーバー維持に必要なカンパをお願いしております。
+
+* TopazBot [GitHub Sponsors](https://github.com/sponsors/ROZ-MOFUMOFU-ME?o=sd&sc=t)
+
+### TopazChat
+
 TopazChatのサーバー維持費やデータ転送料について、開発者のよしたかさんがカンパを募っています。
  
 * TopazChat [FANBOX](https://tyounanmoti.fanbox.cc/)
