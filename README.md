@@ -3,7 +3,7 @@
 
 ![49b54ba526ab1540bafd1bea6e593542](https://user-images.githubusercontent.com/35634920/129456355-da650b6d-37e1-4da0-a362-f056eebea238.png)
 
-[JAPANESE README](./README-JP.md)
+[ì˙ñ{åÍREADME](./README-JP.md)
 
 ## Community
 - TopazChat Discord
@@ -30,7 +30,7 @@ A robust audio processing system that can handle a wide range of audio sources
 is a high quality, low latency RTSP server. It is free for personal use.
 TopazChat's costs is paid by the author Hirotoshi Yoshitaka [@TyounanMOTI](https://github.com/TyounanMOTI), 
 to maintain the instance and audio and video stream data transfer.
-Please make a donation! at [FANBOX](https://tyounanmoti.fanbox.cc/).
+Please make a donation at [FANBOX](https://tyounanmoti.fanbox.cc/)!.
 All sponsors of TopazChat are listed in the SPONSORS.txt.
 
 
@@ -98,6 +98,7 @@ If you're looking to make your own TopazBot that is fairly simple, this example 
 ## Usage
 
 ```bash
+# for Debian/Ubuntu
 # Clone the main repository
 $ git clone https://github.com/ROZ-MOFUMOFU-ME/TopazBot topazbot
 
@@ -121,22 +122,28 @@ $ pm2 start index.js --name TopazBot
 # Summon TopazBot to your Discord Server
 $ https://discord.com/oauth2/authorize?client_id=<Application_ID>&permissions=105263402240&scope=bot%20applications.commands
 
-# Play music at Discord
+# Play music after join voice channel at Discord text field
 $ /play StreamKey
+
+# Resume stopped music when stream is restart
+$ /resync
+
+# Disconnect TopazBot from the voice channel
+$ /stop
 ```
 
 ## Code structure
 The code for the bot is specific to TopazChat.
 
-Here is the code I used for reference. Created by [Discord.js Japan user Group](https://scrapbox.io/discordjs-japan/)
+Here is the code I used for reference. [discordjs-japan/âπê∫Ççƒê∂Ç∑ÇÈ](https://scrapbox.io/discordjs-japan/%E9%9F%B3%E5%A3%B0%E3%82%92%E5%86%8D%E7%94%9F%E3%81%99%E3%82%8B)
 
-https://scrapbox.io/discordjs-japan/%E9%9F%B3%E5%A3%B0%E3%82%92%E5%86%8D%E7%94%9F%E3%81%99%E3%82%8B
+Created by [Discord.js Japan user Group](https://scrapbox.io/discordjs-japan/
 
 ## Contribution
 See [Contributing Guide](https://github.com/ROZ-MOFUMOFU-ME/topazbot/blob/main/.github/CONTRIBUTING.md).
 
 ## Donations
-Donations for development are greatly appreciated!
+TopazChat's author Hirotoshi Yoshitaka is asking for donations to cover the costs of maintaining the server and transferring data.
  
 * TopazChat [FANBOX](https://tyounanmoti.fanbox.cc/)
 

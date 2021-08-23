@@ -27,7 +27,7 @@ Discord‚Ì‰¹ºƒ`ƒƒƒ“ƒlƒ‹‚ÅƒI[ƒfƒBƒI‚ğ‘—óM‚·‚éM—Š«‚Æ—\‘ª‰Â”\‚È“®ì‚Éd“_‚ğ’u‚
 ‚ÍA‚•i¿E’á’x‰„‚ÌRTSPƒT[ƒo‚Å‚·BŒÂl‚Å‚Ì—˜—p‚Í–³—¿‚Å‚·B
 TopazChat‚Ì”ï—p‚ÍAŠJ”­Ò‚Ì‚æ‚µ‚½‚©‚³‚ñ[@TyounanMOTI](https://github.com/TyounanMOTI)‚ª•‰’S‚µ‚Ä‚¢‚Ü‚·B
 ƒT[ƒo[‚ÌˆÛ”ï‚â‰¹ºE“®‰æ”zM‚Ìƒf[ƒ^“]‘——¿‚Ì‚½‚ß‚É
-Šñ•t‚ğ‚¨Šè‚¢‚µ‚Ü‚·I[FANBOX](https://tyounanmoti.fanbox.cc/)
+Šñ•t‚ğ‚¨Šè‚¢‚µ‚Ü‚·I¨[FANBOX](https://tyounanmoti.fanbox.cc/)
 TopazChat‚Ì‚·‚×‚Ä‚ÌƒXƒ|ƒ“ƒT[‚ÍASPONSORS.txt‚É‹LÚ‚³‚ê‚Ä‚¢‚Ü‚·B
 
 
@@ -91,6 +91,7 @@ TopazChat‚Ì‚·‚×‚Ä‚ÌƒXƒ|ƒ“ƒT[‚ÍASPONSORS.txt‚É‹LÚ‚³‚ê‚Ä‚¢‚Ü‚·B
 ## g‚¢•û
 
 ```bash
+# for Debian/Ubuntu
 # mainƒŠƒ|ƒWƒgƒŠ‚©‚çclone
 $ git clone https://github.com/ROZ-MOFUMOFU-ME/TopazBot topazbot
 
@@ -114,22 +115,28 @@ $ pm2 start index.js --name TopazBot
 # TopazBot“±“üURL
 $ https://discord.com/oauth2/authorize?client_id=<Application_ID>&permissions=105263402240&scope=bot%20applications.commands
 
-# Discord‚ÅÄ¶
+# ƒ{ƒCƒXƒ`ƒƒƒ“ƒlƒ‹‚É“ü‚Á‚½ŒãADiscord‚ÌƒeƒLƒXƒg—“‚É“ü—Í‚µ‚Ä‰¹º‚ğÄ¶
 $ /play StreamKey
+
+# ’â~‚µ‚½”zM‚ªÄŠJ‚µ‚½Û‚É‰¹º‚ğÄ¶
+$ /resync
+
+# ƒ{ƒCƒXƒ`ƒƒƒ“ƒlƒ‹‚©‚çTopazBot‚ğØ’f
+$ /stop
 ```
 
 ## Code structure
 ‚±‚Ìƒ{ƒbƒg‚ÌƒR[ƒh‚ÍTopazChatê—p‚Å‚·B
 
-„‚ªQl‚É‚µ‚½ƒR[ƒh [Discord.js Japan user Group](https://scrapbox.io/discordjs-japan/)
+„‚ªQl‚É‚µ‚½ƒR[ƒh [discordjs-japan/‰¹º‚ğÄ¶‚·‚é](https://scrapbox.io/discordjs-japan/%E9%9F%B3%E5%A3%B0%E3%82%92%E5%86%8D%E7%94%9F%E3%81%99%E3%82%8B)
 
-[discordjs-japan/‰¹º‚ğÄ¶‚·‚é](https://scrapbox.io/discordjs-japan/%E9%9F%B3%E5%A3%B0%E3%82%92%E5%86%8D%E7%94%9F%E3%81%99%E3%82%8B)
+[Discord.js Japan user Group](https://scrapbox.io/discordjs-japan/)
 
 ## ƒRƒ“ƒgƒŠƒrƒ…[ƒVƒ‡ƒ“
 ‚±‚¿‚ç‚ğ‚²——‰º‚³‚¢ [Contributing Guide](https://github.com/ROZ-MOFUMOFU-ME/topazbot/blob/main/.github/CONTRIBUTING.md)
 
 ## Šñ•t
-TopazChat‚ÌƒT[ƒo[ˆÛ”ï‚âƒf[ƒ^“]‘——¿‚ğAŠJ”­Ò‚Ì‚æ‚µ‚½‚©‚³‚ñ‚ªƒJƒ“ƒp‚ğ•å‚Á‚Ä‚¢‚Ü‚·B
+TopazChat‚ÌƒT[ƒo[ˆÛ”ï‚âƒf[ƒ^“]‘——¿‚É‚Â‚¢‚ÄAŠJ”­Ò‚Ì‚æ‚µ‚½‚©‚³‚ñ‚ªƒJƒ“ƒp‚ğ•å‚Á‚Ä‚¢‚Ü‚·B
  
 * TopazChat [FANBOX](https://tyounanmoti.fanbox.cc/)
 
