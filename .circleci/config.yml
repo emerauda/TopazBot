@@ -1,15 +1,26 @@
 # This config is equivalent to both the '.circleci/extended/orb-free.yml' and the base '.circleci/config.yml'
 version: 2.1
 
-orbs:
-  node: circleci/node@4.1
-
+node-base: &node-base
+  steps:
+    - checkout
+    - run: npm install
+    - run: npm test
+jobs:
+  test-v14:
+    docker:
+      - image: circleci/node:14
+    <<: *node-base
+  test-v15:
+    docker:
+      - image: circleci/node:15
+    <<: *node-base
+  test-v16:
+    docker:
+      - image: circleci/node:16
 workflows:
-  sample:
+  build:
     jobs:
-      - node/test:
-          version: '14'
-      - node/test:
-          version: '15'
-      - node/test:
-          version: '16'
+      - test-v14
+      - test-v15
+      - test-v16
