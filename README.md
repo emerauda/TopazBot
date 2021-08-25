@@ -9,7 +9,7 @@
 [日本語README](./README-JP.md)
 
 ## Community
-- TopazChat Discord Server
+- TopazChat Discord
 
 join: https://discord.com/invite/fCMcJ8A
 
@@ -29,9 +29,8 @@ A robust audio processing system that can handle a wide range of audio sources
 
 **About TopazChat:**
 
-[TopazChat](https://github.com/TopazChat/TopazChat) 
+[TopazChat](https://booth.pm/ja/items/1752066)
 is a high quality, low latency RTSP server. It is free for personal use.
-[TopazChat Download](https://booth.pm/ja/items/1752066)
 TopazChat's costs is paid by the author Hirotoshi Yoshitaka [@TyounanMOTI](https://github.com/TyounanMOTI), 
 to maintain the instance and audio and video stream data transfer.
 Please make a donation at [FANBOX](https://tyounanmoti.fanbox.cc/)!.
@@ -39,9 +38,12 @@ All sponsors of TopazChat are listed in the SPONSORS.txt.
 
 
 **Useful links:**
-- [Documentation](https://roz-mofumofu-me.github.io/TopazBot)
-- [GitHub Discussions](https://github.com/ROZ-MOFUMOFU-ME/TopazBot/discussions)
-- [Repository](https://github.com/ROZ-MOFUMOFU-ME/TopazBot)
+- [TopazChat](https://booth.pm/ja/items/1752066)
+- [Documentation](https://discordjs.github.io/voice)
+- [Examples](https://github.com/discordjs/voice/tree/main/examples)
+- [GitHub Discussions](https://github.com/discordjs/voice/discussions)
+- [Discord.js Server](https://discord.gg/djs)
+- [Repository](https://github.com/discordjs/voice)
 
 ## Dependencies
 This library has several optional dependencies to support a variety
@@ -167,7 +169,7 @@ TopazChat's author Hirotoshi Yoshitaka is asking for donations to cover the cost
 
 ### TopazChat
 
-* Hirotoshi Yoshitaka [@TyounanMOTI](https://github.com/TyounanMOTI) Auther
+* Hirotoshi Yoshitaka [@TyounanMOTI](https://github.com/TyounanMOTI)
 
 ## License
 Released under the MIT License. See LICENSE file.

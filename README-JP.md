@@ -7,7 +7,7 @@
 ![49b54ba526ab1540bafd1bea6e593542](https://user-images.githubusercontent.com/35634920/129456355-da650b6d-37e1-4da0-a362-f056eebea238.png)
 
 ## ƒRƒ~ƒ…ƒjƒeƒB
-- TopazChat Discord Server
+- TopazChat Discord
 
 join: https://discord.com/invite/fCMcJ8A
 
@@ -26,9 +26,8 @@ Discord‚Ì‰¹ºƒ`ƒƒƒ“ƒlƒ‹‚ÅƒI[ƒfƒBƒI‚ğ‘—óM‚·‚éM—Š«‚Æ—\‘ª‰Â”\‚È“®ì‚Éd“_‚ğ’u‚
 
 **TopazChat‚É‚Â‚¢‚Ä:**
 
-[TopazChat](https://github.com/TopazChat/TopazChat) 
+[TopazChat](https://booth.pm/ja/items/1752066)
 ‚ÍA‚•i¿E’á’x‰„‚ÌRTSPƒT[ƒo‚Å‚·BŒÂl‚Å‚Ì—˜—p‚Í–³—¿‚Å‚·B
-[TopazChat ƒ_ƒEƒ“ƒ[ƒh](https://booth.pm/ja/items/1752066)
 TopazChat‚Ì”ï—p‚ÍAŠJ”­Ò‚Ì‚æ‚µ‚½‚©‚³‚ñ[@TyounanMOTI](https://github.com/TyounanMOTI)‚ª•‰’S‚µ‚Ä‚¢‚Ü‚·B
 ƒT[ƒo[‚ÌˆÛ”ï‚â‰¹ºE“®‰æ”zM‚Ìƒf[ƒ^“]‘——¿‚Ì‚½‚ß‚É
 Šñ•t‚ğ‚¨Šè‚¢‚µ‚Ü‚·I¨[FANBOX](https://tyounanmoti.fanbox.cc/)
@@ -36,9 +35,12 @@ TopazChat‚Ì‚·‚×‚Ä‚ÌƒXƒ|ƒ“ƒT[‚ÍASPONSORS.txt‚É‹LÚ‚³‚ê‚Ä‚¢‚Ü‚·B
 
 
 **ƒŠƒ“ƒNW:**
-- [Documentation](https://roz-mofumofu-me.github.io/TopazBot)
-- [GitHub Discussions](https://github.com/ROZ-MOFUMOFU-ME/TopazBot/discussions)
-- [Repository](https://github.com/ROZ-MOFUMOFU-ME/TopazBot)
+- [TopazChat](https://booth.pm/ja/items/1752066)
+- [Documentation](https://discordjs.github.io/voice)
+- [Examples](https://github.com/discordjs/voice/tree/main/examples)
+- [GitHub Discussions](https://github.com/discordjs/voice/discussions)
+- [Discord.js Server](https://discord.gg/djs)
+- [Repository](https://github.com/discordjs/voice)
 
 ## ˆË‘¶ŠÖŒW
 ‚±‚Ìƒ‰ƒCƒuƒ‰ƒŠ‚ÍA‚³‚Ü‚´‚Ü‚Èƒvƒ‰ƒbƒgƒtƒH[ƒ€‚ğƒTƒ|[ƒg‚·‚é‚½‚ß‚ÉAˆÈ‰º‚ÌƒJƒeƒSƒŠ[‚©‚ç‚»‚ê‚¼‚ê1‚Â‚¸‚ÂƒCƒ“ƒXƒg[ƒ‹‚µ‚Ä‚­‚¾‚³‚¢B
@@ -157,7 +159,7 @@ TopazChat‚ÌƒT[ƒo[ˆÛ”ï‚âƒf[ƒ^“]‘——¿‚É‚Â‚¢‚ÄAŠJ”­Ò‚Ì‚æ‚µ‚½‚©‚³‚ñ‚ªƒJƒ“ƒp‚ğ•
 
 ### TopazChat
 
-* ‚æ‚µ‚½‚©—l [@TyounanMOTI](https://github.com/TyounanMOTI) TopazChatŠJ”­Ò
+* Hirotoshi Yoshitaka [@TyounanMOTI](https://github.com/TyounanMOTI)
 
 ## ƒ‰ƒCƒZƒ“ƒX
 MITƒ‰ƒCƒZƒ“ƒX‚ÅƒŠƒŠ[ƒX‚³‚ê‚Ä‚¢‚Ü‚·BLICENSEƒtƒ@ƒCƒ‹‚ğ‚²——‚­‚¾‚³‚¢B
