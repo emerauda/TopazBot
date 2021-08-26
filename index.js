@@ -66,30 +66,73 @@ async function play(interaction) {
     console.log(StreamKey + " is stopped!");
     return {
         connection: connection,
-        player: player,
         StreamKey: StreamKey,
-        resource: resource,
-        p: p,
-        status: status,
+
     };
 }
 /**
  *
  * @param {CommandInteraction} interaction
  */
-function resync(interaction) {
-    const Data = play(interaction);
+async function resync(interaction) {
+    const guild = interaction.guild;
+    const member = await guild.members.fetch(interaction.member.id);
+    const memberVC = member.voice.channel;
+    if (!memberVC) {
+        return interaction.reply({
+            content: "Voice channel is not found to connect.",
+            ephemeral: true,
+        });
+    }
+    if (!memberVC.joinable) {
+        return interaction.reply({
+            content: "Voice channel is inaccessible.",
+            ephemeral: true,
+        });
+    }
+    if (!memberVC.speakable) {
+        return interaction.reply({
+            content: "Bot do not have permission to play audio in Voice channel.",
+            ephemeral: true,
+        });
+    }
+    const status = ["●Reloading Sounds...", `●Reconnecting to ${memberVC}...`];
+    const p = interaction.reply(status.join("\n"));
+    if (!connection) {
+        connection = joinVoiceChannel({
+            guildId: guild.id,
+            channelId: memberVC.id,
+            adapterCreator: guild.voiceAdapterCreator,
+            selfMute: false,
+        });
+    };
+    const resource = createAudioResource("rtsp://topaz.chat/live/" + StreamKey,
+        {
+            inputType: StreamType.Arbitrary,
+        });
     const player = createAudioPlayer({
         behaviors: {
             noSubscriber: NoSubscriberBehavior.Pause,
         },
     });
     console.log(StreamKey + " is resyncing...");
-    player.play(Data.resource);
-    console.log(StreamKey + " is resynced!");
+    player.play(resource);
     const promises = [];
-    promises.push(entersState(connection, VoiceConnectionStatus.Ready, 1000 * 10).then(() => Data.status[0] += "Done!"));
-    promises.push(entersState(player, AudioPlayerStatus.AutoPaused, 1000 * 10).then(() => Data.status[1] += "Done!"));
+    promises.push(entersState(connection, VoiceConnectionStatus.Ready, 1000 * 10).then(() => status[0] += "Done!"));
+    promises.push(entersState(player, AudioPlayerStatus.AutoPaused, 1000 * 10).then(() => status[1] += "Done!"));
+    await Promise.race(promises);
+    await p;
+    await Promise.all([...promises, interaction.editReply(status.join("\n"))]);
+    connection.subscribe(player);
+    await entersState(player, AudioPlayerStatus.Playing, 100);
+    await interaction.editReply("Resynced");
+    console.log(StreamKey + " is resynced!");
+    await interaction.editReply("Playing " + StreamKey);
+    await entersState(player, AudioPlayerStatus.Idle, 2 ** 31 - 1);
+    await interaction.editReply("Stopped");
+    console.log(StreamKey + " is stopped!");
+    connection = null;
+    StreamKey = null;
 };
 /**
  *
@@ -101,11 +144,11 @@ async function stop(interaction) {
             noSubscriber: NoSubscriberBehavior.Pause,
         },
     });
-    const status = ["●Destroying..."];
-    const p = interaction.reply(status.join("\n"));
     const guild = interaction.guild;
     const member = await guild.members.fetch(interaction.member.id);
     const memberVC = member.voice.channel;
+    const status = ["●Stopping Sounds...", `●Disconnecting from ${memberVC}...`];
+    const p = interaction.reply(status.join("\n"));
     if (!connection) {
         connection = joinVoiceChannel({
             guildId: guild.id,
@@ -123,8 +166,8 @@ async function stop(interaction) {
     connection.destroy();
     await interaction.editReply("Destroyed");
     connection = null;
+    StreamKey = null;
 }
-
 
 /**
  *
@@ -133,6 +176,18 @@ async function stop(interaction) {
 async function onPlay(interaction) {
     try {
         await play(interaction);
+    } catch (err) {
+        if (interaction.replied) {
+            interaction.editReply("An error has occurred.").catch(() => { });
+        } else {
+            interaction.reply("An error has occurred.").catch(() => { });
+        }
+        throw err;
+    }
+}
+async function onResync(interaction) {
+    try {
+        await resync(interaction);
     } catch (err) {
         if (interaction.replied) {
             interaction.editReply("An error has occurred.").catch(() => { });
@@ -163,7 +218,7 @@ async function onCommandInteraction(interaction) {
         return onPlay(interaction);
     }
     if (interaction.commandName === "resync") {
-        return resync(interaction);
+        return onResync(interaction);
     }
     if (interaction.commandName === "stop") {
         return onStop(interaction);
