@@ -61,7 +61,7 @@ async function play(interaction) {
     await entersState(player, AudioPlayerStatus.Playing, 100);
 
     await interaction.editReply("Playing " + StreamKey);
-    await entersState(player, AudioPlayerStatus.Idle, 2 ** 31 - 1)
+    await entersState(player, AudioPlayerStatus.Idle, 2 ** 31 - 1);
     await interaction.editReply("Stopped");
     console.log(StreamKey + " is stopped!");
     return {
