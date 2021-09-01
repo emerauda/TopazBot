@@ -7,6 +7,9 @@ const client = new Discord.Client({
 });
 var StreamKey = null;
 let connection = null;
+function sleep(milliseconds) {
+    return new Promise(resolve => setTimeout(resolve, milliseconds));
+}
 async function play(interaction) {
     const guild = interaction.guild;
     const member = await guild.members.fetch(interaction.member.id);
@@ -64,6 +67,31 @@ async function play(interaction) {
     await entersState(player, AudioPlayerStatus.Idle, 2 ** 31 - 1);
     await interaction.editReply("Stopped");
     console.log(StreamKey + " is stopped!");
+    while (player.state.status === "idle") {
+        await sleep(5000);
+        if (!connection.state.networking.state.connectionData.speaking) {
+            const resource = createAudioResource("rtsp://topaz.chat/live/" + StreamKey,
+                {
+                    inputType: StreamType.Arbitrary,
+                });
+            const player = createAudioPlayer({
+                behaviors: {
+                    noSubscriber: NoSubscriberBehavior.Pause,
+                },
+            });
+            await interaction.editReply("Auto resuming...");
+            console.log('Autoresume has started!');
+            player.play(resource);
+            connection.subscribe(player);
+            await sleep(5000);
+            if (connection.state.networking.state.connectionData.speaking) {
+                await interaction.editReply("Autoresumed");
+                console.log(StreamKey + " is Autoresumed!");
+                await interaction.editReply("Playing " + StreamKey);
+            }
+        }
+        continue;
+    }
     return {
         connection: connection,
         StreamKey: StreamKey,
@@ -131,6 +159,31 @@ async function resync(interaction) {
     await entersState(player, AudioPlayerStatus.Idle, 2 ** 31 - 1);
     await interaction.editReply("Stopped");
     console.log(StreamKey + " is stopped!");
+    while (player.state.status === "idle") {
+        await sleep(5000);
+        if (!connection.state.networking.state.connectionData.speaking) {
+            const resource = createAudioResource("rtsp://topaz.chat/live/" + StreamKey,
+                {
+                    inputType: StreamType.Arbitrary,
+                });
+            const player = createAudioPlayer({
+                behaviors: {
+                    noSubscriber: NoSubscriberBehavior.Pause,
+                },
+            });
+            await interaction.editReply("Auto resuming...");
+            console.log('Autoresume has started!');
+            player.play(resource);
+            connection.subscribe(player);
+            await sleep(5000);
+            if (connection.state.networking.state.connectionData.speaking) {
+                await interaction.editReply("Autoresumed");
+                console.log(StreamKey + " is Autoresumed!");
+                await interaction.editReply("Playing " + StreamKey);
+            }
+        }
+        continue;
+    }
     connection = null;
     StreamKey = null;
 };
