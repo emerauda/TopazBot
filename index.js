@@ -71,7 +71,7 @@ async function play(interaction) {
     while (player.state.status === "idle") {
         await sleep(5000);
         if (!connection.state.networking.state.connectionData.speaking) {
-            const resource = createAudioResource("rtsp://topaz.chat/live/" + StreamKey,
+            const resource = createAudioResource(url,
                 {
                     inputType: StreamType.Arbitrary,
                 });
@@ -172,7 +172,7 @@ async function resync(interaction) {
             player.play(resource);
             connection.subscribe(player);
             await sleep(5000);
-            if (connection.state.networking.state.connectionData.speaking) {
+            if (connection.state.networking.state.connectionData.speaking){
                 console.log(StreamKey + " is Autoresumed!");
             }
         }
