@@ -158,7 +158,7 @@ async function resync(interaction) {
     console.log(StreamKey + " is stopped!");
     while (player.state.status === "idle") {
         await sleep(5000);
-        if (player.state.status === "idle") {
+        if (connection.state.networking.state.connectionData.speaking) {
             const resource = createAudioResource(url,
                 {
                     inputType: StreamType.Arbitrary,
