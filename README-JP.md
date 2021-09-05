@@ -49,7 +49,7 @@ TopazChatのすべてのスポンサーは、SPONSORS.txtに記載されています。
 
 **node & npm:**
 
-- `node`: >=14
+- `node`: >=16
 - `npm`: >=6
 
 **discord.js:**
@@ -66,16 +66,12 @@ TopazChatのすべてのスポンサーは、SPONSORS.txtに記載されています。
 
 **Opus Libraries (npm install):**
 
-- `@discordjs/opus`: ^0.5.3
+- `@discordjs/opus`: ^0.6.0
 
 **FFmpeg:**
 
 - [`FFmpeg`](https://ffmpeg.org/) (サーバーにインストールして下さい)
 - `ffmpeg-static`: ^4.2.7 (npm install)
-
-**dotenv (npm install):**
-
-- `dotenv`: ^10.0.0
 
 **pm2 (npm install): [オプション]**
 
@@ -100,8 +96,8 @@ $ git clone https://github.com/ROZ-MOFUMOFU-ME/TopazBot topazbot
 $ cd topazbot
 $ npm install
 
-# トークンを書き込む (example.envを見てね)
-$ vi .env
+# トークンを書き込む
+$ vi config.json
 
 # コマンド登録
 $ node register.js

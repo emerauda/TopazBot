@@ -71,16 +71,12 @@ try installing another.
 
 **Opus Libraries (npm install):**
 
-- `@discordjs/opus`: ^0.5.3
+- `@discordjs/opus`: ^0.6.0
 
 **FFmpeg:**
 
 - [`FFmpeg`](https://ffmpeg.org/) (installed and added to environment)
 - `ffmpeg-static`: ^4.2.7 (npm install)
-
-**dotenv (npm install):**
-
-- `dotenv`: ^10.0.0
 
 **pm2 (npm install): [Optional]**
 
@@ -107,8 +103,8 @@ $ git clone https://github.com/ROZ-MOFUMOFU-ME/TopazBot topazbot
 $ cd topazbot
 $ npm install
 
-# Set a bot token (see example.env)
-$ vi .env
+# Set a bot token
+$ vi config.json
 
 # Regist command
 $ node register.js
