@@ -54,7 +54,7 @@ try installing another.
 
 **node & npm:**
 
-- `node`: >=14
+- `node`: >=16
 - `npm`: >=6
 
 **discord.js:**
