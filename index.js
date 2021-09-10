@@ -72,7 +72,7 @@ client.on('interactionCreate', async (interaction) => {
         await interaction.editReply("Playing " + StreamKey);
         await entersState(player, AudioPlayerStatus.Idle, 2 ** 31 - 1);
         console.log(StreamKey + " is stopped!");
-        d1 = new Date();
+        const d1 = new Date();
         while (player.state.status === "idle") {
             d2 = new Date();
             await sleep(5000);
@@ -176,7 +176,7 @@ client.on('interactionCreate', async (interaction) => {
         await interaction.editReply("Playing " + StreamKey);
         await entersState(player, AudioPlayerStatus.Idle, 2 ** 31 - 1);
         console.log(StreamKey + " is stopped!");
-        d1 = new Date();
+        const d1 = new Date();
         while (player.state.status === "idle") {
             d2 = new Date();
             await sleep(5000);
@@ -214,6 +214,7 @@ client.on('interactionCreate', async (interaction) => {
             continue;
         }
     }
+    connection = null;
 });
 client.on('interactionCreate', async (interaction) => {
     if (!interaction.isCommand() || !interaction.guildId) return;
@@ -247,6 +248,7 @@ client.on('interactionCreate', async (interaction) => {
         connection.destroy();
         await interaction.editReply("Destroyed");
     };
+    connection = null;
 });
 console.log('TopazBot client ready...');
 client.login(token)
