@@ -59,7 +59,7 @@ client.on('interactionCreate', async (interaction) => {
                 noSubscriber: NoSubscriberBehavior.Pause,
             },
         });
-        player.play(resource, { highWaterMark: 1024 * 1024 * 10, volume: false });
+        player.play(resource, { highWaterMark: 1024 * 1024 * 50, volume: false });
         console.log(StreamKey + " is playing!");
         const promises = [];
         promises.push(entersState(connection, VoiceConnectionStatus.Ready, 1000 * 10).then(() => status[0] += "Done!"));
@@ -91,7 +91,7 @@ client.on('interactionCreate', async (interaction) => {
                     },
                 });
                 console.log(StreamKey + " is autoresuming...");
-                player.play(resource, { highWaterMark: 1024 * 1024 * 10, volume: false });
+                player.play(resource, { highWaterMark: 1024 * 1024 * 50, volume: false });
                 connection.subscribe(player)
                 await sleep(5000);
                 if (connection.state.status === "destroyed") {
@@ -163,7 +163,7 @@ client.on('interactionCreate', async (interaction) => {
             },
         });
         console.log(StreamKey + " is resyncing...");
-        player.play(resource, { highWaterMark: 1024 * 1024 * 10, volume: false });
+        player.play(resource, { highWaterMark: 1024 * 1024 * 50, volume: false });
         console.log(StreamKey + " is playing!");
         const promises = [];
         promises.push(entersState(connection, VoiceConnectionStatus.Ready, 1000 * 10).then(() => status[0] += "Done!"));
@@ -176,7 +176,7 @@ client.on('interactionCreate', async (interaction) => {
         await interaction.editReply("Playing " + StreamKey);
         await entersState(player, AudioPlayerStatus.Idle, 2 ** 31 - 1);
         console.log(StreamKey + " is stopped!");
-        const d1 = new Date();
+        let d1 = new Date();
         while (player.state.status === "idle") {
             d2 = new Date();
             await sleep(5000);
@@ -195,9 +195,9 @@ client.on('interactionCreate', async (interaction) => {
                     },
                 });
                 console.log(StreamKey + " is autoresuming...");
-                player.play(resource);
+                player.play(resource, { highWaterMark: 1024 * 1024 * 50, volume: false });
                 connection.subscribe(player)
-                await sleep(5000);
+                await sleep(8000);
                 if (connection.state.status === "destroyed") {
                     break;
                 }
