@@ -5,9 +5,6 @@
             "checkout",
             {
                 "run": "npm install"
-            },
-            {
-                "run": "npm start"
             }
         ]
     },
@@ -22,9 +19,6 @@
                 "checkout",
                 {
                     "run": "npm install"
-                },
-                {
-                    "run": "npm start"
                 }
             ]
         },
@@ -38,9 +32,6 @@
                 "checkout",
                 {
                     "run": "npm install"
-                },
-                {
-                    "run": "npm start"
                 }
             ]
         },
@@ -54,9 +45,6 @@
                 "checkout",
                 {
                     "run": "npm install"
-                },
-                {
-                    "run": "npm start"
                 }
             ]
         }
