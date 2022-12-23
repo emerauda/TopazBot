@@ -1,5 +1,5 @@
-require('dotenv').config();
 const { Client, ClientApplication } = require("discord.js");
+const { token, deployment_guild_id } = require('./config.json');
 /**
  *
  * @param {Client} client
@@ -26,7 +26,7 @@ const ping = {
         },
     ],
 };
-const pingResync = {
+const pingResync = { 
     name: "resync",
     description: "Resync TopazChat music",
 };
@@ -39,7 +39,7 @@ const commands = [ping, pingResync, pingStop];
 const client = new Client({
     intents: 0,
 });
-client.token = process.env.DISCORD_TOKEN;
+client.token = token;
 async function main() {
     client.application = new ClientApplication(client, {});
     await client.application.fetch();
