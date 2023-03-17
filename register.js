@@ -1,5 +1,5 @@
 const { Client, ClientApplication } = require("discord.js");
-const { token, deployment_guild_id } = require('./config.json');
+const { token } = require('./config.json');
 /**
  *
  * @param {Client} client
