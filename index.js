@@ -1,6 +1,6 @@
 const { Client, Interaction, GuildMember, Snowflake } = require("discord.js");
-const { joinVoiceChannel, entersState, VoiceConnectionStatus, createAudioResource, StreamType, createAudioPlayer, AudioPlayer, AudioPlayerStatus, NoSubscriberBehavior, generateDependencyReport } = require("@discordjs/voice");
-const { token, deployment_guild_id } = require('./config.json');
+const { joinVoiceChannel, entersState, VoiceConnectionStatus, createAudioResource, StreamType, createAudioPlayer, AudioPlayerStatus, NoSubscriberBehavior, generateDependencyReport } = require("@discordjs/voice");
+const { token } = require('./config.json');
 const client = new Client({ intents: ['GUILDS', 'GUILD_VOICE_STATES'] });
 console.log(generateDependencyReport());
 const subscriptions = new Map();
@@ -8,7 +8,8 @@ function sleep(milliseconds) {
     return new Promise(resolve => setTimeout(resolve, milliseconds));
 }
 var StreamKey = null;
-let connection = null;
+var connection = null;
+var url = null;
 
 // Handles slash command interactions
 client.on('interactionCreate', async (interaction) => {
@@ -49,7 +50,7 @@ client.on('interactionCreate', async (interaction) => {
         };
         // Extract the video URL from the command
         StreamKey = interaction.options.get('streamkey').value;
-        url = "rtsp://topaz.chat/live/" + StreamKey;
+        const url = "rtsp://topaz.chat/live/" + StreamKey;
         const resource = createAudioResource(url,
             {
                 inputType: StreamType.Arbitrary,
@@ -68,7 +69,7 @@ client.on('interactionCreate', async (interaction) => {
         await p;
         await Promise.all([...promises, interaction.editReply(status.join("\n"))]);
         connection.subscribe(player);
-        await entersState(player, AudioPlayerStatus.Playing, 100);
+        await entersState(player, AudioPlayerStatus.Playing, 5000);
         await interaction.editReply("Playing " + StreamKey);
         await entersState(player, AudioPlayerStatus.Idle, 2 ** 31 - 1);
         console.log(StreamKey + " is stopped!");
@@ -153,6 +154,7 @@ client.on('interactionCreate', async (interaction) => {
                 selfMute: false,
             });
         };
+        const url = "rtsp://topaz.chat/live/" + StreamKey;
         const resource = createAudioResource(url,
             {
                 inputType: StreamType.Arbitrary,
@@ -172,7 +174,7 @@ client.on('interactionCreate', async (interaction) => {
         await p;
         await Promise.all([...promises, interaction.editReply(status.join("\n"))]);
         connection.subscribe(player);
-        await entersState(player, AudioPlayerStatus.Playing, 100);
+        await entersState(player, AudioPlayerStatus.Playing, 5000);
         await interaction.editReply("Playing " + StreamKey);
         await entersState(player, AudioPlayerStatus.Idle, 2 ** 31 - 1);
         console.log(StreamKey + " is stopped!");
