@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.com/ROZ-MOFUMOFU-ME/TopazBot.svg?branch=main)](https://travis-ci.com/ROZ-MOFUMOFU-ME/TopazBot) 
 [![CircleCI](https://circleci.com/gh/ROZ-MOFUMOFU-ME/TopazBot/tree/main.svg?style=svg)](https://circleci.com/gh/ROZ-MOFUMOFU-ME/TopazBot/tree/main)
 
-![49b54ba526ab1540bafd1bea6e593542](https://user-images.githubusercontent.com/35634920/129456355-da650b6d-37e1-4da0-a362-f056eebea238.png)
+![スクリーンショット 2023年-05月-13日 21 34 41](https://github.com/ROZ-MOFUMOFU-ME/TopazBot/assets/35634920/44da5967-3204-4e28-a8da-8f4aa554eccb)
 
 [日本語README](./README-JP.md)
 
