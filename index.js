@@ -1,4 +1,4 @@
-const { Client, Interaction, GuildMember, Snowflake } = require("discord.js");
+const { Client } = require("discord.js");
 const { joinVoiceChannel, entersState, VoiceConnectionStatus, createAudioResource, StreamType, createAudioPlayer, AudioPlayerStatus, NoSubscriberBehavior, generateDependencyReport } = require("@discordjs/voice");
 const { token } = require('./config.json');
 const client = new Client({ intents: ['GUILDS', 'GUILD_VOICE_STATES'] });
@@ -11,7 +11,13 @@ var StreamKey = null;
 var connection = null;
 var url = null;
 
+client.on('ready', () => {
+    console.log(`Logged in as ${client.user.tag}!`);
+    console.log('TopazBot client ready...');
+  });
+
 // Handles slash command interactions
+// play command
 client.on('interactionCreate', async (interaction) => {
     if (!interaction.isCommand() || !interaction.guildId) return;
     let subscription = subscriptions.get(interaction.guildId);
@@ -48,9 +54,9 @@ client.on('interactionCreate', async (interaction) => {
                 selfMute: false,
             });
         };
-        // Extract the video URL from the command
+        // Extract the stream URL from the command
         StreamKey = interaction.options.get('streamkey').value;
-        const url = "rtsp://topaz.chat/live/" + StreamKey;
+        url = "rtsp://topaz.chat/live/" + StreamKey;
         const resource = createAudioResource(url,
             {
                 inputType: StreamType.Arbitrary,
@@ -73,6 +79,7 @@ client.on('interactionCreate', async (interaction) => {
         await interaction.editReply("Playing " + StreamKey);
         await entersState(player, AudioPlayerStatus.Idle, 2 ** 31 - 1);
         console.log(StreamKey + " is stopped!");
+        // Automatic disconnection if no stream is detected for 30 minutes
         const d1 = new Date();
         while (player.state.status === "idle") {
             d2 = new Date();
@@ -94,7 +101,7 @@ client.on('interactionCreate', async (interaction) => {
                 console.log(StreamKey + " is autoresuming...");
                 player.play(resource, { highWaterMark: 1024 * 1024 * 50, volume: false });
                 connection.subscribe(player)
-                await sleep(5000);
+                await sleep(8000);
                 if (connection.state.status === "destroyed") {
                     break;
                 }
@@ -117,6 +124,8 @@ client.on('interactionCreate', async (interaction) => {
         url: url,
     };
 })
+
+// resync command
 client.on('interactionCreate', async (interaction) => {
     if (!interaction.isCommand() || !interaction.guildId) return;
     let connection = null;
@@ -178,6 +187,7 @@ client.on('interactionCreate', async (interaction) => {
         await interaction.editReply("Playing " + StreamKey);
         await entersState(player, AudioPlayerStatus.Idle, 2 ** 31 - 1);
         console.log(StreamKey + " is stopped!");
+        // Automatic disconnection if no stream is detected for 30 minutes
         let d1 = new Date();
         while (player.state.status === "idle") {
             d2 = new Date();
@@ -207,6 +217,7 @@ client.on('interactionCreate', async (interaction) => {
                     console.log(StreamKey + " is autoresumed!");
                     d1 = new Date();
                 }
+                // Automatic disconnection if no stream is detected for 30 minutes
                 if (d2 - d1 > 1800000) {
                     console.log(StreamKey + " is autodestroyed!");
                     connection.destroy();
@@ -218,6 +229,8 @@ client.on('interactionCreate', async (interaction) => {
     }
     connection = null;
 });
+
+// stop command
 client.on('interactionCreate', async (interaction) => {
     if (!interaction.isCommand() || !interaction.guildId) return;
     let subscription = subscriptions.get(interaction.guildId);
@@ -252,5 +265,5 @@ client.on('interactionCreate', async (interaction) => {
     };
     connection = null;
 });
-console.log('TopazBot client ready...');
+
 client.login(token)
