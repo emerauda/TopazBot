@@ -117,7 +117,7 @@ $ sudo npm i pm2 -g
 $ pm2 start index.js --name TopazBot
 
 # Summon TopazBot to your Discord Server
-$ https://discord.com/oauth2/authorize?client_id=<Application_ID>&permissions=105263402240&scope=bot%20applications.commands
+$ https://discord.com/api/oauth2/authorize?client_id=876143776572248074&permissions=3155968&scope=bot%20applications.commands
 
 # Play music after join voice channel at Discord text field
 $ /play StreamKey
