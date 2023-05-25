@@ -80,7 +80,7 @@ client.on('interactionCreate', async (interaction) => {
         await entersState(player, AudioPlayerStatus.Idle, 2 ** 31 - 1);
         console.log(StreamKey + " is stopped!");
         // Automatic disconnection if no stream is detected for 30 minutes
-        const d1 = new Date();
+        let d1 = new Date();
         while (player.state.status === "idle") {
             d2 = new Date();
             await sleep(5000);
