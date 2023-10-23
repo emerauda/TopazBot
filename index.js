@@ -78,7 +78,6 @@ client.on('interactionCreate', async (interaction) => {
         await entersState(player, AudioPlayerStatus.Playing, 5000);
         await interaction.editReply("Playing " + StreamKey);
         await entersState(player, AudioPlayerStatus.Idle, 2 ** 31 - 1);
-        console.log(StreamKey + " is stopped!");
         // Automatic disconnection if no stream is detected for 30 minutes
         let d1 = new Date();
         while (player.state.status === "idle") {
@@ -98,10 +97,12 @@ client.on('interactionCreate', async (interaction) => {
                         noSubscriber: NoSubscriberBehavior.Pause,
                     },
                 });
+                console.log(StreamKey + " is stopped!");
+                await sleep(3000);
                 console.log(StreamKey + " is autoresuming...");
                 player.play(resource, { highWaterMark: 1024 * 1024 * 50, volume: false });
                 connection.subscribe(player)
-                await sleep(8000);
+                await sleep(5000);
                 if (connection.state.status === "destroyed") {
                     break;
                 }
@@ -206,10 +207,12 @@ client.on('interactionCreate', async (interaction) => {
                         noSubscriber: NoSubscriberBehavior.Pause,
                     },
                 });
+                console.log(StreamKey + " is stopped!");
+                await sleep(3000);
                 console.log(StreamKey + " is autoresuming...");
                 player.play(resource, { highWaterMark: 1024 * 1024 * 50, volume: false });
                 connection.subscribe(player)
-                await sleep(8000);
+                await sleep(5000);
                 if (connection.state.status === "destroyed") {
                     break;
                 }
