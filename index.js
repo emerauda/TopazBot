@@ -7,13 +7,12 @@ const subscriptions = new Map();
 function sleep(milliseconds) {
     return new Promise(resolve => setTimeout(resolve, milliseconds));
 }
-var StreamKey = null;
-var connection = null;
-var url = null;
+let StreamKey = null;
+let connection = null;
+let url = null;
 
 client.on('ready', () => {
-    console.log(`Logged in as ${client.user.tag}!`);
-    console.log('TopazBot client ready...');
+    console.log(`Logged in as ${client.user.tag}! client ready...`);
   });
 
 // Handles slash command interactions
@@ -78,10 +77,11 @@ client.on('interactionCreate', async (interaction) => {
         await entersState(player, AudioPlayerStatus.Playing, 5000);
         await interaction.editReply("Playing " + StreamKey);
         await entersState(player, AudioPlayerStatus.Idle, 2 ** 31 - 1);
+        console.log(StreamKey + " is stopped!");
         // Automatic disconnection if no stream is detected for 30 minutes
-        let d1 = new Date();
+        let lastActivityTime = new Date();
         while (player.state.status === "idle") {
-            d2 = new Date();
+            const currentTime = new Date();
             await sleep(5000);
             if (connection.state.status === "destroyed") {
                 break;
@@ -97,7 +97,6 @@ client.on('interactionCreate', async (interaction) => {
                         noSubscriber: NoSubscriberBehavior.Pause,
                     },
                 });
-                console.log(StreamKey + " is stopped!");
                 await sleep(3000);
                 console.log(StreamKey + " is autoresuming...");
                 player.play(resource, { highWaterMark: 1024 * 1024 * 50, volume: false });
@@ -108,9 +107,9 @@ client.on('interactionCreate', async (interaction) => {
                 }
                 if (connection.state.subscription.player._state.status === "playing") {
                     console.log(StreamKey + " is autoresumed!");
-                    d1 = new Date();
+                    let lastActivityTime = new Date();
                 }
-                if (d2 - d1 > 1800000) {
+                if (currentTime - lastActivityTime > 1800000) {
                     console.log(StreamKey + " is autodestroyed!");
                     connection.destroy();
                     break;
@@ -189,9 +188,9 @@ client.on('interactionCreate', async (interaction) => {
         await entersState(player, AudioPlayerStatus.Idle, 2 ** 31 - 1);
         console.log(StreamKey + " is stopped!");
         // Automatic disconnection if no stream is detected for 30 minutes
-        let d1 = new Date();
+        let lastActivityTime = new Date();
         while (player.state.status === "idle") {
-            d2 = new Date();
+            const currentTime = new Date();
             await sleep(5000);
             if (connection.state.status === "destroyed") {
                 break;
@@ -207,7 +206,6 @@ client.on('interactionCreate', async (interaction) => {
                         noSubscriber: NoSubscriberBehavior.Pause,
                     },
                 });
-                console.log(StreamKey + " is stopped!");
                 await sleep(3000);
                 console.log(StreamKey + " is autoresuming...");
                 player.play(resource, { highWaterMark: 1024 * 1024 * 50, volume: false });
@@ -218,10 +216,9 @@ client.on('interactionCreate', async (interaction) => {
                 }
                 if (connection.state.subscription.player._state.status === "playing") {
                     console.log(StreamKey + " is autoresumed!");
-                    d1 = new Date();
+                    let lastActivityTime = new Date();
                 }
-                // Automatic disconnection if no stream is detected for 30 minutes
-                if (d2 - d1 > 1800000) {
+                if (currentTime - lastActivityTime > 1800000) {
                     console.log(StreamKey + " is autodestroyed!");
                     connection.destroy();
                     break;
