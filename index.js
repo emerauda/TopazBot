@@ -17,11 +17,19 @@ client.on('ready', () => {
 // play command
 client.on('interactionCreate', async (interaction) => {
     if (!interaction.isCommand() || !interaction.guildId) return;
-    if (interaction.commandName === "play") {
+    if (interaction.commandName === `play`) {
         await interaction.deferReply();
         const voiceChannel = interaction.member.voice.channel;
-        if (!interaction.member.voice.channelId) {
-          await interaction.reply('You need to be in a voice channel to use this command!');
+        if (!voiceChannel) {
+          await interaction.editReply('You need to be in a voice channel to use this command!');
+          return;
+        }
+        if (!voiceChannel.joinable) {
+          await interaction.editReply('Voice channel is inaccessible.');
+          return;
+        }
+        if (!voiceChannel.speakable) {
+          await interaction.editReply('Voice channel is inaccessible.');
           return;
         }
         if (!connection) {
@@ -86,11 +94,11 @@ client.on('interactionCreate', async (interaction) => {
 client.on('interactionCreate', async (interaction) => {
     if (!interaction.isCommand() || !interaction.guildId) return;
     let connection = null;
-    if (interaction.commandName === "resync") {
+    if (interaction.commandName === `resync`) {
         await interaction.deferReply();
         const voiceChannel = interaction.member.voice.channel;
-        if (!interaction.member.voice.channelId) {
-          await interaction.reply('You need to be in a voice channel to use this command!');
+         if (!voiceChannel) {
+          await interaction.editReply('You need to be in a voice channel to use this command!');
           return;
         }
         if (!connection) {
@@ -100,7 +108,6 @@ client.on('interactionCreate', async (interaction) => {
               adapterCreator: interaction.guild.voiceAdapterCreator,
             });
         };
-        const streamUrl = `rtsp://topaz.chat/live/${streamKey}`;
         const resource = createAudioResource(streamUrl);
         const player = createAudioPlayer();
         console.log(`${streamKey} is resyncing...`);
@@ -150,11 +157,11 @@ client.on('interactionCreate', async (interaction) => {
 // stop command
 client.on('interactionCreate', async (interaction) => {
     if (!interaction.isCommand() || !interaction.guildId) return;
-    if (interaction.commandName === "stop") {
+    if (interaction.commandName === `stop`) {
         await interaction.deferReply();
         const voiceChannel = interaction.member.voice.channel;
-        if (!interaction.member.voice.channelId) {
-          await interaction.reply('You need to be in a voice channel to use this command!');
+        if (!voiceChannel) {
+          await interaction.editReply('You need to be in a voice channel to use this command!');
           return;
         }
         const player = createAudioPlayer();
