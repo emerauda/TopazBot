@@ -22,5 +22,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Install dependencies
       run: npm install
-    - name: Check for build success
-      run: echo "Build completed successfully!"
+    - name: Run test
+      run: npm test
+    - name: Check for build and test success
+      run: echo "Build completed and test successfully!"
