@@ -1,49 +1,49 @@
 
 # TopazBot - RTSP Discord Music bot for TopazChat
 [![Join the chat at https://github.com/ROZ-MOFUMOFU-ME/TopazBot/](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ROZ-MOFUMOFU-ME/TopazBot?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Build Status](https://travis-ci.com/ROZ-MOFUMOFU-ME/TopazBot.svg?branch=main)](https://travis-ci.com/ROZ-MOFUMOFU-ME/TopazBot) 
+[![Node.js CI](https://github.com/ROZ-MOFUMOFU-ME/TopazBot/actions/workflows/node.js.yml/badge.svg)](https://github.com/ROZ-MOFUMOFU-ME/TopazBot/actions/workflows/node.js.yml)
 [![CircleCI](https://circleci.com/gh/ROZ-MOFUMOFU-ME/TopazBot/tree/main.svg?style=svg)](https://circleci.com/gh/ROZ-MOFUMOFU-ME/TopazBot/tree/main)
 
 ![49b54ba526ab1540bafd1bea6e593542](https://user-images.githubusercontent.com/35634920/129456355-da650b6d-37e1-4da0-a362-f056eebea238.png)
 
-## �R�~���j�e�B
+## コミュニティ
 - TopazChat Discord Server
 
 join: https://discord.com/invite/fCMcJ8A
 
-## TopazBot�ɂ���
-Node.js�p��Discord Voice API��TopazChat RTSP��p�̎����ŁAJavaScript�ŏ�����Ă��܂��B
+## TopazBotについて
+Node.js用のDiscord Voice APIのTopazChat RTSP専用の実装で、JavaScriptで書かれています。
 
-**����!!**
+**注意!!**
 
-*�uTopazBot�v��MIT���C�Z���X���ɂ���܂����A�uTopazChat�v�͏��p���p�֎~�ł��B*
+*「TopazBot」はMITライセンス下にありますが、「TopazChat」は商用利用禁止です。*
 
-**TopazBot�̓���:**
+**TopazBotの特徴:**
 
-Discord�̉����`�����l���ŃI�[�f�B�I�𑗎�M����M�����Ɨ\���\�ȓ���ɏd�_��u���Ă��܂��B
-���������̊g�����Adiscord.js�ȊO�̃��C�u�������J�X�^���A�_�v�^�ŃT�|�[�g���܂��B
-�l�X�ȃI�[�f�B�I�\�[�X�ɑΉ��\�Ȉ��肵���ȃI�[�f�B�I�����V�X�e���ł��B
+Discordの音声チャンネルでオーディオを送受信する信頼性と予測可能な動作に重点を置いています。
+水平方向の拡張性、discord.js以外のライブラリもカスタムアダプタでサポートします。
+様々なオーディオソースに対応可能な安定したなオーディオ処理システムです。
 
-**TopazChat�ɂ���:**
+**TopazChatについて:**
 
 [TopazChat](https://github.com/TopazChat/TopazChat) 
-�́A���i���E��x����RTSP�T�[�o�ł��B�l�ł̗��p�͖����ł��B
-[TopazChat �_�E�����[�h](https://booth.pm/ja/items/1752066)
-TopazChat�̔�p�́A�J���҂̂悵��������[@TyounanMOTI](https://github.com/TyounanMOTI)�����S���Ă��܂��B
-�T�[�o�[�̈ێ���≹���E����z�M�̃f�[�^�]�����̂��߂�
-��t�����肢���܂��I��[FANBOX](https://tyounanmoti.fanbox.cc/)
-TopazChat�̂��ׂẴX�|���T�[�́ASPONSORS.txt�ɋL�ڂ���Ă��܂��B
+は、高品質・低遅延のRTSPサーバです。個人での利用は無料です。
+[TopazChat ダウンロード](https://booth.pm/ja/items/1752066)
+TopazChatの費用は、開発者のよしたかさん[@TyounanMOTI](https://github.com/TyounanMOTI)が負担しています。
+サーバーの維持費や音声・動画配信のデータ転送料のために
+寄付をお願いします！→[FANBOX](https://tyounanmoti.fanbox.cc/)
+TopazChatのすべてのスポンサーは、SPONSORS.txtに記載されています。
 
 
-**�����N�W:**
+**リンク集:**
 - [Documentation](https://roz-mofumofu-me.github.io/TopazBot)
 - [GitHub Discussions](https://github.com/ROZ-MOFUMOFU-ME/TopazBot/discussions)
 - [Repository](https://github.com/ROZ-MOFUMOFU-ME/TopazBot)
 
-## �ˑ��֌W
-���̃��C�u�����́A���܂��܂ȃv���b�g�t�H�[�����T�|�[�g���邽�߂ɁA�ȉ��̃J�e�S���[���炻�ꂼ��1���C���X�g�[�����Ă��������B
-�ˑ��֌W�́A�p�t�H�[�}���X���D�悳��鏇�ɋL�ڂ���Ă��܂��B
-�I�v�V������1���C���X�g�[���ł��Ȃ��ꍇ�́A�ʂ̃I�v�V�������C���X�g�[�����Ă݂Ă��������B
+## 依存関係
+このライブラリは、さまざまなプラットフォームをサポートするために、以下のカテゴリーからそれぞれ1つずつインストールしてください。
+依存関係は、パフォーマンスが優先される順に記載されています。
+オプションの1つがインストールできない場合は、別のオプションをインストールしてみてください。
 
 ### Debian or Ubuntu
 
@@ -70,90 +70,90 @@ TopazChat�̂��ׂẴX�|���T�[�́ASPONSORS.txt�ɋL�ڂ���Ă��܂��B
 
 **FFmpeg:**
 
-- [`FFmpeg`](https://ffmpeg.org/) (�T�[�o�[�ɃC���X�g�[�����ĉ�����)
+- [`FFmpeg`](https://ffmpeg.org/) (サーバーにインストールして下さい)
 - `ffmpeg-static`: ^4.2.7 (npm install)
 
-**pm2 (npm install): [�I�v�V����]**
+**pm2 (npm install): [オプション]**
 
 - `pm2`
 
-# TopazBot�̗�
+# TopazBotの例
 
-�����@discordjs/voice���g���āA[discord.js](https://github.com/discordjs/discord.js)�ƈꏏ��TopazBot���쐬�����ł��B
+これは@discordjs/voiceを使って、[discord.js](https://github.com/discordjs/discord.js)と一緒にTopazBotを作成する例です。
 
-���̗�ł́A���̃��C�u�������g�p���Ĉ��肵���Ȕz�M�V�X�e�����쐬������@�ɏœ_�𓖂ĂĂ��܂��B
+この例では、このライブラリを使用して安定したな配信システムを作成する方法に焦点を当てています。
 
-�V���v���ȃX�g���[�~���OMusicBot����肽���Ǝv���Ă�����́A���̃T���v�����Q�l�ɂ��Ă݂Ă��������B
+シンプルなストリーミングMusicBotを作りたいと思っている方は、このサンプルを参考にしてみてください。
 
-## �g����
+## 使い方
 
 ```bash
 # for Debian/Ubuntu
-# main���|�W�g������clone
+# mainリポジトリからclone
 $ git clone https://github.com/ROZ-MOFUMOFU-ME/TopazBot topazbot
 
-# �t�H���_�Ɉړ����ĕK�v�ȃv���O�������C���X�g�[��
+# フォルダに移動して必要なプログラムをインストール
 $ cd topazbot
 $ npm install
 
-# �g�[�N������������
+# トークンを書き込む
 $ vi config.json
 
-# �R�}���h�o�^
+# コマンド登録
 $ node register.js
 
-# �v���O�����X�^�[�g
+# プログラムスタート
 $ npm start
 
-# pm2���g���ăv���O�����X�^�[�g
+# pm2を使ってプログラムスタート
 $ sudo npm i pm2 -g
 $ pm2 start index.js --name TopazBot
 
-# TopazBot����URL
+# TopazBot導入URL
 $ https://discord.com/oauth2/authorize?client_id=<Application_ID>&permissions=105263402240&scope=bot%20applications.commands
 
-# �{�C�X�`�����l���ɓ�������ADiscord�̃e�L�X�g���ɓ��͂��ĉ������Đ�
+# ボイスチャンネルに入った後、Discordのテキスト欄に入力して音声を再生
 $ /play StreamKey
 
-# ��~�����z�M���ĊJ�����ۂɉ������Đ�
+# 停止した配信が再開した際に音声を再生
 $ /resync
 
-# �{�C�X�`�����l������TopazBot��ؒf
+# ボイスチャンネルからTopazBotを切断
 $ /stop
 ```
 
 ## Code structure
-���̃{�b�g�̃R�[�h��TopazChat��p�ł��B
+このボットのコードはTopazChat専用です。
 
-�����Q�l�ɂ����R�[�h [discordjs-japan/�������Đ�����](https://scrapbox.io/discordjs-japan/%E9%9F%B3%E5%A3%B0%E3%82%92%E5%86%8D%E7%94%9F%E3%81%99%E3%82%8B)
+私が参考にしたコード [discordjs-japan/音声を再生する](https://scrapbox.io/discordjs-japan/%E9%9F%B3%E5%A3%B0%E3%82%92%E5%86%8D%E7%94%9F%E3%81%99%E3%82%8B)
 
 [Discord.js Japan user Group](https://scrapbox.io/discordjs-japan/)
 
-## �R���g���r���[�V����
-����������������� [Contributing Guide](https://github.com/ROZ-MOFUMOFU-ME/topazbot/blob/main/.github/CONTRIBUTING.md)
+## コントリビューション
+こちらをご覧下さい [Contributing Guide](https://github.com/ROZ-MOFUMOFU-ME/topazbot/blob/main/.github/CONTRIBUTING.md)
 
-## ��t
+## 寄付
 
 ### TopazBot
 
-���JTopazBot�T�[�o�[�ێ��ɕK�v�ȃJ���p�����肢���Ă���܂��B
+公開TopazBotサーバー維持に必要なカンパをお願いしております。
 
 * TopazBot [GitHub Sponsors](https://github.com/sponsors/ROZ-MOFUMOFU-ME?o=sd&sc=t)
 
 ### TopazChat
 
-TopazChat�̃T�[�o�[�ێ����f�[�^�]�����ɂ��āA�J���҂̂悵�������񂪃J���p�����Ă��܂��B
+TopazChatのサーバー維持費やデータ転送料について、開発者のよしたかさんがカンパを募っています。
  
 * TopazChat [FANBOX](https://tyounanmoti.fanbox.cc/)
 
-## �N���W�b�g
+## クレジット
 ### TopazBot
  
 * Aoi Emerauda [@ROZ-MOFUMOFU-ME](https://github.com/ROZ-MOFUMOFU-ME)
 
 ### TopazChat
 
-* �悵�����l [@TyounanMOTI](https://github.com/TyounanMOTI) TopazChat�J����
+* よしたか様 [@TyounanMOTI](https://github.com/TyounanMOTI) TopazChat開発者
 
-## ���C�Z���X
-MIT���C�Z���X�Ń����[�X����Ă��܂��BLICENSE�t�@�C�����������������B
+## ライセンス
+MITライセンスでリリースされています。LICENSEファイルをご覧ください。
