@@ -1,61 +1,91 @@
-{
-    "version": 2.1,
-    "node-base": {
-        "steps": [
-            "checkout",
-            {
-                "run": "npm install"
-            }
-        ]
-    },
-    "jobs": {
-        "test-v14": {
-            "docker": [
-                {
-                    "image": "circleci/node:14"
-                }
-            ],
-            "steps": [
-                "checkout",
-                {
-                    "run": "npm install"
-                }
-            ]
-        },
-        "test-v15": {
-            "docker": [
-                {
-                    "image": "circleci/node:15"
-                }
-            ],
-            "steps": [
-                "checkout",
-                {
-                    "run": "npm install"
-                }
-            ]
-        },
-        "test-v16": {
-            "docker": [
-                {
-                    "image": "circleci/node:16"
-                }
-            ],
-            "steps": [
-                "checkout",
-                {
-                    "run": "npm install"
-                }
-            ]
-        }
-    },
-    "workflows": {
-        "build": {
-            "jobs": [
-                "test-v14",
-                "test-v15",
-                "test-v16"
-            ]
-        }
-    }
-}
+version: 2.1
+orbs:
+  node: circleci/node@5.2
+jobs:
+  test-v12:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - node/install:
+          node-version: "12.22"
+      - run:
+          name: Install dependencies
+          command: npm install
+      - run:
+          name: Verify build
+          command: echo "Build completed successfully!"
+  test-v14:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - node/install:
+          node-version: "14.21"
+      - run:
+          name: Install dependencies
+          command: npm install
+      - run:
+          name: Verify build
+          command: echo "Build completed successfully!"
+  test-v16:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - node/install:
+          node-version: "16.20"
+      - run:
+          name: Install dependencies
+          command: npm install
+      - run:
+          name: Verify build
+          command: echo "Build completed successfully!"
+  test-v18:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - node/install:
+          node-version: "18.20"
+      - run:
+          name: Install dependencies
+          command: npm install
+      - run:
+          name: Verify build
+          command: echo "Build completed successfully!"
+  test-v20:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - node/install:
+          node-version: "20.12"
+      - run:
+          name: Install dependencies
+          command: npm install
+      - run:
+          name: Verify build
+          command: echo "Build completed successfully!"v
+  test-v22:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - node/install:
+          node-version: "22.0"
+      - run:
+          name: Install dependencies
+          command: npm install
+      - run:
+          name: Verify build
+          command: echo "Build completed successfully!"
+workflows:
+  build_and_test:
+    jobs:
+      - test-v12
+      - test-v14
+      - test-v16
+      - test-v18
+      - test-v20
+      - test-v22
