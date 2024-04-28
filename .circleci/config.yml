@@ -13,8 +13,11 @@ jobs:
           name: Install dependencies
           command: npm install
       - run:
-          name: Verify build
-          command: echo "Build completed successfully!"
+          name: Run test
+          command: npm test
+      - run:
+          name: Verify build and test
+          command: echo "Build completed and test successfully!"
   test-v14:
     docker:
       - image: cimg/base:stable
@@ -26,8 +29,11 @@ jobs:
           name: Install dependencies
           command: npm install
       - run:
-          name: Verify build
-          command: echo "Build completed successfully!"
+          name: Run test
+          command: npm test
+      - run:
+          name: Verify build and test
+          command: echo "Build completed and test successfully!"
   test-v16:
     docker:
       - image: cimg/base:stable
@@ -39,8 +45,11 @@ jobs:
           name: Install dependencies
           command: npm install
       - run:
-          name: Verify build
-          command: echo "Build completed successfully!"
+          name: Run test
+          command: npm test
+      - run:
+          name: Verify build and test
+          command: echo "Build completed and test successfully!"
   test-v18:
     docker:
       - image: cimg/base:stable
@@ -52,8 +61,11 @@ jobs:
           name: Install dependencies
           command: npm install
       - run:
-          name: Verify build
-          command: echo "Build completed successfully!"
+          name: Run test
+          command: npm test
+      - run:
+          name: Verify build and test
+          command: echo "Build completed and test successfully!"
   test-v20:
     docker:
       - image: cimg/base:stable
@@ -65,8 +77,11 @@ jobs:
           name: Install dependencies
           command: npm install
       - run:
-          name: Verify build
-          command: echo "Build completed successfully!"v
+          name: Run test
+          command: npm test
+      - run:
+          name: Verify build and test
+          command: echo "Build completed and test successfully!"
   test-v22:
     docker:
       - image: cimg/base:stable
@@ -78,8 +93,11 @@ jobs:
           name: Install dependencies
           command: npm install
       - run:
-          name: Verify build
-          command: echo "Build completed successfully!"
+          name: Run test
+          command: npm test
+      - run:
+          name: Verify build and test
+          command: echo "Build completed and test successfully!"
 workflows:
   build_and_test:
     jobs:
