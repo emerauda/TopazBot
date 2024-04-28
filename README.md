@@ -1,7 +1,7 @@
 ﻿
 # TopazBot - RTSP Discord Music bot for TopazChat
 [![Join the chat at https://github.com/ROZ-MOFUMOFU-ME/TopazBot/](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ROZ-MOFUMOFU-ME/TopazBot?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Build Status](https://travis-ci.com/ROZ-MOFUMOFU-ME/TopazBot.svg?branch=main)](https://travis-ci.com/ROZ-MOFUMOFU-ME/TopazBot) 
+[![Node.js CI](https://github.com/ROZ-MOFUMOFU-ME/TopazBot/actions/workflows/node.js.yml/badge.svg)](https://github.com/ROZ-MOFUMOFU-ME/TopazBot/actions/workflows/node.js.yml)
 [![CircleCI](https://circleci.com/gh/ROZ-MOFUMOFU-ME/TopazBot/tree/main.svg?style=svg)](https://circleci.com/gh/ROZ-MOFUMOFU-ME/TopazBot/tree/main)
 
 ![スクリーンショット 2023年-05月-13日 21 36 27](https://github.com/ROZ-MOFUMOFU-ME/TopazBot/assets/35634920/d95514b6-7993-4a35-ba02-c0f5736eb20a)
