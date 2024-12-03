@@ -1,5 +1,6 @@
 const { Client, GatewayIntentBits } = require('discord.js');
-const { joinVoiceChannel, createAudioPlayer, createAudioResource, entersState, AudioPlayerStatus, generateDependencyReport } = require('@discordjs/voice');
+const { joinVoiceChannel, createAudioPlayer, createAudioResource, entersState, AudioPlayerStatus, generateDependencyReport, StreamType } = require('@discordjs/voice');
+const { spawn } = require('child_process');
 const { token } = require('./config.json');
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates] });
 console.log(generateDependencyReport());
@@ -9,9 +10,22 @@ function sleep(milliseconds) {
 let streamKey = null;
 let streamUrl = null;
 
+function createFFmpegStream(streamUrl) {
+    const ffmpeg = spawn('ffmpeg', [
+        '-rtsp_transport', 'tcp',
+        '-timeout', '30000000',
+        '-i', streamUrl,
+        '-f', 's16le',
+        '-ar', '48000',
+        '-ac', '2',
+        'pipe:1'
+    ]);
+    return ffmpeg.stdout;
+}
+
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}! client ready...`);
-  });
+});
 
 // Handles slash command interactions
 // play command
@@ -21,28 +35,29 @@ client.on('interactionCreate', async (interaction) => {
         await interaction.deferReply();
         const voiceChannel = interaction.member.voice.channel;
         if (!voiceChannel) {
-          await interaction.editReply('You need to be in a voice channel to use this command!');
-          return;
+            await interaction.editReply('You need to be in a voice channel to use this command!');
+            return;
         }
         if (!voiceChannel.joinable) {
-          await interaction.editReply('Voice channel is inaccessible.');
-          return;
+            await interaction.editReply('Voice channel is inaccessible.');
+            return;
         }
         if (!voiceChannel.speakable) {
-          await interaction.editReply('Voice channel is inaccessible.');
-          return;
+            await interaction.editReply('Voice channel is inaccessible.');
+            return;
         }
         if (!connection) {
             connection = joinVoiceChannel({
-              channelId: voiceChannel.id,
-              guildId: interaction.guildId,
-              adapterCreator: interaction.guild.voiceAdapterCreator,
+                channelId: voiceChannel.id,
+                guildId: interaction.guildId,
+                adapterCreator: interaction.guild.voiceAdapterCreator,
             });
         };
         // Extract the stream URL from the command
         streamKey = interaction.options.get('streamkey').value;
         streamUrl = `rtsp://topaz.chat/live/${streamKey}`;
-        const resource = createAudioResource(streamUrl);
+        const ffmpegStream = createFFmpegStream(streamUrl);
+        const resource = createAudioResource(ffmpegStream, { inputType: StreamType.Raw });
         const player = createAudioPlayer();
         player.play(resource);
         console.log(`${streamKey} is playing!`);
@@ -60,9 +75,9 @@ client.on('interactionCreate', async (interaction) => {
                 break;
             }
             if (connection.state.subscription.player._state.status === "idle") {
-
-              const resource = createAudioResource(streamUrl);
-              const player = createAudioPlayer();
+                const ffmpegStream = createFFmpegStream(streamUrl);
+                const resource = createAudioResource(ffmpegStream, { inputType: StreamType.Raw });
+                const player = createAudioPlayer();
                 await sleep(3000);
                 console.log(`${streamKey} is autoresuming...`);
                 player.play(resource);
@@ -97,18 +112,19 @@ client.on('interactionCreate', async (interaction) => {
     if (interaction.commandName === `resync`) {
         await interaction.deferReply();
         const voiceChannel = interaction.member.voice.channel;
-         if (!voiceChannel) {
-          await interaction.editReply('You need to be in a voice channel to use this command!');
-          return;
+        if (!voiceChannel) {
+            await interaction.editReply('You need to be in a voice channel to use this command!');
+            return;
         }
         if (!connection) {
             connection = joinVoiceChannel({
-              channelId: voiceChannel.id,
-              guildId: interaction.guildId,
-              adapterCreator: interaction.guild.voiceAdapterCreator,
+                channelId: voiceChannel.id,
+                guildId: interaction.guildId,
+                adapterCreator: interaction.guild.voiceAdapterCreator,
             });
         };
-        const resource = createAudioResource(streamUrl);
+        const ffmpegStream = createFFmpegStream(streamUrl);
+        const resource = createAudioResource(ffmpegStream, { inputType: StreamType.Raw });
         const player = createAudioPlayer();
         console.log(`${streamKey} is resyncing...`);
         player.play(resource);
@@ -128,7 +144,8 @@ client.on('interactionCreate', async (interaction) => {
             }
             if (connection.state.subscription.player._state.status === "idle") {
 
-                const resource = createAudioResource(streamUrl);
+                const ffmpegStream = createFFmpegStream(streamUrl);
+                const resource = createAudioResource(ffmpegStream, { inputType: StreamType.Raw });
                 const player = createAudioPlayer();
                 await sleep(3000);
                 console.log(`${streamKey} is autoresuming...`);
@@ -161,15 +178,14 @@ client.on('interactionCreate', async (interaction) => {
         await interaction.deferReply();
         const voiceChannel = interaction.member.voice.channel;
         if (!voiceChannel) {
-          await interaction.editReply('You need to be in a voice channel to use this command!');
-          return;
+            await interaction.editReply('You need to be in a voice channel to use this command!');
+            return;
         }
-        const player = createAudioPlayer();
         if (!connection) {
             connection = joinVoiceChannel({
-              channelId: voiceChannel.id,
-              guildId: interaction.guildId,
-              adapterCreator: interaction.guild.voiceAdapterCreator,
+                channelId: voiceChannel.id,
+                guildId: interaction.guildId,
+                adapterCreator: interaction.guild.voiceAdapterCreator,
             });
         };
         console.log(`${streamKey} is destroyed!`);
