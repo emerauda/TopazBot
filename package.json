@@ -1,6 +1,6 @@
 {
         "name": "topazbot",
-        "version": "0.3.20",
+        "version": "0.4.0",
         "description": "A TopazChat music bot written using @discordjs/voice",
         "scripts": {
                 "start": "node index.js"
