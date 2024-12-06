@@ -1,5 +1,5 @@
 const { Client, GatewayIntentBits } = require('discord.js');
-const { joinVoiceChannel, createAudioPlayer, createAudioResource, entersState, AudioPlayerStatus, generateDependencyReport, StreamType } = require('@discordjs/voice');
+const { joinVoiceChannel, createAudioPlayer, createAudioResource, entersState, AudioPlayerStatus, generateDependencyReport } = require('@discordjs/voice');
 const { spawn } = require('child_process');
 const { token } = require('./config.json');
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates] });
@@ -89,7 +89,7 @@ client.on('interactionCreate', async (interaction) => {
                 }
                 if (connection.state.subscription.player._state.status === "playing") {
                     console.log(`${streamKey} is autoresumed!`);
-                    let lastActivityTime = new Date();
+                    lastActivityTime = new Date();
                 }
                 if (currentTime - lastActivityTime > 1800000) {
                     console.log(`${streamKey} is autodestroyed!`);
