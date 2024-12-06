@@ -132,3 +132,5 @@ dmypy.json
 .circleci/
 .github/
 .travis.yml
+node_modules/
+config.json
