@@ -27,6 +27,11 @@ if (!token) {
     throw new Error('DISCORD_TOKEN is not set in environment variables.');
 }
 
+// Read stream number from environment variable (as string)
+const number = process.env.NUMBER || "0";
+const stream = "maitake";
+const STATIC_STREAM_KEY = `${stream}${number}`;
+
 // Utility sleep function
 function sleep(ms: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -63,10 +68,6 @@ const guildAudioStates: Map<string, GuildAudioState> = new Map();
 client.once('ready', () => {
     console.log(`Logged in as ${client.user?.tag}! client ready...`);
 });
-
-const stream = "maitake";
-const number = "0";
-const STATIC_STREAM_KEY = `${stream}${number}`;
 
 // Unified command handler
 client.on('interactionCreate', async (interaction) => {
@@ -151,6 +152,7 @@ client.on('interactionCreate', async (interaction) => {
     // stop command
     else if (interaction.commandName === `stop${number}`) {
         await interaction.deferReply();
+        // Force disconnect: destroy connection and stop playback
         if (state.connection) {
             state.connection.destroy();
         }
@@ -168,10 +170,15 @@ client.on('interactionCreate', async (interaction) => {
 });
 
 // Stream playback, auto-reconnect, and auto-disconnect logic
-async function playStream(state: GuildAudioState, interaction: CommandInteraction, isResync = false) {
+async function playStream(
+    state: GuildAudioState,
+    interaction: CommandInteraction | null,
+    isResync = false
+) {
     if (!state.connection || !state.streamUrl || !state.streamKey) return;
 
     let first = true;
+    let notified = false;
     while (true) {
         const ffmpegStream = createFFmpegStream(state.streamUrl);
         const resource = createAudioResource(ffmpegStream);
@@ -181,70 +188,152 @@ async function playStream(state: GuildAudioState, interaction: CommandInteractio
         state.connection.subscribe(player);
         state.lastActivityTime = Date.now();
 
-        if (first) {
-            if (isResync) {
-                console.log(`${state.streamKey} is resyncing...`);
-            } else {
-                console.log(`${state.streamKey} is playing!`);
-            }
-        }
+        let playStart: number | null = null;
+        let playSucceeded = false;
 
-        let resumed = false;
         try {
             // Wait for Playing state (start)
             await entersState(player, AudioPlayerStatus.Playing, 5000);
+            playStart = Date.now();
 
-            // Wait 1 second and check if still playing to confirm real playback
-            await sleep(1000);
-            if (player.state.status !== 'playing') {
-                throw new Error('Stream did not stay in playing state');
+            // Wait for either Idle or 2 seconds, whichever comes first
+            let playedLongEnough = false;
+            await Promise.race([
+                (async () => {
+                    await sleep(1500); // Wait at least 1.5 seconds
+                    playedLongEnough = true;
+                })(),
+                (async () => {
+                    await entersState(player, AudioPlayerStatus.Idle, 1500);
+                })()
+            ]);
+
+            if (!playedLongEnough) {
+                // The player became Idle before 1.5 seconds passed
+                throw new Error('Stream did not stay in playing state for at least 1 second');
             }
 
+            // If we reach here, playback was stable for at least 1.5 seconds
+            playSucceeded = true;
+
             if (first) {
-                await interaction.editReply(`Playing ${state.streamKey}.`);
-                // Wait 1 second and check if still playing to confirm real playback
-                await sleep(1000);
-                if (player.state.status !== 'playing') {
-                    throw new Error('Stream did not stay in playing state');
+                if (interaction && !notified) {
+                    await interaction.editReply(`Playing ${state.streamKey}.`);
+                    notified = true;
                 }
                 if (isResync) {
                     console.log(`${state.streamKey} is resynced!`);
                 }
                 first = false;
-            } else {
-                console.log(`${state.streamKey} is autoresumed!`);
             }
+            console.log(`${state.streamKey} is playing!`);
             // Wait for Idle state (end)
             await entersState(player, AudioPlayerStatus.Idle, 1800000);
             console.log(`${state.streamKey} is stopped!`);
         } catch (e) {
-            if (first) {
-                await interaction.editReply('Failed to play stream.');
-                return;
+            if (!playSucceeded) {
+                if (first) {
+                    if (interaction && !notified) {
+                        await interaction.editReply(`${state.streamKey} is autoresuming...`);
+                        notified = true;
+                    } else {
+                        console.log(`${state.streamKey} is autoresuming...`);
+                    }
+                } else {
+                    console.log(`${state.streamKey} is autoresuming...`);
+                }
+                await sleep(10000);
+                continue;
             }
-            await sleep(3000);
-            // continue loop for retry
-        }
-
-        // Auto-disconnect if too long idle
-        if (!state.connection) break;
-        if (Date.now() - state.lastActivityTime > 1800000) { // 30 minutes
-            console.log(`${state.streamKey} is autodestroyed!`);
-            state.connection.destroy();
-            state.connection = null;
-            state.player = null;
-            break;
+            await sleep(10000);
         }
 
         // If connection still exists, try to autoresume (continue loop)
         if (state.connection) {
             console.log(`${state.streamKey} is autoresuming...`);
-            await sleep(3000); // Optional: wait before reconnect
+            await sleep(5000);
             continue;
         } else {
             break;
         }
     }
 }
+
+// The target voice channel ID to monitor
+const TARGET_VOICE_CHANNEL_ID = process.env.TARGET_VOICE_CHANNEL_ID || "";
+
+// Listen for voice state updates
+client.on('voiceStateUpdate', async (oldState, newState) => {
+    // 1. When a user joins the target voice channel
+    if (
+        newState.channelId === TARGET_VOICE_CHANNEL_ID && // Joined the target channel
+        oldState.channelId !== TARGET_VOICE_CHANNEL_ID && // Was not in the target channel before
+        !newState.member?.user.bot // Ignore bot's own join/leave
+    ) {
+        const channel = newState.channel;
+        if (!channel || channel.type !== ChannelType.GuildVoice) return;
+
+        // If the bot is already in the channel, do nothing
+        if (channel.members.some(m => m.user.bot)) return;
+
+        // Bot joins the channel and starts playback
+        const guildId = channel.guild.id;
+        let state = guildAudioStates.get(guildId);
+        if (!state) {
+            state = {
+                connection: null,
+                player: null,
+                streamKey: null,
+                streamUrl: null,
+                lastActivityTime: Date.now(),
+                isPlaying: false,
+            };
+            guildAudioStates.set(guildId, state);
+        }
+        if (!state.connection || state.connection.state.status === VoiceConnectionStatus.Destroyed) {
+            state.connection = joinVoiceChannel({
+                channelId: channel.id,
+                guildId: guildId,
+                adapterCreator: channel.guild.voiceAdapterCreator,
+            });
+        }
+        state.streamKey = STATIC_STREAM_KEY;
+        state.streamUrl = `rtsp://topaz.chat/live/${STATIC_STREAM_KEY}`;
+        if (!state.isPlaying) {
+            state.isPlaying = true;
+            // Since there is no interaction, pass null and handle it in playStream
+            playStream(state, null as any).finally(() => {
+                state.isPlaying = false;
+            });
+        }
+    }
+
+    // 2. When a user leaves the target voice channel
+    if (
+        oldState.channelId === TARGET_VOICE_CHANNEL_ID && // Left the target channel
+        newState.channelId !== TARGET_VOICE_CHANNEL_ID // Is not in the target channel anymore
+    ) {
+        const channel = oldState.channel;
+        if (!channel || channel.type !== ChannelType.GuildVoice) return;
+
+        // If there are no non-bot members left, bot leaves the channel
+        const nonBotMembers = channel.members.filter(m => !m.user.bot);
+        if (nonBotMembers.size === 0) {
+            const guildId = channel.guild.id;
+            const state = guildAudioStates.get(guildId);
+            if (state && state.connection) {
+                state.connection.destroy();
+                guildAudioStates.set(guildId, {
+                    connection: null,
+                    player: null,
+                    streamKey: null,
+                    streamUrl: null,
+                    lastActivityTime: Date.now(),
+                    isPlaying: false,
+                });
+            }
+        }
+    }
+});
 
 client.login(token);
