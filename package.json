@@ -1,6 +1,6 @@
 {
         "name": "topazbot",
-        "version": "1.0.0",
+        "version": "1.0.1",
         "description": "A TopazChat music bot written using @discordjs/voice",
         "scripts": {
                 "start": "node dist/index.js",
@@ -17,6 +17,7 @@
         },
         "devDependencies": {
                 "@types/node": "^24.0.3",
+                "ts-node": "^10.9.2",
                 "typescript": "^5.8.3"
         }
 }
