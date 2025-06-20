@@ -1,8 +1,8 @@
 
 # TopazBot - RTSP Discord Music bot for TopazChat
-[![Join the chat at https://github.com/ROZ-MOFUMOFU-ME/TopazBot/](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ROZ-MOFUMOFU-ME/TopazBot?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Node.js CI](https://github.com/ROZ-MOFUMOFU-ME/TopazBot/actions/workflows/node.js.yml/badge.svg)](https://github.com/ROZ-MOFUMOFU-ME/TopazBot/actions/workflows/node.js.yml)
-[![CircleCI](https://circleci.com/gh/ROZ-MOFUMOFU-ME/TopazBot/tree/main.svg?style=svg)](https://circleci.com/gh/ROZ-MOFUMOFU-ME/TopazBot/tree/main)
+[![Join the chat at https://github.com/emerauda/TopazBot/](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/emerauda/TopazBot?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Node.js CI](https://github.com/emerauda/TopazBot/actions/workflows/node.js.yml/badge.svg)](https://github.com/emerauda/TopazBot/actions/workflows/node.js.yml)
+[![CircleCI](https://circleci.com/gh/emerauda/TopazBot/tree/main.svg?style=svg)](https://circleci.com/gh/emerauda/TopazBot/tree/main)
 
 ![49b54ba526ab1540bafd1bea6e593542](https://user-images.githubusercontent.com/35634920/129456355-da650b6d-37e1-4da0-a362-f056eebea238.png)
 
@@ -36,9 +36,9 @@ TopazChatのすべてのスポンサーは、SPONSORS.txtに記載されてい�
 
 
 **リンク集:**
-- [Documentation](https://roz-mofumofu-me.github.io/TopazBot)
-- [GitHub Discussions](https://github.com/ROZ-MOFUMOFU-ME/TopazBot/discussions)
-- [Repository](https://github.com/ROZ-MOFUMOFU-ME/TopazBot)
+- [Documentation](https://emerauda.github.io/TopazBot)
+- [GitHub Discussions](https://github.com/emerauda/TopazBot/discussions)
+- [Repository](https://github.com/emerauda/TopazBot)
 
 ## 依存関係
 このライブラリは、さまざまなプラットフォームをサポートするために、以下のカテゴリーからそれぞれ1つずつインストールしてください。
@@ -149,7 +149,7 @@ TopazChatのサーバー維持費やデータ転送料について、開発者�
 ## クレジット
 ### TopazBot
  
-* Aoi Emerauda [@ROZ-MOFUMOFU-ME](https://github.com/ROZ-MOFUMOFU-ME)
+* Aoi Emerauda [@emerauda](https://github.com/emerauda)
 
 ### TopazChat
 
