@@ -76,7 +76,6 @@ try installing another.
 **FFmpeg:**
 
 - [`FFmpeg`](https://ffmpeg.org/) (installed and added to environment)
-- `ffmpeg-static`: ^4.2.7 (npm install)
 
 **pm2 (npm install): [Optional]**
 
@@ -97,24 +96,25 @@ If you're looking to make your own TopazBot that is fairly simple, this example 
 ```bash
 # for Debian/Ubuntu
 # Clone the main repository
-$ git clone https://github.com/ROZ-MOFUMOFU-ME/TopazBot topazbot
+$ git clone https://github.com/emerauda/TopazBot topazbot
 
 # Open this example and install dependencies
 $ cd topazbot
 $ npm install
 
 # Set a bot token
-$ vi config.json
+$ cp .env.example .env
+$ vi .env
 
 # Regist command
 $ node register.js
 
-# Start the bot
-$ npm start
+# Build and start the bot
+$ npm run build && npm run start
 
 # Start the bot with pm2
-$ sudo npm i pm2 -g
-$ pm2 start index.js --name TopazBot
+$ npm i pm2 -g
+$ pm2 start npm -n TopazBot start
 
 # Summon TopazBot to your Discord Server
 $ https://discord.com/api/oauth2/authorize?client_id=876143776572248074&permissions=3155968&scope=bot%20applications.commands
@@ -137,7 +137,7 @@ Here is the code I used for reference. [@discordjs/voiceを使用して音声を
 Created by [Discord.js Japan user Group](https://scrapbox.io/discordjs-japan/)
 
 ## Contribution
-See [Contributing Guide](https://github.com/ROZ-MOFUMOFU-ME/topazbot/blob/main/.github/CONTRIBUTING.md).
+See [Contributing Guide](https://github.com/emerauda/topazbot/blob/main/.github/CONTRIBUTING.md).
 
 ## Donations
 

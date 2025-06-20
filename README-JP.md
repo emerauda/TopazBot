@@ -71,7 +71,6 @@ TopazChatのすべてのスポンサーは、SPONSORS.txtに記載されてい�
 **FFmpeg:**
 
 - [`FFmpeg`](https://ffmpeg.org/) (サーバーにインストールして下さい)
-- `ffmpeg-static`: ^4.2.7 (npm install)
 
 **pm2 (npm install): [オプション]**
 
@@ -90,24 +89,25 @@ TopazChatのすべてのスポンサーは、SPONSORS.txtに記載されてい�
 ```bash
 # for Debian/Ubuntu
 # mainリポジトリからclone
-$ git clone https://github.com/ROZ-MOFUMOFU-ME/TopazBot topazbot
+$ git clone https://github.com/emerauda/TopazBot topazbot
 
 # フォルダに移動して必要なプログラムをインストール
 $ cd topazbot
 $ npm install
 
 # トークンを書き込む
-$ vi config.json
+$ cp .env.example .env
+$ vi .env
 
 # コマンド登録
 $ node register.js
 
-# プログラムスタート
-$ npm start
+# プログラムビルドとプログラムスタート
+$ npm run build && npm run start
 
 # pm2を使ってプログラムスタート
-$ sudo npm i pm2 -g
-$ pm2 start index.js --name TopazBot
+$ npm i pm2 -g
+$ pm2 start npm -n TopazBot start
 
 # TopazBot導入URL
 $ https://discord.com/oauth2/authorize?client_id=<Application_ID>&permissions=105263402240&scope=bot%20applications.commands
@@ -130,7 +130,7 @@ $ /stop
 [Discord.js Japan user Group](https://scrapbox.io/discordjs-japan/)
 
 ## コントリビューション
-こちらをご覧下さい [Contributing Guide](https://github.com/ROZ-MOFUMOFU-ME/topazbot/blob/main/.github/CONTRIBUTING.md)
+こちらをご覧下さい [Contributing Guide](https://github.com/emerauda/topazbot/blob/main/.github/CONTRIBUTING.md)
 
 ## 寄付
 
