@@ -1,10 +1,10 @@
 ﻿
 # TopazBot - RTSP Discord Music bot for TopazChat
-[![Join the chat at https://github.com/ROZ-MOFUMOFU-ME/TopazBot/](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ROZ-MOFUMOFU-ME/TopazBot?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Node.js CI](https://github.com/ROZ-MOFUMOFU-ME/TopazBot/actions/workflows/node.js.yml/badge.svg)](https://github.com/ROZ-MOFUMOFU-ME/TopazBot/actions/workflows/node.js.yml)
-[![CircleCI](https://circleci.com/gh/ROZ-MOFUMOFU-ME/TopazBot/tree/main.svg?style=svg)](https://circleci.com/gh/ROZ-MOFUMOFU-ME/TopazBot/tree/main)
+[![Join the chat at https://github.com/emerauda/TopazBot/](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/emerauda/TopazBot?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Node.js CI](https://github.com/emerauda/TopazBot/actions/workflows/node.js.yml/badge.svg)](https://github.com/emerauda/TopazBot/actions/workflows/node.js.yml)
+[![CircleCI](https://circleci.com/gh/emerauda/TopazBot/tree/main.svg?style=svg)](https://circleci.com/gh/emerauda/TopazBot/tree/main)
 
-![スクリーンショット 2023年-05月-13日 21 36 27](https://github.com/ROZ-MOFUMOFU-ME/TopazBot/assets/35634920/d95514b6-7993-4a35-ba02-c0f5736eb20a)
+![スクリーンショット 2023年-05月-13日 21 36 27](https://github.com/emerauda/TopazBot/assets/35634920/d95514b6-7993-4a35-ba02-c0f5736eb20a)
 
 [日本語README](./README-JP.md)
 
@@ -39,9 +39,9 @@ All sponsors of TopazChat are listed in the SPONSORS.txt.
 
 
 **Useful links:**
-- [Documentation](https://roz-mofumofu-me.github.io/TopazBot)
-- [GitHub Discussions](https://github.com/ROZ-MOFUMOFU-ME/TopazBot/discussions)
-- [Repository](https://github.com/ROZ-MOFUMOFU-ME/TopazBot)
+- [Documentation](https://emerauda.github.io/TopazBot)
+- [GitHub Discussions](https://github.com/emerauda/TopazBot/discussions)
+- [Repository](https://github.com/emerauda/TopazBot)
 
 ## Dependencies
 This library has several optional dependencies to support a variety
@@ -159,7 +159,7 @@ TopazChat's author Hirotoshi Yoshitaka is asking for donations to cover the cost
 
 ### TopazBot
  
-* Aoi Emerauda [@ROZ-MOFUMOFU-ME](https://github.com/ROZ-MOFUMOFU-ME)
+* Aoi Emerauda [@emerauda](https://github.com/emerauda)
 
 ### TopazChat
 
