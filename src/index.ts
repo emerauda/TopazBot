@@ -4,7 +4,6 @@ import { joinVoiceChannel, createAudioPlayer, createAudioResource, entersState, 
 import { spawn, ChildProcessWithoutNullStreams } from 'child_process';
 import { readFileSync } from 'fs';
 import { Readable } from 'stream';
-import ffmpeg from 'ffmpeg-static';
 
 // Simple .env loader (no external dependencies)
 try {
@@ -40,15 +39,14 @@ function sleep(ms: number): Promise<void> {
 
 // FFmpeg stream creator
 function createFFmpegStream(streamUrl: string): Readable {
-    const ffmpegPath = ffmpeg as string;
-    const ffmpegProcess = spawn(ffmpegPath, [
+    const ffmpeg = spawn('ffmpeg', [
         '-rtsp_transport', 'tcp',
         '-i', streamUrl,
         '-f', 'adts',
         '-c:a', 'copy',
         'pipe:1'
     ]);
-    return ffmpegProcess.stdout as Readable;
+    return ffmpeg.stdout as Readable;
 }
 
 // Per-guild connection state
