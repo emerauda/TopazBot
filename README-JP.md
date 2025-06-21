@@ -75,10 +75,6 @@ TopazChatのすべてのスポンサーは、SPONSORS.txtに記載されてい�
 
 **FFmpeg:**
 
-- `ffmpeg-static`: "^5.2.0 (npm install)
-
-or
-
 - [`FFmpeg`](https://ffmpeg.org/) (サーバーにインストールして下さい)
 
 **pm2 (npm install): [オプション]**
