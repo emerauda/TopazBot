@@ -4,6 +4,7 @@ import { joinVoiceChannel, createAudioPlayer, createAudioResource, entersState, 
 import { spawn, ChildProcessWithoutNullStreams } from 'child_process';
 import { readFileSync } from 'fs';
 import { Readable } from 'stream';
+import ffmpeg from 'ffmpeg-static';
 
 // Simple .env loader (no external dependencies)
 try {
@@ -28,8 +29,8 @@ if (!token) {
 }
 
 // Read stream number from environment variable (as string)
-const number = process.env.NUMBER || "0";
-const stream = "maitake";
+const number = process.env.NUMBER;
+const stream = process.env.STREAM;
 const STATIC_STREAM_KEY = `${stream}${number}`;
 
 // Utility sleep function
@@ -39,14 +40,15 @@ function sleep(ms: number): Promise<void> {
 
 // FFmpeg stream creator
 function createFFmpegStream(streamUrl: string): Readable {
-    const ffmpeg = spawn('ffmpeg', [
+    const ffmpegPath = ffmpeg as string;
+    const ffmpegProcess = spawn(ffmpegPath, [
         '-rtsp_transport', 'tcp',
         '-i', streamUrl,
         '-f', 'adts',
         '-c:a', 'copy',
         'pipe:1'
     ]);
-    return ffmpeg.stdout as Readable;
+    return ffmpegProcess.stdout as Readable;
 }
 
 // Per-guild connection state
@@ -222,13 +224,20 @@ async function playStream(
                     notified = true;
                 }
                 if (isResync) {
+                    console.log(`${state.streamKey} is resyncing...`);
+                    await sleep(5000); // Wait 5 second
                     console.log(`${state.streamKey} is resynced!`);
                 }
                 first = false;
+            } else {
+                // When autoresuming succeeds
+                console.log(`${state.streamKey} is autoresuming...`);
+                await sleep(1000); // Wait 1 second
+                console.log(`${state.streamKey} is autoresumed!`);
             }
             console.log(`${state.streamKey} is playing!`);
-            // Wait for Idle state (end)
-            await entersState(player, AudioPlayerStatus.Idle, 1800000);
+            // Wait for Idle state (end) - no timeout to avoid timeout errors
+            await entersState(player, AudioPlayerStatus.Idle, 86400000); // 24 hours timeout
             console.log(`${state.streamKey} is stopped!`);
         } catch (e) {
             if (!playSucceeded) {

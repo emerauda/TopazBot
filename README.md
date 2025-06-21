@@ -57,23 +57,32 @@ try installing another.
 - `node`: >=16
 - `npm`: >=6
 
-**discord.js:**
+**discord.js (npm install)**
 
-- `discord.js`: ^13.0.0
+- `discord.js`: ^14.20.0
 
-**@discordjs/voice:**
+**@discordjs/voice (npm install):**
 
-- `@discordjs/voice`: ^0.6.0
+- `@discordjs/voice`: ^0.18.0
+
+**@discordjs/opus (npm install):**
+
+- `@discordjs/opus`: "^0.10.0"
+
 
 **Encryption Libraries (npm install):**
 
-- `sodium`: ^3.0.2
+- `sodium-native`: ^5.0.6
 
 **Opus Libraries (npm install):**
 
-- `@discordjs/opus`: ^0.6.0
+- `@discordjs/opus`: ^0.10.0
 
 **FFmpeg:**
+
+- `ffmpeg-static`: "^5.2.0 (npm install)
+
+or
 
 - [`FFmpeg`](https://ffmpeg.org/) (installed and added to environment)
 
