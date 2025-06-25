@@ -122,7 +122,7 @@ $ npm i pm2 -g
 $ pm2 start npm -n TopazBot start
 
 # Summon TopazBot to your Discord Server
-$ https://discord.com/api/oauth2/authorize?client_id=876143776572248074&permissions=3155968&scope=bot%20applications.commands
+$ https://discord.com/oauth2/authorize?client_id=876143776572248074&permissions=2150631424&integration_type=0&scope=bot
 
 # Play music after join voice channel at Discord text field
 $ /play StreamKey

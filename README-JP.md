@@ -115,7 +115,7 @@ $ npm i pm2 -g
 $ pm2 start npm -n TopazBot start
 
 # TopazBot導入URL
-$ https://discord.com/oauth2/authorize?client_id=<Application_ID>&permissions=105263402240&scope=bot%20applications.commands
+$ https://discord.com/oauth2/authorize?client_id=876143776572248074&permissions=2150631424&integration_type=0&scope=bot
 
 # ボイスチャンネルに入った後、Discordのテキスト欄に入力して音声を再生
 $ /play StreamKey
