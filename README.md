@@ -1,6 +1,6 @@
 ﻿# TopazBot - RTSP Discord Music bot for TopazChat
 
-[![Lint/Format](https://github.com/emerauda/TopazBot/actions/workflows/lint-format.yml/badge.svg)](https://github.com/Vemerauda/TopazBot/actions/workflows/lint-format.yml)
+[![Lint/Format](https://github.com/emerauda/TopazBot/actions/workflows/lint.yml/badge.svg)](https://github.com/emerauda/TopazBot/actions/workflows/lint.yml)
 [![Node.js CI](https://github.com/emerauda/TopazBot/actions/workflows/node.js.yml/badge.svg)](https://github.com/emerauda/TopazBot/actions/workflows/node.js.yml)
 [![CircleCI](https://circleci.com/gh/emerauda/TopazBot/tree/main.svg?style=svg)](https://circleci.com/gh/emerauda/TopazBot/tree/main)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
