@@ -1,5 +1,5 @@
-
 # TopazBot - RTSP Discord Music bot for TopazChat
+
 [![Join the chat at https://github.com/emerauda/TopazBot/](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/emerauda/TopazBot?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Node.js CI](https://github.com/emerauda/TopazBot/actions/workflows/node.js.yml/badge.svg)](https://github.com/emerauda/TopazBot/actions/workflows/node.js.yml)
 [![CircleCI](https://circleci.com/gh/emerauda/TopazBot/tree/main.svg?style=svg)](https://circleci.com/gh/emerauda/TopazBot/tree/main)
@@ -7,16 +7,18 @@
 ![49b54ba526ab1540bafd1bea6e593542](https://user-images.githubusercontent.com/35634920/129456355-da650b6d-37e1-4da0-a362-f056eebea238.png)
 
 ## コミュニティ
+
 - TopazChat Discord Server
 
 join: https://discord.com/invite/fCMcJ8A
 
 ## TopazBotについて
+
 Node.js用のDiscord Voice APIのTopazChat RTSP専用の実装で、JavaScriptで書かれています。
 
 **注意!!**
 
-*「TopazBot」はMITライセンス下にありますが、「TopazChat」は商用利用禁止です。*
+_「TopazBot」はMITライセンス下にありますが、「TopazChat」は商用利用禁止です。_
 
 **TopazBotの特徴:**
 
@@ -26,7 +28,7 @@ Discordの音声チャンネルでオーディオを送受信する信頼性と�
 
 **TopazChatについて:**
 
-[TopazChat](https://github.com/TopazChat/TopazChat) 
+[TopazChat](https://github.com/TopazChat/TopazChat)
 は、高品質・低遅延のRTSPサーバです。個人での利用は無料です。
 [TopazChat ダウンロード](https://booth.pm/ja/items/1752066)
 TopazChatの費用は、開発者のよしたかさん[@TyounanMOTI](https://github.com/TyounanMOTI)が負担しています。
@@ -34,13 +36,14 @@ TopazChatの費用は、開発者のよしたかさん[@TyounanMOTI](https://git
 寄付をお願いします！→[FANBOX](https://tyounanmoti.fanbox.cc/)
 TopazChatのすべてのスポンサーは、SPONSORS.txtに記載されています。
 
-
 **リンク集:**
+
 - [Documentation](https://emerauda.github.io/TopazBot)
 - [GitHub Discussions](https://github.com/emerauda/TopazBot/discussions)
 - [Repository](https://github.com/emerauda/TopazBot)
 
 ## 依存関係
+
 このライブラリは、さまざまなプラットフォームをサポートするために、以下のカテゴリーからそれぞれ1つずつインストールしてください。
 依存関係は、パフォーマンスが優先される順に記載されています。
 オプションの1つがインストールできない場合は、別のオプションをインストールしてみてください。
@@ -63,7 +66,6 @@ TopazChatのすべてのスポンサーは、SPONSORS.txtに記載されてい�
 **@discordjs/opus (npm install):**
 
 - `@discordjs/opus`: "^0.10.0"
-
 
 **Encryption Libraries (npm install):**
 
@@ -128,6 +130,7 @@ $ /stop
 ```
 
 ## Code structure
+
 このボットのコードはTopazChat専用です。
 
 私が参考にしたコード [discordjs-japan/音声を再生する](https://scrapbox.io/discordjs-japan/%E9%9F%B3%E5%A3%B0%E3%82%92%E5%86%8D%E7%94%9F%E3%81%99%E3%82%8B)
@@ -135,6 +138,7 @@ $ /stop
 [Discord.js Japan user Group](https://scrapbox.io/discordjs-japan/)
 
 ## コントリビューション
+
 こちらをご覧下さい [Contributing Guide](https://github.com/emerauda/topazbot/blob/main/.github/CONTRIBUTING.md)
 
 ## 寄付
@@ -143,22 +147,24 @@ $ /stop
 
 公開TopazBotサーバー維持に必要なカンパをお願いしております。
 
-* TopazBot [GitHub Sponsors](https://github.com/sponsors/ROZ-MOFUMOFU-ME?o=sd&sc=t)
+- TopazBot [GitHub Sponsors](https://github.com/sponsors/ROZ-MOFUMOFU-ME?o=sd&sc=t)
 
 ### TopazChat
 
 TopazChatのサーバー維持費やデータ転送料について、開発者のよしたかさんがカンパを募っています。
- 
-* TopazChat [FANBOX](https://tyounanmoti.fanbox.cc/)
+
+- TopazChat [FANBOX](https://tyounanmoti.fanbox.cc/)
 
 ## クレジット
+
 ### TopazBot
- 
-* Aoi Emerauda [@emerauda](https://github.com/emerauda)
+
+- Aoi Emerauda [@emerauda](https://github.com/emerauda)
 
 ### TopazChat
 
-* よしたか様 [@TyounanMOTI](https://github.com/TyounanMOTI) TopazChat開発者
+- よしたか様 [@TyounanMOTI](https://github.com/TyounanMOTI) TopazChat開発者
 
 ## ライセンス
+
 MITライセンスでリリースされています。LICENSEファイルをご覧ください。

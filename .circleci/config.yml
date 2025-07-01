@@ -60,7 +60,7 @@ jobs:
     steps:
       - checkout
       - node/install:
-          node-version: "20.12"
+          node-version: "20.19"
       - run:
           name: Install dependencies
           command: npm install
@@ -73,7 +73,7 @@ jobs:
     steps:
       - checkout
       - node/install:
-          node-version: "22.0"
+          node-version: "22.17"
       - run:
           name: Install dependencies
           command: npm install
@@ -83,7 +83,4 @@ jobs:
 workflows:
   build_and_test:
     jobs:
-      - test-v16
-      - test-v18
-      - test-v20
       - test-v22

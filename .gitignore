@@ -138,3 +138,7 @@ node_modules/
 
 # config
 config.json
+
+# coverage
+coverage/
+!coverage/lcov-report/
