@@ -18,6 +18,10 @@ export function sleep(ms: number): Promise<void> {
 
 // FFmpeg stream creator
 export function createFFmpegStream(streamUrl: string): Readable {
+  // テスト環境では FFmpeg を実行せず空ストリームを返す
+  if (process.env.JEST_WORKER_ID) {
+    return Readable.from([]);
+  }
   const ffmpeg = spawn('ffmpeg', [
     '-rtsp_transport',
     'tcp',

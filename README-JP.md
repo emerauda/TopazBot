@@ -1,8 +1,12 @@
 # TopazBot - RTSP Discord Music bot for TopazChat
 
-[![Join the chat at https://github.com/emerauda/TopazBot/](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/emerauda/TopazBot?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Lint/Format](https://github.com/emerauda/TopazBot/actions/workflows/lint-format.yml/badge.svg)](https://github.com/emerauda/TopazBot/actions/workflows/lint-format.yml)
 [![Node.js CI](https://github.com/emerauda/TopazBot/actions/workflows/node.js.yml/badge.svg)](https://github.com/emerauda/TopazBot/actions/workflows/node.js.yml)
 [![CircleCI](https://circleci.com/gh/emerauda/TopazBot/tree/main.svg?style=svg)](https://circleci.com/gh/emerauda/TopazBot/tree/main)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-22.x-green.svg)](https://nodejs.org/)
+[![Discord](https://img.shields.io/badge/Discord-Bot-5865F2?style=flat&logo=discord&logoColor=white)](https://discord.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ![49b54ba526ab1540bafd1bea6e593542](https://user-images.githubusercontent.com/35634920/129456355-da650b6d-37e1-4da0-a362-f056eebea238.png)
 
@@ -14,7 +18,7 @@ join: https://discord.com/invite/fCMcJ8A
 
 ## TopazBotについて
 
-Node.js用のDiscord Voice APIのTopazChat RTSP専用の実装で、JavaScriptで書かれています。
+Node.js用のDiscord Voice APIのTopazChat RTSP専用の実装で、Typescriptで書かれています。
 
 **注意!!**
 
@@ -114,7 +118,7 @@ $ npm run build && npm run start
 
 # pm2を使ってプログラムスタート
 $ npm i pm2 -g
-$ pm2 start npm -n TopazBot start
+$ pm2 start npm -n TopazBot -- start
 
 # TopazBot導入URL
 $ https://discord.com/oauth2/authorize?client_id=876143776572248074&permissions=2150631424&integration_type=0&scope=bot

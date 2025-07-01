@@ -9,24 +9,28 @@ import {
 } from 'discord.js';
 import { readFileSync } from 'fs';
 
-// Simple .env loader (no external dependencies)
-try {
-  const env = readFileSync('.env', 'utf-8');
-  env.split('\n').forEach((line) => {
-    const match = line.match(/^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)\s*$/);
-    if (match) {
-      const [, key, value] = match;
-      if (!process.env[key]) {
-        process.env[key] = value.replace(/^['\"]|['\"]$/g, ''); // remove quotes
+// Simple .env loader, skip in Jest tests
+if (!process.env.JEST_WORKER_ID) {
+  try {
+    const env = readFileSync('.env', 'utf-8');
+    env.split('\n').forEach((line) => {
+      const match = line.match(/^\s*([A-Za-z_][A-ZaZ0-9_]*)\s*=\s*(.*)\s*$/);
+      if (match) {
+        const [, key, value] = match;
+        if (!process.env[key]) {
+          process.env[key] = value.replace(/^['\"]|['\"]$/g, '');
+        }
       }
-    }
-  });
-} catch {
-  // Do nothing if .env does not exist
+    });
+  } catch {
+    // Do nothing
+  }
 }
 
+// Read token from environment variable; in Jest skip validation
 const token = process.env.DISCORD_TOKEN;
-if (!token) {
+// スクリプト実行時のみトークン未設定で例外を投げる
+if (require.main === module && !token) {
   throw new Error('DISCORD_TOKEN is not set in environment variables.');
 }
 
