@@ -8,7 +8,7 @@
 [![Discord](https://img.shields.io/badge/Discord-Bot-5865F2?style=flat&logo=discord&logoColor=white)](https://discord.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-![スクリーンショット 2023年-05月-13日 21 36 27](https://github.com/emerauda/TopazBot/assets/35634920/d95514b6-7993-4a35-ba02-c0f5736eb20a)
+![スクリーンショット](https://github.com/emerauda/TopazBot/assets/35634920/d95514b6-7993-4a35-ba02-c0f5736eb20a)
 
 [日本語README](./README-JP.md)
 
@@ -20,7 +20,7 @@ join: https://discord.com/invite/fCMcJ8A
 
 ## About
 
-A TopazChat RTSP specific implementation of the Discord Voice API for Node.js, written in Typescript.
+A TopazChat RTSP specific implementation of the Discord Voice API for Node.js, written in TypeScript.
 
 **Attention!!**
 
