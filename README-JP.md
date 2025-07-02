@@ -182,15 +182,18 @@ graph TD
 
     subgraph "Your Server (VPS)"
         TopazBot
-        TopazChat
         FFmpeg
+    end
+
+    subgraph "TopazChat Server"
+        TopazChat
     end
 
     User -- "/play" --> TopazBot
     TopazBot -- "RTSP Stream Request" --> TopazChat
     TopazChat -- "RTSP Stream" --> FFmpeg
     FFmpeg -- "Opus Audio" --> TopazBot
-    TopazBot -- "Sends Audio" --> DiscordVoiceChannel[Discord Voice Channel]
+    TopazBot -- "Sends Audio" --> DiscordVoiceChannel
 ```
 
 ### 🔧 技術スタック

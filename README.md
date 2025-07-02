@@ -182,8 +182,11 @@ graph TD
 
     subgraph "Your Server (VPS)"
         TopazBot
-        TopazChat
         FFmpeg
+    end
+
+    subgraph "TopazChat Server"
+        TopazChat
     end
 
     User -- "/play" --> TopazBot
