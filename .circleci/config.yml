@@ -80,7 +80,22 @@ jobs:
       - run:
           name: Verify build
           command: echo "Build completed successfully!"
+  test-v24:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - node/install:
+          node-version: "24.03"
+      - run:
+          name: Install dependencies
+          command: npm install
+      - run:
+          name: Verify build
+          command: echo "Build completed successfully!"
+
 workflows:
   build_and_test:
     jobs:
       - test-v22
+      - test-v24

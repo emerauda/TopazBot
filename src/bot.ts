@@ -9,7 +9,11 @@ import {
   VoiceConnectionStatus,
 } from '@discordjs/voice';
 import { Readable } from 'stream';
+import type { ChildProcess } from 'child_process';
 import { spawn } from 'child_process';
+
+// Inlined test environment check
+const isTestEnv = !!process.env.JEST_WORKER_ID;
 
 // Utility sleep function
 export function sleep(ms: number): Promise<void> {
@@ -17,11 +21,12 @@ export function sleep(ms: number): Promise<void> {
 }
 
 // FFmpeg stream creator
+// In test environment, return an empty stream instead of executing FFmpeg
 export function createFFmpegStream(streamUrl: string): Readable {
-  // テスト環境では FFmpeg を実行せず空ストリームを返す
-  if (process.env.JEST_WORKER_ID) {
+  if (isTestEnv) {
     return Readable.from([]);
   }
+  // Transcode RTSP stream to raw PCM for Discord using system ffmpeg
   const ffmpeg = spawn('ffmpeg', [
     '-rtsp_transport',
     'tcp',
@@ -33,7 +38,26 @@ export function createFFmpegStream(streamUrl: string): Readable {
     'copy',
     'pipe:1',
   ]);
-  return ffmpeg.stdout as Readable;
+  // Log FFmpeg stderr for diagnostics
+  if (ffmpeg.stderr) {
+    ffmpeg.stderr.on('data', (chunk) => {
+      if (!isTestEnv) {
+        console.error(`[ffmpeg stderr] ${chunk.toString()}`);
+      }
+    });
+  }
+  ffmpeg.on('error', (err) => {
+    if (!isTestEnv) {
+      console.error('[ffmpeg process error]', err);
+    }
+  });
+  ffmpeg.on('close', (code, signal) => {
+    console.log(`[ffmpeg process closed] code=${code} signal=${signal}`);
+  });
+  if (!ffmpeg.stdout) {
+    throw new Error('FFmpeg stdout not available');
+  }
+  return ffmpeg.stdout;
 }
 
 // Per-guild connection state
@@ -44,6 +68,7 @@ export interface GuildAudioState {
   streamUrl: string | null;
   lastActivityTime: number;
   isPlaying: boolean; // Prevent multiple playStream per guild
+  ffmpegProcess?: ChildProcess | null;
 }
 
 export const guildAudioStates: Map<string, GuildAudioState> = new Map();
@@ -55,8 +80,8 @@ export async function playStream(
   isResync = false,
   testOptions?: { maxLoop?: number; forceBreak?: boolean }
 ) {
-  // テスト環境下で明示的なtestOptionsがない場合、無限ループ防止のためmaxLoop=1を設定
-  if (process.env.JEST_WORKER_ID && testOptions === undefined) {
+  // In test environment without explicit testOptions, set maxLoop=1 to prevent infinite loops
+  if (isTestEnv && testOptions === undefined) {
     testOptions = { maxLoop: 1 };
   }
   if (!state.connection || !state.streamUrl || !state.streamKey) return;
@@ -67,13 +92,20 @@ export async function playStream(
     if (testOptions?.forceBreak) break;
     loopCount++;
     if (testOptions?.maxLoop && loopCount > testOptions.maxLoop) {
-      // テストの maxLoop 到達時に明示的に接続を破棄
+      // When test maxLoop is reached, explicitly destroy the connection
       if (state.connection) {
         state.connection.destroy();
       }
       break;
     }
-    const ffmpegStream = createFFmpegStream(state.streamUrl);
+    // Spawn FFmpeg and track process for cleanup
+    const ffmpeg = spawn(
+      'ffmpeg',
+      ['-rtsp_transport', 'tcp', '-i', state.streamUrl!, '-f', 'adts', '-c:a', 'copy', 'pipe:1'],
+      { stdio: ['ignore', 'pipe', 'pipe'] }
+    );
+    state.ffmpegProcess = ffmpeg;
+    const ffmpegStream = ffmpeg.stdout!;
     const resource = createAudioResource(ffmpegStream);
     const player = createAudioPlayer();
     player.play(resource);
@@ -94,7 +126,7 @@ export async function playStream(
       await entersState(player, AudioPlayerStatus.Playing, 5000);
 
       // Wait 1 second and check if still playing to confirm real playback
-      if (!testOptions) await sleep(1000);
+      if (!isTestEnv) await sleep(1000);
       if (player.state.status !== 'playing') {
         throw new Error('Stream did not stay in playing state');
       }
@@ -102,7 +134,7 @@ export async function playStream(
       if (first) {
         await interaction.editReply(`Playing ${state.streamKey}.`);
         // Wait 1 second and check if still playing to confirm real playback
-        if (!testOptions) await sleep(1000);
+        if (!isTestEnv) await sleep(1000);
         if (player.state.status !== 'playing') {
           throw new Error('Stream did not stay in playing state');
         }
@@ -116,12 +148,15 @@ export async function playStream(
       // Wait for Idle state (end)
       await entersState(player, AudioPlayerStatus.Idle, 1800000);
       console.log(`${state.streamKey} is stopped!`);
-    } catch {
+    } catch (error) {
+      if (!isTestEnv) {
+        console.error('playStream error:', error);
+      }
       if (first) {
         await interaction.editReply('Failed to play stream.');
         return;
       }
-      if (!testOptions) await sleep(3000);
+      if (!isTestEnv) await sleep(3000);
       // continue loop for retry
     }
 
@@ -139,7 +174,7 @@ export async function playStream(
     // If connection still exists, try to autoresume (continue loop)
     if (state.connection) {
       console.log(`${state.streamKey} is autoresuming...`);
-      if (!testOptions) await sleep(3000); // Optional: wait before reconnect
+      if (!isTestEnv) await sleep(3000); // Optional: wait before reconnect
       continue;
     } else {
       break;
@@ -162,6 +197,7 @@ export async function handleInteraction(interaction: any) {
       streamUrl: null,
       lastActivityTime: Date.now(),
       isPlaying: false,
+      ffmpegProcess: null,
     };
     guildAudioStates.set(guildId, state);
   }
@@ -244,8 +280,13 @@ export async function handleInteraction(interaction: any) {
   // stop command
   else if (interaction.commandName === 'stop') {
     await interaction.deferReply();
+    if (state.ffmpegProcess) {
+      state.ffmpegProcess.kill();
+    }
     if (state.connection) {
+      const destroyedKey = state.streamKey;
       state.connection.destroy();
+      console.log(`${destroyedKey} is destroyed!`);
     }
     // Reset all state for this guild
     guildAudioStates.set(guildId, {
@@ -255,6 +296,7 @@ export async function handleInteraction(interaction: any) {
       streamUrl: null,
       lastActivityTime: Date.now(),
       isPlaying: false,
+      ffmpegProcess: null,
     });
     await interaction.editReply('Destroyed.');
   }

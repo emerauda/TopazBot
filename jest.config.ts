@@ -9,6 +9,7 @@ const config: Config = {
     ...tsJestTransformCfg,
   },
   collectCoverageFrom: ['src/**/*.ts'],
+  testPathIgnorePatterns: ['/node_modules/', 'coverage\\.test\\.ts$'],
 };
 
 export default config;

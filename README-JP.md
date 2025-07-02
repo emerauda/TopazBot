@@ -1,4 +1,4 @@
-# TopazBot - RTSP Discord Music bot for TopazChat
+# 📻 TopazBot - RTSP Discord Music bot for TopazChat
 
 [![Lint/Format](https://github.com/emerauda/TopazBot/actions/workflows/lint.yml/badge.svg)](https://github.com/emerauda/TopazBot/actions/workflows/lint.yml)
 [![Node.js CI](https://github.com/emerauda/TopazBot/actions/workflows/node.js.yml/badge.svg)](https://github.com/emerauda/TopazBot/actions/workflows/node.js.yml)
@@ -13,58 +13,73 @@
 
 [English README](./README.md)
 
-## コミュニティ
+---
 
-- TopazChat Discord Server
+## 🌟 概要
 
-join: https://discord.com/invite/fCMcJ8A
-
-## TopazBotについて
-
-Node.js用のDiscord Voice APIのTopazChat RTSP専用の実装で、TypeScriptで書かれています。
+**TopazBot**は、TopazChatのRTSPストリームを利用した高音質で低遅延なDiscordミュージックボットです。Linux等のサーバーで動作し、ストリーム音声をDiscordサーバーに提供します。
 
 **注意!!**
 
 _「TopazBot」はMITライセンス下にありますが、「TopazChat」は商用利用禁止です。_
 
-**TopazBotの特徴:**
+### ✨ 主な機能
 
-Discordの音声チャンネルでオーディオを送受信する信頼性と予測可能な動作に重点を置いています。
-水平方向の拡張性、discord.js以外のライブラリもカスタムアダプタでサポートします。
-様々なオーディオソースに対応可能な安定したなオーディオ処理システムです。
+- 🧠 **高品質**: ステレオで高音質で低遅延なミュージックBot
+- 🔒 **セキュア**: Discord署名検証による安全な通信
+- 🌐 **多フォーマット対応**: ffmpegで柔軟なストリーム処理
 
-**TopazChatについて:**
+---
 
-[TopazChat](https://github.com/TopazChat/TopazChat)
-は、高品質・低遅延のRTSPサーバです。個人での利用は無料です。
-[TopazChat ダウンロード](https://booth.pm/ja/items/1752066)
-TopazChatの費用は、開発者のよしたかさん[@TyounanMOTI](https://github.com/TyounanMOTI)が負担しています。
-サーバーの維持費や音声・動画配信のデータ転送料のために
-寄付をお願いします！→[FANBOX](https://tyounanmoti.fanbox.cc/)
+## 💎 TopazChatについて
+
+### 📝 詳細
+
+[TopazChat](https://github.com/TopazChat/TopazChat)は、高品質・低遅延のRTSPサーバです。個人での利用は無料です。
+[TopazChat ダウンロード](https://booth.pm/ja/items/1752066)TopazChatの費用は、開発者のよしたかさん[@TyounanMOTI](https://github.com/TyounanMOTI)が負担しています。
+サーバーの維持費や音声・動画配信のデータ転送料のために寄付をお願いします！→[FANBOX](https://tyounanmoti.fanbox.cc/)
 TopazChatのすべてのスポンサーは、SPONSORS.txtに記載されています。
 
-**リンク集:**
+### 💬 コミュニティ
 
-- [Documentation](https://emerauda.github.io/TopazBot)
-- [GitHub Discussions](https://github.com/emerauda/TopazBot/discussions)
-- [Repository](https://github.com/emerauda/TopazBot)
+- TopazChat Discord Server
 
-## 依存関係
+join: https://discord.com/invite/fCMcJ8A
+
+---
+
+## 🚀 クイックスタート
+
+### 🔗 公開TopazBot URL
+
+下記URLから導入できます
+https://discord.com/oauth2/authorize?client_id=876143776572248074&permissions=2150631424&integration_type=0&scope=bot
+
+### 📋 自前ビルド前提条件
+
+- Linux サーバー
+- ffmpeg
+- Node.js 22.x
+- npm または yarn
+- Discord Bot Token
+- TopazChatストリーム
+
+## 📦 依存関係
 
 このライブラリは、さまざまなプラットフォームをサポートするために、以下のカテゴリーからそれぞれ1つずつインストールしてください。
 依存関係は、パフォーマンスが優先される順に記載されています。
 オプションの1つがインストールできない場合は、別のオプションをインストールしてみてください。
 
-### Debian or Ubuntu
+### 🐧 Debian or Ubuntu
 
 **node & npm:**
 
-- `node`: >=16
+- `node`: >=22
 - `npm`: >=6
 
 **discord.js (npm install)**
 
-- `discord.js`: ^14.20.0
+- `discord.js`: ^14.21.0
 
 **@discordjs/voice (npm install):**
 
@@ -84,59 +99,152 @@ TopazChatのすべてのスポンサーは、SPONSORS.txtに記載されてい�
 
 **FFmpeg:**
 
-- [`FFmpeg`](https://ffmpeg.org/) (サーバーにインストールして下さい)
+- [`FFmpeg`](https://ffmpeg.org/) (apt install ffmpeg等でサーバーにインストールして下さい)
 
 **pm2 (npm install): [オプション]**
 
 - `pm2`
 
-# TopazBotの例
-
-これは@discordjs/voiceを使って、[discord.js](https://github.com/discordjs/discord.js)と一緒にTopazBotを作成する例です。
-
-この例では、このライブラリを使用して安定したな配信システムを作成する方法に焦点を当てています。
-
-シンプルなストリーミングMusicBotを作りたいと思っている方は、このサンプルを参考にしてみてください。
-
-## 使い方
+### 🛠️ インストール
 
 ```bash
-# for Debian/Ubuntu
-# mainリポジトリからclone
-$ git clone https://github.com/emerauda/TopazBot topazbot
+# リポジトリをクローン
+git clone https://github.com/emerauda/TopazBot.git topazbot
+cd topazbot
 
-# フォルダに移動して必要なプログラムをインストール
-$ cd topazbot
-$ npm install
+# 依存関係をインストール
+npm install
 
-# トークンを書き込む
-$ cp .env.example .env
-$ vi .env
-
-# コマンド登録
-$ node register.js
-
-# プログラムビルドとプログラムスタート
-$ npm run build && npm run start
-
-# pm2を使ってプログラムスタート
-$ npm i pm2 -g
-$ pm2 start npm -n TopazBot -- start
-
-# TopazBot導入URL
-$ https://discord.com/oauth2/authorize?client_id=876143776572248074&permissions=2150631424&integration_type=0&scope=bot
-
-# ボイスチャンネルに入った後、Discordのテキスト欄に入力して音声を再生
-$ /play StreamKey
-
-# 停止した配信が再開した際に音声を再生
-$ /resync
-
-# ボイスチャンネルからTopazBotを切断
-$ /stop
+# 環境変数を設定
+cp .env.example .env
+# .envファイルを編集して必要な環境変数を設定
 ```
 
-## Code structure
+### ⚙️ 設定
+
+`.env`ファイルに以下の環境変数を設定：
+
+```env
+DISCORD_TOKEN=your_discord_bot_token
+```
+
+### 🚀 デプロイ
+
+```bash
+# ビルド
+npm run build
+
+# スタート
+npm run start
+
+# コマンド登録
+npm run register
+
+# pm2を使ってプログラムスタート
+npm i pm2 -g
+pm2 start npm -n TopazBot -- start
+
+```
+
+---
+
+## 🎮 コマンド一覧
+
+TopazBotは以下のスラッシュコマンドに対応しています。
+
+### ▶️ `/play`
+
+- **説明**: 指定されたストリームキーを使用して、TopazChatからのRTSPストリームを再生します。
+- **使い方**: `/play StreamKey: <あなたのストリームキー>`
+- **パラメータ**:
+  - `StreamKey` (必須): TopazChatのストリームキー。
+
+### 🔄 `/resync`
+
+- **説明**: 接続が不安定な場合や、ストリームが途切れた際に再接続を試みます。
+- **使い方**: `/resync`
+
+### ⏹️ `/stop`
+
+- **説明**: 現在のストリーム再生を停止し、ボイスチャンネルから切断します。
+- **使い方**: `/stop`
+
+---
+
+## 🏗️ アーキテクチャ
+
+```mermaid
+graph TD
+    subgraph "Discord Server"
+        User
+    end
+
+    subgraph "Your Server (VPS)"
+        TopazBot
+        TopazChat
+        FFmpeg
+    end
+
+    User -- "/play" --> TopazBot
+    TopazBot -- "RTSP Stream Request" --> TopazChat
+    TopazChat -- "RTSP Stream" --> FFmpeg
+    FFmpeg -- "Opus Audio" --> TopazBot
+    TopazBot -- "Sends Audio" --> DiscordVoiceChannel[Discord Voice Channel]
+```
+
+### 🔧 技術スタック
+
+| カテゴリ           | 技術             | バージョン |
+| :----------------- | :--------------- | :--------- |
+| **言語**           | TypeScript       | ^5.8.3     |
+| **ランタイム**     | Node.js          | >=22.x     |
+| **フレームワーク** | discord.js       | ^14.21.0   |
+| **音声処理**       | @discordjs/voice | ^0.18.0    |
+| **メディア処理**   | FFmpeg           | -          |
+| **RTSPサーバー**   | TopazChat        | -          |
+| **Opusライブラリ** | @discordjs/opus  | ^0.10.0    |
+| **暗号化**         | sodium-native    | ^5.0.6     |
+| **パッケージ管理** | npm              | >=6        |
+| **テスト**         | Jest             | ^30.0.3    |
+| **リンター**       | ESLint           | ^9.30.1    |
+| **フォーマッター** | Prettier         | ^3.6.2     |
+
+---
+
+## 🧪 開発
+
+### 📝 スクリプト
+
+| コマンド                | 説明                         |
+| ----------------------- | ---------------------------- |
+| `npm run build`         | TypeScriptをビルド           |
+| `npm run dev`           | 開発サーバーを開始           |
+| `npm run register`      | Discordコマンドを登録        |
+| `npm run lint`          | 型チェックを実行             |
+| `npm run lint:fix`      | 型修正を実行                 |
+| `npm run format`        | コードフォーマットを適用     |
+| `npm run format:check`  | コードフォーマットをチェック |
+| `npm run test`          | テストを実行                 |
+| `npm run test:watch`    | テストをウォッチモードで実行 |
+| `npm run test:coverage` | カバレッジ付きテストを実行   |
+
+### 🔍 デバッグ
+
+```bash
+# ローカル開発サーバー起動
+npm run dev
+
+# テスト実行
+npm test
+
+# カバレッジレポート生成
+npm run test:coverage
+# カバレッジレポートは ./coverage/lcov-report/index.html で確認可能
+```
+
+---
+
+## 📂 Code structure
 
 このボットのコードはTopazChat専用です。
 
@@ -144,34 +252,96 @@ $ /stop
 
 [Discord.js Japan user Group](https://scrapbox.io/discordjs-japan/)
 
-## コントリビューション
+---
 
-こちらをご覧下さい [Contributing Guide](https://github.com/emerauda/topazbot/blob/main/.github/CONTRIBUTING.md)
+## 🤝 コントリビューション
 
-## 寄付
+[コントリビューションガイド](https://github.com/emerauda/TopazBot/blob/main/.github/CONTRIBUTING.md)
 
-### TopazBot
+コントリビューションを歓迎します！以下の手順に従ってください：
+
+1. 🔀 このリポジトリをフォーク
+2. 🌿 新しいブランチを作成 (`git checkout -b feature/amazing-feature`)
+3. 💾 変更をコミット (`git commit -m 'Add some amazing feature'`)
+4. 📤 ブランチにプッシュ (`git push origin feature/amazing-feature`)
+5. 🔃 プルリクエストを作成
+
+### 📋 コントリビューションガイドライン
+
+- コードスタイルは ESLint 設定に従ってください
+- 新機能にはテストを追加してください
+- コミットメッセージは分かりやすく記述してください
+
+---
+
+## ❤️ 寄付
+
+### 🤖 TopazBot
 
 公開TopazBotサーバー維持に必要なカンパをお願いしております。
 
 - TopazBot [GitHub Sponsors](https://github.com/sponsors/ROZ-MOFUMOFU-ME?o=sd&sc=t)
 
-### TopazChat
+### 💬 TopazChat
 
 TopazChatのサーバー維持費やデータ転送料について、開発者のよしたかさんがカンパを募っています。
 
 - TopazChat [FANBOX](https://tyounanmoti.fanbox.cc/)
 
-## クレジット
+## 🙏 クレジット
 
-### TopazBot
+### 🤖 TopazBot
 
 - Aoi Emerauda [@emerauda](https://github.com/emerauda)
 
-### TopazChat
+### 💬 TopazChat
 
 - よしたか様 [@TyounanMOTI](https://github.com/TyounanMOTI) TopazChat開発者
 
-## ライセンス
+## 📄 ライセンス
 
-MITライセンスでリリースされています。LICENSEファイルをご覧ください。
+このプロジェクトは MIT ライセンスの下で公開されています。詳細は [LICENSE](LICENSE) ファイルをご覧ください。
+
+---
+
+## 👥 チーム
+
+<div align="center">
+
+[![Contributors](https://contrib.rocks/image?repo=emerauda/TopazBot)](https://github.com/emerauda/TopazBot/graphs/contributors)
+
+</div>
+
+---
+
+## 📞 サポート
+
+- 🐛 **バグレポート**: [Issues](https://github.com/emerauda/TopazBot/issues)
+- 💡 **機能要望**: [Discussions](https://github.com/emerauda/TopazBot/discussions)
+- 📧 **お問い合わせ**: [support@vrc-connections.com](mailto:support@vrc-connections.com)
+
+---
+
+## 🌟 スター履歴
+
+[![Star History Chart](https://api.star-history.com/svg?repos=emerauda/TopazBot&type=Date)](https://star-history.com/#emerauda/TopazBot&Date)
+
+---
+
+## 📊 統計
+
+![GitHub Stats](https://github-readme-stats.vercel.app/api?username=emerauda&repo=TopazBot&show_icons=true&theme=dark)
+
+---
+
+<div align="center">
+
+**⭐ このプロジェクトが気に入ったら、スターをお願いします！ ⭐**
+
+[![GitHub stars](https://img.shields.io/github/stars/emerauda/TopazBot.svg?style=social&label=Star)](https://github.com/emerauda/TopazBot)
+[![GitHub forks](https://img.shields.io/github/forks/emerauda/TopazBot.svg?style=social&label=Fork)](https://github.com/emerauda/TopazBot/fork)
+[![GitHub watchers](https://img.shields.io/github/watchers/emerauda/TopazBot.svg?style=social&label=Watch)](https://github.com/emerauda/TopazBot)
+
+Made with ❤️ by [Aoi Emerauda](https://github.com/emerauda)
+
+</div>

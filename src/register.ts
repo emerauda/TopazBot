@@ -9,8 +9,11 @@ import {
 } from 'discord.js';
 import { readFileSync } from 'fs';
 
-// Simple .env loader, skip in Jest tests
-if (!process.env.JEST_WORKER_ID) {
+// Inlined test environment check
+const isTestEnv = !!process.env.JEST_WORKER_ID;
+
+// .env loader (skipped in test environment)
+if (!isTestEnv) {
   try {
     const env = readFileSync('.env', 'utf-8');
     env.split('\n').forEach((line) => {
@@ -27,9 +30,10 @@ if (!process.env.JEST_WORKER_ID) {
   }
 }
 
-// Read token from environment variable; in Jest skip validation
+// Read token from environment variable; skip validation in test environment
 const token = process.env.DISCORD_TOKEN;
-// スクリプト実行時のみトークン未設定で例外を投げる
+
+// Throw error if DISCORD_TOKEN is not set when script is executed directly
 if (require.main === module && !token) {
   throw new Error('DISCORD_TOKEN is not set in environment variables.');
 }
