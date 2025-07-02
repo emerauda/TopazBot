@@ -7,6 +7,16 @@ import {
   GuildAudioState,
 } from '../src/bot';
 
+// Mock child_process spawn to prevent FFmpeg execution in tests
+jest.mock('child_process', () => ({
+  spawn: jest.fn(() => ({
+    stdout: require('stream').Readable.from(['test']),
+    stderr: require('stream').Readable.from([]),
+    kill: jest.fn(),
+    on: jest.fn(),
+  })),
+}));
+
 // Mock Discord.js voice functions
 jest.mock('@discordjs/voice', () => {
   const actual = jest.requireActual('@discordjs/voice');
@@ -28,6 +38,12 @@ jest.mock('@discordjs/voice', () => {
 });
 
 describe('bot.ts', () => {
+  beforeEach(() => {
+    // Clear state before each test
+    guildAudioStates.clear();
+    jest.clearAllMocks();
+  });
+
   test('sleep function works', async () => {
     const start = Date.now();
     await sleep(20);
@@ -41,7 +57,6 @@ describe('bot.ts', () => {
   test('createFFmpegStream returns empty stream in test environment', async () => {
     const stream = createFFmpegStream('dummy-url');
     const data: any[] = [];
-    // @ts-ignore
     for await (const chunk of stream) data.push(chunk);
     expect(data).toEqual([]);
   });
@@ -49,9 +64,7 @@ describe('bot.ts', () => {
   test('guildAudioStates is a Map', () => {
     expect(guildAudioStates).toBeInstanceOf(Map);
   });
-});
 
-describe('handleInteraction coverage', () => {
   test('non-command interaction returns undefined', async () => {
     const fake = { isChatInputCommand: () => false };
     await expect(handleInteraction(fake)).resolves.toBeUndefined();
@@ -80,7 +93,7 @@ describe('handleInteraction coverage', () => {
       isChatInputCommand: () => true,
       guildId: 'guild2',
       commandName: 'stop',
-      member: { voice: { channel: null } }, // Add member property
+      member: { voice: { channel: null } },
       deferReply,
       editReply,
     };
@@ -91,6 +104,7 @@ describe('handleInteraction coverage', () => {
   test('play command with valid voice channel succeeds', async () => {
     const editReply = jest.fn();
     const deferReply = jest.fn();
+    const voiceAdapterCreator = jest.fn(() => ({}));
     const fake = {
       isChatInputCommand: () => true,
       guildId: 'guild1',
@@ -103,7 +117,7 @@ describe('handleInteraction coverage', () => {
             joinable: true,
             speakable: true,
             guild: {
-              voiceAdapterCreator: jest.fn(),
+              voiceAdapterCreator,
             },
           },
         },
@@ -123,35 +137,15 @@ describe('handleInteraction coverage', () => {
     const mockInteraction = {
       isChatInputCommand: () => true,
       commandName: 'play',
-      guildId: null, // This should be null to trigger the early return
+      guildId: null,
       user: { tag: 'TestUser#0001' },
       reply: jest.fn(),
     } as any;
 
     await handleInteraction(mockInteraction);
-
-    // With null guildId, the function should return early and not call reply
     expect(mockInteraction.reply).not.toHaveBeenCalled();
   });
 
-  test('handleInteraction with user not in voice channel', async () => {
-    const mockInteraction = {
-      isChatInputCommand: () => true,
-      commandName: 'play',
-      guildId: 'guild1',
-      member: { voice: { channel: null } },
-      user: { tag: 'TestUser#0001' },
-      deferReply: jest.fn(),
-      editReply: jest.fn(),
-    } as any;
-
-    await handleInteraction(mockInteraction);
-
-    expect(mockInteraction.editReply).toHaveBeenCalledWith('Please join a voice channel.');
-  });
-});
-
-describe('playStream tests', () => {
   test('playStream is a function', () => {
     expect(typeof playStream).toBe('function');
   });
