@@ -177,6 +177,7 @@ TopazBot supports the following slash commands.
 graph TD
     subgraph "Discord Server"
         User
+        DiscordVoiceChannel[Discord Voice Channel]
     end
 
     subgraph "Your Server (VPS)"
@@ -189,7 +190,7 @@ graph TD
     TopazBot -- "RTSP Stream Request" --> TopazChat
     TopazChat -- "RTSP Stream" --> FFmpeg
     FFmpeg -- "Opus Audio" --> TopazBot
-    TopazBot -- "Sends Audio" --> DiscordVoiceChannel[Discord Voice Channel]
+    TopazBot -- "Sends Audio" --> DiscordVoiceChannel
 ```
 
 ### 🔧 Tech Stack

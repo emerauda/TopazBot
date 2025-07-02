@@ -177,6 +177,7 @@ TopazBotは以下のスラッシュコマンドに対応しています。
 graph TD
     subgraph "Discord Server"
         User
+        DiscordVoiceChannel[Discord Voice Channel]
     end
 
     subgraph "Your Server (VPS)"
