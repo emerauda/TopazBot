@@ -86,7 +86,7 @@ jobs:
     steps:
       - checkout
       - node/install:
-          node-version: "24.03"
+          node-version: "24.3"
       - run:
           name: Install dependencies
           command: npm install
