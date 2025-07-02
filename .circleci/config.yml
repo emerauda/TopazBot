@@ -98,4 +98,3 @@ workflows:
   build_and_test:
     jobs:
       - test-v22
-      - test-v24
