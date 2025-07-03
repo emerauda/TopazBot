@@ -50,41 +50,41 @@ jobs:
           source: ./
           destination: site
           config: |
-        title: TopazBot
-        description: RTSP Discord Music bot for TopazChat
-        url: "https://emerauda.github.io"
-        baseurl: "/TopazBot"
-        include:
-          - docs
-          - README.md
-          - README-JP.md
-        theme: jekyll-theme-minima
-        markdown: kramdown
-        permalink: pretty
-        plugins:
-          - jekyll-github-metadata
-          - jekyll-sitemap
-        kramdown:
-          input: GFM
-          parse_block_html: true
-          syntax_highlighter: rouge
-          hard_wrap: false
-        safe: false
-        exclude:
-          - node_modules
-          - package.json
-          - package-lock.json
-          - .gitignore
-          - .env.example
-          - coverage
-          - tests
-          - src
-          - dist
-          - build
-        minima:
-          custom_css: docs/assets/dark.css
-        head_custom: |
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.8.0/mermaid.min.js"></script>
+            title: TopazBot
+            description: RTSP Discord Music bot for TopazChat
+            url: "https://emerauda.github.io"
+            baseurl: "/TopazBot"
+            include:
+              - docs
+              - README.md
+              - README-JP.md
+            theme: jekyll-theme-minima
+            markdown: kramdown
+            permalink: pretty
+            plugins:
+              - jekyll-github-metadata
+              - jekyll-sitemap
+            kramdown:
+              input: GFM
+              parse_block_html: true
+              syntax_highlighter: rouge
+              hard_wrap: false
+            safe: false
+            exclude:
+              - node_modules
+              - package.json
+              - package-lock.json
+              - .gitignore
+              - .env.example
+              - coverage
+              - tests
+              - src
+              - dist
+              - build
+            minima:
+              custom_css: docs/assets/dark.css
+            head_custom: |
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.8.0/mermaid.min.js"></script>
 
       # Debug: List generated files
       - name: Debug Jekyll output
