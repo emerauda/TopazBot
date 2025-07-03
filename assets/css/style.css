@@ -126,3 +126,12 @@ img {
 .social-count {
   background-color: #21262c !important;
 }
+
+/* Layout wrapper to center content like GitHub */
+.wrapper {
+  margin: 0 auto;
+  max-width: 960px;
+  padding: 24px;
+}
+
+/* End layout wrapper */
