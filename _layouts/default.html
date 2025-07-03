@@ -7,30 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
-    <link rel="stylesheet" href="{{ "/assets/css/style.css" | relative_url }}">
-
+    <link rel="stylesheet" href="/assets/css/style.css" />
 </head>
 
 <body>
-    <div class="wrapper">
 
-        <section>
-            <div id="title">
-                <h1>{{ site.title | default: site.github.repository_name }}</h1>
-                <p>{{ site.description | default: site.github.project_tagline }}</p>
-                <hr>
-            </div>
-
-            {{ content }}
-
-        </section>
-
-    </div>
+    {{ content }}
 
     <!-- Mermaid.js -->
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <script>
-        // Jekyllが生成するコードブロックをMermaidが解釈できる形式に変換します
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.8.0/mermaid.min.js"></script>
+    <script>  
         document.addEventListener("DOMContentLoaded", () => {
             document.querySelectorAll('pre code.language-mermaid').forEach(el => {
                 const container = document.createElement('div');
@@ -38,7 +24,6 @@
                 container.classList.add('mermaid');
                 el.parentNode.parentNode.replaceChild(container, el.parentNode);
             });
-            // Mermaidを初期化・実行します
             mermaid.initialize({ startOnLoad: true, theme: 'dark' });
         });
     </script>
