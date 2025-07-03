@@ -48,7 +48,6 @@ jobs:
       # Prepare coverage folder for Pages (avoid modifying site directly)
       - name: Prepare coverage directory
         run: |
-          rm -rf coverage
           cp -r coverage/lcov-report coverage
 
       - name: Upload artifact
