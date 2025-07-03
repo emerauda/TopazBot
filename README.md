@@ -1,4 +1,4 @@
-﻿# ![logo](https://emerauda.github.io/TopazBot/docs/icon/32x32.png) TopazBot - RTSP Discord Music bot for TopazChat
+﻿# ![logo](docs/icon/32x32.png) TopazBot - RTSP Discord Music bot for TopazChat
 
 [![Lint/Format](https://github.com/emerauda/TopazBot/actions/workflows/lint.yml/badge.svg)](https://github.com/emerauda/TopazBot/actions/workflows/lint.yml)
 [![Node.js CI](https://github.com/emerauda/TopazBot/actions/workflows/node.js.yml/badge.svg)](https://github.com/emerauda/TopazBot/actions/workflows/node.js.yml)
@@ -10,7 +10,7 @@
 [![Discord](https://img.shields.io/badge/Discord-Bot-5865F2?style=flat&logo=discord&logoColor=white)](https://discord.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-![スクリーンショット](https://github.com/user-attachments/assets/6566930d-fee8-4ac2-965b-dfd506544979)
+![Screenshot](docs/assets/screenshot.png)
 
 [日本語README](./README-JP.md)
 
@@ -395,10 +395,14 @@ body {
 .main-content table th, .main-content table td { border: 1px solid #30363d; }
 .main-content table tr { background-color: #0d1117; border-top: 1px solid #21262d; }
 .main-content table tr:nth-child(2n) { background-color: #161b22; }
-.site-footer { border-top-color: #30363d; }
-.site-footer-owner a, .site-footer-credits a { color: #58a6ff; }
-img[alt="logo"], img[alt="Star History Chart"] { filter: invert(1) hue-rotate(180deg); }
-img[alt="スクリーンショット"], img[alt="Contributors"], img[alt="GitHub Stats"] { filter: none; }
+
+/* Dark theme code and table backgrounds */
+.main-content pre, .main-content code {
+  background-color: #161b22 !important;
+}
+.main-content table th, .main-content table td {
+  background-color: #161b22 !important;
+}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
 <script>mermaid.initialize({startOnLoad:true, theme: 'dark'});</script>
