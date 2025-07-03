@@ -58,6 +58,13 @@ jobs:
           cp -r site/* _deploy/
           mkdir -p _deploy/coverage
           cp -r coverage/lcov-report/* _deploy/coverage/
+          # Move legal pages to /terms and /privacy
+          mkdir -p _deploy/terms
+          cp _deploy/terms-of-service.html _deploy/terms/index.html
+          rm _deploy/terms-of-service.html
+          mkdir -p _deploy/privacy
+          cp _deploy/privacy-policy.html _deploy/privacy/index.html
+          rm _deploy/privacy-policy.html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

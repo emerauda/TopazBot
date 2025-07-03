@@ -176,6 +176,11 @@ TopazBotは以下のスラッシュコマンドに対応しています。
 - **説明**: 現在のストリーム再生を停止し、ボイスチャンネルから切断します。
 - **使い方**: `/stop`
 
+## 📜 利用規約
+
+- [利用規約](https://emerauda.github.io/TopazBot/terms/)
+- [プライバシーポリシー](https://emerauda.github.io/TopazBot/privacy/)
+
 ---
 
 ## 🏗️ アーキテクチャ

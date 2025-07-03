@@ -178,6 +178,13 @@ TopazBot supports the following slash commands.
 
 ---
 
+## 📜 Legal
+
+- [Terms of Service](https://emerauda.github.io/TopazBot/terms/)
+- [Privacy Policy](https://emerauda.github.io/TopazBot/privacy/)
+
+---
+
 ## 🏗️ Architecture
 
 ```mermaid
