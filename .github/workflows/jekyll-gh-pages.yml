@@ -50,13 +50,46 @@ jobs:
           source: ./
           destination: site
           config: |
+            title: TopazBot
+            description: RTSP Discord Music bot for TopazChat
+            url: "https://emerauda.github.io"
+            baseurl: "/TopazBot"
             include:
               - docs
+              - README.md
             markdown: kramdown
             permalink: pretty
+            plugins:
+              - jekyll-github-metadata
+              - jekyll-sitemap
             kramdown:
               input: GFM
               parse_block_html: true
+              syntax_highlighter: rouge
+              hard_wrap: false
+            safe: false
+            exclude:
+              - node_modules
+              - package.json
+              - package-lock.json
+              - .gitignore
+              - .env.example
+              - coverage
+              - tests
+              - src
+              - dist
+              - build
+
+      # Add Mermaid support to HTML files
+      - name: Add Mermaid support to HTML files
+        run: |
+          echo "Adding Mermaid support to HTML files..."
+          find site -name "*.html" -exec sed -i '/<\/head>/i\
+          <script src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js"></script>\
+          <script>mermaid.initialize({startOnLoad:true});</script>' {} \;
+          
+          # Convert mermaid code blocks to mermaid divs
+          find site -name "*.html" -exec sed -i 's/<pre><code class="language-mermaid">/<div class="mermaid">/g; s/<\/code><\/pre>/<\/div>/g' {} \;
 
       # Debug: List generated files
       - name: Debug Jekyll output
