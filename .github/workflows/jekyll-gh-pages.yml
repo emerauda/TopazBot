@@ -45,6 +45,10 @@ jobs:
           source: ./
           destination: site
 
+      - name: Allow write access to site directory
+        run: |
+          chmod -R a+rw site
+
       - name: Merge coverage into site
         run: |
           mkdir -p site/coverage
