@@ -184,6 +184,7 @@ TopazBotは以下のスラッシュコマンドに対応しています。
 ---
 
 ## 🏗️ アーキテクチャ
+
 ```mermaid
 graph TD
     subgraph "Discord Server"

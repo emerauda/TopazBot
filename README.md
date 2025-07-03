@@ -185,6 +185,7 @@ TopazBot supports the following slash commands.
 ---
 
 ## 🏗️ Architecture
+
 ```mermaid
 graph TD
     subgraph "Discord Server"
