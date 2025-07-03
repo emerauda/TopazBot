@@ -185,7 +185,7 @@ TopazBotは以下のスラッシュコマンドに対応しています。
 
 ## 🏗️ アーキテクチャ
 
-```mermaid
+<div class="mermaid">
 graph TD
     subgraph "Discord Server"
         User
@@ -206,7 +206,7 @@ graph TD
     TopazChat -- "RTSP Stream" --> FFmpeg
     FFmpeg -- "Opus Audio" --> TopazBot
     TopazBot -- "Sends Audio" --> DiscordVoiceChannel
-```
+</div>
 
 ### 🔧 技術スタック
 
@@ -322,7 +322,7 @@ TopazChatのサーバー維持費やデータ転送料について、開発者�
 
 ## 👥 チーム
 
-<div align="center">
+<div align="center" markdown="1">
 
 [![Contributors](https://contrib.rocks/image?repo=emerauda/TopazBot)](https://github.com/emerauda/TopazBot/graphs/contributors)
 
@@ -350,7 +350,7 @@ TopazChatのサーバー維持費やデータ転送料について、開発者�
 
 ---
 
-<div align="center">
+<div align="center" markdown="1">
 
 **⭐ このプロジェクトが気に入ったら、スターをお願いします！ ⭐**
 
@@ -361,3 +361,6 @@ TopazChatのサーバー維持費やデータ転送料について、開発者�
 Made with ❤️ by [Aoi Emerauda](https://github.com/emerauda)
 
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>

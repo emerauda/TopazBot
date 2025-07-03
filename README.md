@@ -187,7 +187,7 @@ TopazBot supports the following slash commands.
 
 ## 🏗️ Architecture
 
-```mermaid
+<div class="mermaid">
 graph TD
     subgraph "Discord Server"
         User
@@ -208,7 +208,7 @@ graph TD
     TopazChat -- "RTSP Stream" --> FFmpeg
     FFmpeg -- "Opus Audio" --> TopazBot
     TopazBot -- "Sends Audio" --> DiscordVoiceChannel
-```
+</div>
 
 ### 🔧 Tech Stack
 
@@ -324,7 +324,7 @@ This project is released under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## 👥 Team
 
-<div align="center">
+<div align="center" markdown="1">
 
 [![Contributors](https://contrib.rocks/image?repo=emerauda/TopazBot)](https://github.com/emerauda/TopazBot/graphs/contributors)
 
@@ -352,7 +352,7 @@ This project is released under the MIT License. See the [LICENSE](LICENSE) file 
 
 ---
 
-<div align="center">
+<div align="center" markdown="1">
 
 **⭐ If you like this project, please give it a star! ⭐**
 
@@ -363,3 +363,6 @@ This project is released under the MIT License. See the [LICENSE](LICENSE) file 
 Made with ❤️ by [Aoi Emerauda](https://github.com/emerauda)
 
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
