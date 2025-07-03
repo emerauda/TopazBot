@@ -58,7 +58,7 @@ jobs:
               - docs
               - README.md
               - README-JP.md
-            theme: jekyll-theme-minima
+            theme: jekyll-theme-chirpy
             markdown: kramdown
             permalink: pretty
             plugins:
@@ -82,24 +82,21 @@ jobs:
               - src
               - dist
               - build
-              - _config.yml
-            minima:
+            chirpy:
               skin: dark
             head_custom: |
               <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.8.0/mermaid.min.js"></script>
               <script>
-              // Jekyllが生成するコードブロックをMermaidが解釈できる形式に変換します
               document.addEventListener("DOMContentLoaded", () => {
-              document.querySelectorAll('pre code.language-mermaid').forEach(el => {
-                const container = document.createElement('div');
-                container.innerHTML = el.textContent;
-                container.classList.add('mermaid');
-                el.parentNode.parentNode.replaceChild(container, el.parentNode);
+                document.querySelectorAll('pre code.language-mermaid').forEach(el => {
+                  const container = document.createElement('div');
+                  container.innerHTML = el.textContent;
+                  container.classList.add('mermaid');
+                  el.parentNode.parentNode.replaceChild(container, el.parentNode);
+                });
+                mermaid.initialize({ startOnLoad: true, theme: 'dark' });
               });
-              // Mermaidを初期化・実行します
-              mermaid.initialize({ startOnLoad: true, theme: 'dark' });
-            });
-            </script>
+              </script>
 
       # Debug: List generated files
       - name: Debug Jekyll output
