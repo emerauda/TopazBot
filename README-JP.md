@@ -289,13 +289,13 @@ npm run test:coverage
 
 ## ❤️ 寄付
 
-### 🤖 TopazBot
+### 📻 TopazBot
 
 公開TopazBotサーバー維持に必要なカンパをお願いしております。
 
 - TopazBot [GitHub Sponsors](https://github.com/sponsors/ROZ-MOFUMOFU-ME?o=sd&sc=t)
 
-### 💬 TopazChat
+### 💎 TopazChat
 
 TopazChatのサーバー維持費やデータ転送料について、開発者のよしたかさんがカンパを募っています。
 
@@ -303,11 +303,11 @@ TopazChatのサーバー維持費やデータ転送料について、開発者�
 
 ## 🙏 クレジット
 
-### 🤖 TopazBot
+### 📻 TopazBot
 
 - Aoi Emerauda [@emerauda](https://github.com/emerauda)
 
-### 💬 TopazChat
+### 💎 TopazChat
 
 - よしたか様 [@TyounanMOTI](https://github.com/TyounanMOTI) TopazChat開発者
 

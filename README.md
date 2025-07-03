@@ -290,13 +290,13 @@ Please read our [Contributing Guidelines](https://github.com/emerauda/TopazBot/b
 
 ## ❤️ Donations
 
-### 🤖 TopazBot
+### 📻 TopazBot
 
 Please consider donating to help maintain the public TopazBot server.
 
 - TopazBot [GitHub Sponsors](https://github.com/sponsors/ROZ-MOFUMOFU-ME?o=sd&sc=t)
 
-### 💬 TopazChat
+### 💎 TopazChat
 
 The developer of TopazChat, Hirotoshi Yoshitaka, is seeking donations to cover server maintenance and data transfer costs.
 
@@ -304,11 +304,11 @@ The developer of TopazChat, Hirotoshi Yoshitaka, is seeking donations to cover s
 
 ## 🙏 Credits
 
-### 🤖 TopazBot
+### 📻 TopazBot
 
 - Aoi Emerauda [@emerauda](https://github.com/emerauda)
 
-### 💬 TopazChat
+### 💎 TopazChat
 
 - Hirotoshi Yoshitaka [@TyounanMOTI](https://github.com/TyounanMOTI) TopazChat Developer
 
