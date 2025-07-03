@@ -58,7 +58,7 @@ jobs:
               - docs
               - README.md
               - README-JP.md
-            theme: jekyll-theme-chirpy
+            theme: jekyll-theme-midnight
             markdown: kramdown
             permalink: pretty
             plugins:
@@ -83,16 +83,9 @@ jobs:
               - dist
               - build
               // dark mode
-            # Use Chirpy theme with dark mode 
-            chirpy:
+            # Use Midnight theme with dark mode
+            midnight:
               skin: dark
-            # Use the default layout for all pages
-            defaults:
-              - scope: 
-                  path: ""
-                  type: "pages"
-              - values:
-                  layout: default
             # Custom head script for Mermaid diagrams
             head_custom: |
               <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.8.0/mermaid.min.js"></script>
