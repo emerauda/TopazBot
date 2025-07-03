@@ -130,7 +130,7 @@ img {
 /* Layout wrapper to center content like GitHub */
 .wrapper {
   margin: 0 auto;
-  max-width: 960px;
+  max-width: 780px;
   padding: 24px;
 }
 
