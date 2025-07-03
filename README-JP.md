@@ -184,31 +184,6 @@ TopazBotは以下のスラッシュコマンドに対応しています。
 ---
 
 ## 🏗️ アーキテクチャ
-
-<div class="mermaid" align="center">
-graph TD
-    subgraph "Discord Server"
-        User
-        DiscordVoiceChannel[Discord Voice Channel]
-    end
-
-    subgraph "Your Server (VPS)"
-        TopazBot
-        FFmpeg
-    end
-
-    subgraph "TopazChat Server"
-        TopazChat
-    end
-
-    User -- "/play" --> TopazBot
-    TopazBot -- "RTSP Stream Request" --> TopazChat
-    TopazChat -- "RTSP Stream" --> FFmpeg
-    FFmpeg -- "Opus Audio" --> TopazBot
-    TopazBot -- "Sends Audio" --> DiscordVoiceChannel
-
-</div>
-
 ```mermaid
 graph TD
     subgraph "Discord Server"
