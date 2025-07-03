@@ -56,7 +56,9 @@ jobs:
             baseurl: "/TopazBot"
             include:
               - docs
+              - docs/assets
               - README.md
+              - README-JP.md
             theme: jekyll-theme-minima
             markdown: kramdown
             permalink: pretty
