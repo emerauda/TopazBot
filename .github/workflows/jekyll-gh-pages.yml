@@ -58,6 +58,9 @@ jobs:
               - docs
               - README.md
               - README-JP.md
+              - assets
+              - _includes
+              - _layouts
             theme: jekyll-theme-minima
             markdown: kramdown
             permalink: pretty
@@ -78,13 +81,20 @@ jobs:
               - .env.example
               - coverage
               - tests
+              - test
               - src
               - dist
               - build
+              - _config.yml
             minima:
-              custom_css: docs/assets/dark.css
+              skin: dark
             head_custom: |
               <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.8.0/mermaid.min.js"></script>
+              <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                  mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+                });
+              </script>
 
       # Debug: List generated files
       - name: Debug Jekyll output

@@ -1,0 +1,87 @@
+@import "minima";
+
+/* Dark theme overrides for Jekyll site */
+body {
+  background-color: #0d1117 !important;
+  color: #c9d1d9 !important;
+}
+
+.site-header {
+  background-color: #161b22 !important;
+  border-bottom: 1px solid #30363d !important;
+}
+
+.site-title, .site-title:visited {
+  color: #c9d1d9 !important;
+}
+
+.site-nav .page-link {
+  color: #c9d1d9 !important;
+}
+
+.wrapper {
+  background-color: #0d1117 !important;
+}
+
+.page-content {
+  background-color: #0d1117 !important;
+}
+
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4,
+.post-content h5,
+.post-content h6 {
+  color: #c9d1d9 !important;
+  border-bottom: 1px solid #21262d !important;
+}
+
+.post-content a {
+  color: #58a6ff !important;
+}
+
+.post-content code,
+.post-content pre {
+  background-color: #161b22 !important;
+  border: 1px solid #30363d !important;
+  color: #c9d1d9 !important;
+}
+
+.post-content blockquote {
+  color: #8b949e !important;
+  border-left: 4px solid #30363d !important;
+}
+
+.post-content table th,
+.post-content table td {
+  border: 1px solid #30363d !important;
+  background-color: #161b22 !important;
+  color: #c9d1d9 !important;
+}
+
+.post-content table tr {
+  background-color: #0d1117 !important;
+  border-top: 1px solid #21262d !important;
+}
+
+.post-content table tr:nth-child(2n) {
+  background-color: #161b22 !important;
+}
+
+.post-content img {
+  background-color: #161b22 !important;
+  border-radius: 4px !important;
+  padding: 2px !important;
+}
+
+.site-footer {
+  background-color: #161b22 !important;
+  border-top: 1px solid #30363d !important;
+  color: #8b949e !important;
+}
+
+/* Mermaid diagram styling */
+.mermaid {
+  background-color: transparent !important;
+}
