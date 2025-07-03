@@ -1,11 +1,10 @@
-# ![logo](docs/icon/32x32.png) TopazBot - RTSP Discord Music bot for TopazChat
+# ![logo](https://emerauda.github.io/TopazBot/docs/icon/32x32.png) TopazBot - RTSP Discord Music bot for TopazChat
 
 [![Lint/Format](https://github.com/emerauda/TopazBot/actions/workflows/lint.yml/badge.svg)](https://github.com/emerauda/TopazBot/actions/workflows/lint.yml)
 [![Node.js CI](https://github.com/emerauda/TopazBot/actions/workflows/node.js.yml/badge.svg)](https://github.com/emerauda/TopazBot/actions/workflows/node.js.yml)
 [![CircleCI](https://circleci.com/gh/emerauda/TopazBot/tree/main.svg?style=svg)](https://circleci.com/gh/emerauda/TopazBot/tree/main)
 [![codecov](https://codecov.io/gh/emerauda/TopazBot/graph/badge.svg?token=PSJ1EUT6QO)](https://codecov.io/gh/emerauda/TopazBot)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Contributors](https://img.shields.io/github/contributors/emerauda/TopazBot.svg)](https://github.com/emerauda/TopazBot/graphs/contributors)
 [![Node.js](https://img.shields.io/badge/Node.js-22.x-green.svg)](https://nodejs.org/)
 [![Discord](https://img.shields.io/badge/Discord-Bot-5865F2?style=flat&logo=discord&logoColor=white)](https://discord.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -36,8 +35,8 @@ _「TopazBot」はMITライセンス下にありますが、「TopazChat」は�
 
 ### 📝 詳細
 
-[TopazChat](https://github.com/TopazChat/TopazChat)は、高品質・低遅延のRTSPサーバです。個人での利用は無料です。
-[TopazChat ダウンロード](https://booth.pm/ja/items/1752066)TopazChatの費用は、開発者のよしたかさん[@TyounanMOTI](https://github.com/TyounanMOTI)が負担しています。
+[TopazChat](https://github.com/TopazChat/TopazChat)は、高品質・低遅延のRTSPサーバです。個人での利用は無料です。[TopazChat ダウンロード](https://booth.pm/ja/items/1752066)
+TopazChatの費用は、開発者のよしたかさん[@TyounanMOTI](https://github.com/TyounanMOTI)が負担しています。
 サーバーの維持費や音声・動画配信のデータ転送料のために寄付をお願いします！→[FANBOX](https://tyounanmoti.fanbox.cc/)
 TopazChatのすべてのスポンサーは、SPONSORS.txtに記載されています。
 
@@ -66,7 +65,7 @@ TopazBotを導入するには、2つの方法があります。
 #### 📋 前提条件
 
 - Linux サーバー
-- ffmpeg
+- FFmpeg (RTSP対応版)
 - Node.js 22.x
 - npm または yarn
 - Discord Bot Token
@@ -394,13 +393,25 @@ body {
 .main-content table tr { background-color: #0d1117; border-top: 1px solid #21262d; }
 .main-content table tr:nth-child(2n) { background-color: #161b22; }
 
-/* Dark theme code and table backgrounds */
-.main-content pre, .main-content code {
+/* Dark theme code and tables */
+.main-content pre {
+  background-color: #161b22 !important;
+  border: 1px solid #30363d !important;
+}
+.main-content pre code {
   background-color: #161b22 !important;
 }
-.main-content table th, .main-content table td {
+.main-content table tr,
+.main-content table th,
+.main-content table td {
   background-color: #161b22 !important;
+}
+/* Dark theme image backgrounds */
+.main-content img {
+  background-color: #161b22 !important;
+  border-radius: 4px !important;
+  padding: 2px !important;
 }
 </style>
-<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.8.0/mermaid.min.js"></script>
 <script>mermaid.initialize({startOnLoad:true, theme: 'dark'});</script>

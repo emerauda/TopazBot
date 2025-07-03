@@ -5,8 +5,7 @@
 [![CircleCI](https://circleci.com/gh/emerauda/TopazBot/tree/main.svg?style=svg)](https://circleci.com/gh/emerauda/TopazBot/tree/main)
 [![codecov](https://codecov.io/gh/emerauda/TopazBot/graph/badge.svg?token=PSJ1EUT6QO)](https://codecov.io/gh/emerauda/TopazBot)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Contributors](https://img.shields.io/github/contributors/emerauda/TopazBot.svg)](https://github.com/emerauda/TopazBot/graphs/contributors)
-[![Node.js](https://img.shields.io/badge/Node.js-22-green.svg)](https://nodejs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-22.x-green.svg)](https://nodejs.org/)
 [![Discord](https://img.shields.io/badge/Discord-Bot-5865F2?style=flat&logo=discord&logoColor=white)](https://discord.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -36,8 +35,7 @@ _"TopazBot" is under the MIT license, but "TopazChat" is not for commercial use.
 
 ### 📝 Details
 
-[TopazChat](https://github.com/TopazChat/TopazChat) is a high-quality, low-latency RTSP server. It is free for personal use.
-[TopazChat Download](https://booth.pm/ja/items/1752066)
+[TopazChat](https://github.com/TopazChat/TopazChat) is a high-quality, low-latency RTSP server. It is free for personal use.[TopazChat Download](https://booth.pm/ja/items/1752066)
 The costs for TopazChat are covered by the developer, Hirotoshi Yoshitaka [@TyounanMOTI](https://github.com/TyounanMOTI).
 Please consider donating to help with server maintenance and data transfer costs for audio/video streaming! → [FANBOX](https://tyounanmoti.fanbox.cc/)
 All sponsors of TopazChat are listed in SPONSORS.txt.
@@ -67,7 +65,7 @@ You can host the bot on your own server.
 #### 📋 Prerequisites
 
 - Linux Server
-- ffmpeg
+- FFmpeg (RTSP-enabled)
 - Node.js 22.x
 - npm or yarn
 - Discord Bot Token
@@ -396,13 +394,25 @@ body {
 .main-content table tr { background-color: #0d1117; border-top: 1px solid #21262d; }
 .main-content table tr:nth-child(2n) { background-color: #161b22; }
 
-/* Dark theme code and table backgrounds */
-.main-content pre, .main-content code {
+/* Dark theme code and tables */
+.main-content pre {
+  background-color: #161b22 !important;
+  border: 1px solid #30363d !important;
+}
+.main-content pre code {
   background-color: #161b22 !important;
 }
-.main-content table th, .main-content table td {
+.main-content table tr,
+.main-content table th,
+.main-content table td {
   background-color: #161b22 !important;
+}
+/* Dark theme image backgrounds */
+.main-content img {
+  background-color: #161b22 !important;
+  border-radius: 4px !important;
+  padding: 2px !important;
 }
 </style>
-<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.8.0/mermaid.min.js"></script>
 <script>mermaid.initialize({startOnLoad:true, theme: 'dark'});</script>
