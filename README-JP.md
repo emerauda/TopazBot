@@ -1,4 +1,4 @@
-# ![logo](https://github.com/user-attachments/assets/22fe1af3-7d0c-48e4-bff3-3a89ba03d9cb) TopazBot - RTSP Discord Music bot for TopazChat
+# ![logo](https://github.com/emerauda/TopazBot/blob/main/docs/icon/32x32.png) TopazBot - RTSP Discord Music bot for TopazChat
 
 [![Lint/Format](https://github.com/emerauda/TopazBot/actions/workflows/lint.yml/badge.svg)](https://github.com/emerauda/TopazBot/actions/workflows/lint.yml)
 [![Node.js CI](https://github.com/emerauda/TopazBot/actions/workflows/node.js.yml/badge.svg)](https://github.com/emerauda/TopazBot/actions/workflows/node.js.yml)
