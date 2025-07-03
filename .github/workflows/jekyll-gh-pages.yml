@@ -82,8 +82,18 @@ jobs:
               - src
               - dist
               - build
+              // dark mode
+            # Use Chirpy theme with dark mode 
             chirpy:
               skin: dark
+            # Use the default layout for all pages
+            defaults:
+              - scope: 
+                  path: ""
+                  type: "pages"
+              - values:
+                  layout: default
+            # Custom head script for Mermaid diagrams
             head_custom: |
               <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.8.0/mermaid.min.js"></script>
               <script>

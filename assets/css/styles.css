@@ -1,0 +1,46 @@
+@import "minimal";
+
+/* Dark Theme Override */
+body {
+    background: #212121;
+    color: #e0e0e0;
+}
+
+#title {
+    border-color: #424242;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #ffffff;
+    border-bottom-color: #424242;
+}
+
+a {
+    color: #64b5f6;
+}
+
+a:hover,
+a:focus {
+    color: #90caf9;
+}
+
+hr {
+    border-color: #424242;
+}
+
+pre,
+code {
+    background-color: #333;
+    border: 1px solid #444;
+    color: #f5f5f5;
+}
+
+blockquote {
+    border-left-color: #424242;
+    color: #bdbdbd;
+}
