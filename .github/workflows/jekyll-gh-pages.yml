@@ -57,6 +57,7 @@ jobs:
             include:
               - docs
               - README.md
+            theme: jekyll-theme-minima
             markdown: kramdown
             permalink: pretty
             plugins:
@@ -95,7 +96,9 @@ jobs:
             /* Dark theme global overrides */\
             body, .markdown-body { background-color: #0d1117 !important; color: #c9d1d9 !important; }\
             .markdown-body pre, .markdown-body code { background-color: #161b22 !important; }\
-            .markdown-body table th, .markdown-body table td { background-color: #161b22 !important; }\
+            .markdown-body .highlight pre, .markdown-body .highlight code { background-color: #161b22 !important; }\
+            .markdown-body table th, .markdown-body table td, .markdown-body table tr { background-color: #161b22 !important; }\
+            .markdown-body img { background-color: #0d1117 !important; }\
             img { background-color: #161b22 !important; padding: 2px; border-radius: 4px; }\
             .badge, .social-count { background-color: #21262c !important; }\
           </style>' {} \;
