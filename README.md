@@ -1,4 +1,4 @@
-﻿# ![logo](https://github.com/emerauda/TopazBot/blob/main/docs/icon/32x32.png) TopazBot - RTSP Discord Music bot for TopazChat
+﻿# ![logo](https://emerauda.github.io/TopazBot/docs/icon/32x32.png) TopazBot - RTSP Discord Music bot for TopazChat
 
 [![Lint/Format](https://github.com/emerauda/TopazBot/actions/workflows/lint.yml/badge.svg)](https://github.com/emerauda/TopazBot/actions/workflows/lint.yml)
 [![Node.js CI](https://github.com/emerauda/TopazBot/actions/workflows/node.js.yml/badge.svg)](https://github.com/emerauda/TopazBot/actions/workflows/node.js.yml)
@@ -250,7 +250,7 @@ npm test
 
 # Generate coverage report
 npm run test:coverage
-# The coverage report can be viewed at ./coverage/lcov-report/index.html
+# The coverage report can be viewed at [coverage](https://emerauda.github.io/TopazBot/coverage/)
 ```
 
 ---
