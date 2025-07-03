@@ -338,7 +338,8 @@ TopazChatのサーバー維持費やデータ転送料について、開発者�
 
 ## 🌟 スター履歴
 
-[![Star History Chart](https://api.star-history.com/svg?repos=emerauda/TopazBot&type=Date)](https://star-history.com/#emerauda/TopazBot&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=emerauda/TopazBot&type=Date&theme=dark)](https://star-history.com/#emerauda/TopazBot&Date)
+
 
 ---
 

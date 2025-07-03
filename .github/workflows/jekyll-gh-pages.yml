@@ -84,11 +84,21 @@ jobs:
       - name: Add Mermaid support to HTML files
         run: |
           echo "Adding Mermaid support to HTML files..."
+          echo "Injecting dark theme CSS overrides..."
           # Add Mermaid script to head section
           find site -name "*.html" -exec sed -i '/<\/head>/i\
-          <script src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js"></script>\
-          <script>mermaid.initialize({startOnLoad:true, theme:"default"});</script>' {} \;
-          
+          <script src=\"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.8.0/mermaid.min.js\"></script>\
+          <script>mermaid.initialize({startOnLoad:true, theme:\"default\"});</script>' {} \;
+          # Inject dark theme CSS overrides into head
+          find site -name "*.html" -exec sed -i '/<\/head>/i\
+          <style>\
+            /* Dark theme global overrides */\
+            body, .markdown-body { background-color: #0d1117 !important; color: #c9d1d9 !important; }\
+            .markdown-body pre, .markdown-body code { background-color: #161b22 !important; }\
+            .markdown-body table th, .markdown-body table td { background-color: #161b22 !important; }\
+            img { background-color: #161b22 !important; padding: 2px; border-radius: 4px; }\
+            .badge, .social-count { background-color: #21262c !important; }\
+          </style>' {} \;
           # Convert mermaid code blocks to mermaid divs - handle both variations
           find site -name "*.html" -exec sed -i 's/<pre><code class="language-mermaid">/<div class="mermaid">/g' {} \;
           find site -name "*.html" -exec sed -i 's/<code class="language-mermaid">/<div class="mermaid">/g' {} \;
