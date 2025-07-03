@@ -256,8 +256,8 @@ npm test
 
 # Generate coverage report
 npm run test:coverage
-# The coverage report can be viewed at [coverage](https://emerauda.github.io/TopazBot/coverage/)
 ```
+### The coverage report can be viewed at [coverage](https://emerauda.github.io/TopazBot/coverage/)
 
 ---
 
