@@ -1,3 +1,8 @@
+/* Ensure the page background is dark */
+html, body {
+  background-color: #0d1117 !important;
+}
+
 /* Layout wrapper to center content like GitHub */
 .wrapper {
   margin: 0 auto;
