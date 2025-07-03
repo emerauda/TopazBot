@@ -5,11 +5,12 @@
 [![CircleCI](https://circleci.com/gh/emerauda/TopazBot/tree/main.svg?style=svg)](https://circleci.com/gh/emerauda/TopazBot/tree/main)
 [![codecov](https://codecov.io/gh/emerauda/TopazBot/graph/badge.svg?token=PSJ1EUT6QO)](https://codecov.io/gh/emerauda/TopazBot)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Contributors](https://img.shields.io/github/contributors/emerauda/TopazBot.svg)](https://github.com/emerauda/TopazBot/graphs/contributors)
 [![Node.js](https://img.shields.io/badge/Node.js-22.x-green.svg)](https://nodejs.org/)
 [![Discord](https://img.shields.io/badge/Discord-Bot-5865F2?style=flat&logo=discord&logoColor=white)](https://discord.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-![スクリーンショット](https://github.com/emerauda/TopazBot/assets/35634920/d95514b6-7993-4a35-ba02-c0f5736eb20a)
+![スクリーンショット](https://github.com/user-attachments/assets/6566930d-fee8-4ac2-965b-dfd506544979)
 
 [English README](./README.md)
 
@@ -25,7 +26,7 @@ _「TopazBot」はMITライセンス下にありますが、「TopazChat」は�
 
 ### ✨ 主な機能
 
-- 🧠 **高品質**: ステレオで高音質で低遅延なミュージックBot
+- 🧠 **高品質**: ステレオで高音質で低遅延なストリーム再生
 - 🔒 **セキュア**: Discord署名検証による安全な通信
 - 🌐 **多フォーマット対応**: ffmpegで柔軟なストリーム処理
 
@@ -56,7 +57,7 @@ TopazBotを導入するには、2つの方法があります。
 
 一番簡単な方法です。以下のリンクからあなたのDiscordサーバーにBotを追加できます。
 
-[ここをクリックしてBotを導入](https://discord.com/oauth2/authorize?client_id=876143776572248074&permissions=2150631424&integration_type=0&scope=bot)
+[ここをクリックしてBotを導入](https://discord.com/oauth2/authorize?client_id=876143776572248074)
 
 ### 2. セルフホストで利用する
 
@@ -206,6 +207,7 @@ graph TD
     TopazChat -- "RTSP Stream" --> FFmpeg
     FFmpeg -- "Opus Audio" --> TopazBot
     TopazBot -- "Sends Audio" --> DiscordVoiceChannel
+
 </div>
 
 ### 🔧 技術スタック
@@ -272,21 +274,18 @@ npm run test:coverage
 
 ## 🤝 コントリビューション
 
-[コントリビューションガイド](https://github.com/emerauda/TopazBot/blob/main/.github/CONTRIBUTING.md)
+オープンソースコミュニティを素晴らしい学び、創造、そしてインスピレーションの場にしてくれるのは、コントリビューションです。あなたのいかなる貢献も**心から感謝**しています。
 
-コントリビューションを歓迎します！以下の手順に従ってください：
+もしこのプロジェクトをより良くする提案があれば、リポジトリをフォークしてプルリクエストを作成してください。また、"enhancement" タグを付けてIssueを立てるだけでも構いません。
+プロジェクトにスターを付けるのもお忘れなく！ありがとうございます！
 
-1. 🔀 このリポジトリをフォーク
-2. 🌿 新しいブランチを作成 (`git checkout -b feature/amazing-feature`)
-3. 💾 変更をコミット (`git commit -m 'Add some amazing feature'`)
-4. 📤 ブランチにプッシュ (`git push origin feature/amazing-feature`)
-5. 🔃 プルリクエストを作成
+1.  プロジェクトをフォークする
+2.  機能ブランチを作成する (`git checkout -b feature/AmazingFeature`)
+3.  変更をコミットする (`git commit -m 'Add some AmazingFeature'`)
+4.  ブランチにプッシュする (`git push origin feature/AmazingFeature`)
+5.  プルリクエストを開く
 
-### 📋 コントリビューションガイドライン
-
-- コードスタイルは ESLint 設定に従ってください
-- 新機能にはテストを追加してください
-- コミットメッセージは分かりやすく記述してください
+プロセスや期待されることの詳細については、**[コントリビューションガイドライン](https://github.com/emerauda/TopazBot/blob/main/CONTRIBUTING.md)**をお読みください。
 
 ---
 
@@ -334,7 +333,7 @@ TopazChatのサーバー維持費やデータ転送料について、開発者�
 
 - 🐛 **バグレポート**: [Issues](https://github.com/emerauda/TopazBot/issues)
 - 💡 **機能要望**: [Discussions](https://github.com/emerauda/TopazBot/discussions)
-- 📧 **お問い合わせ**: [support@vrc-connections.com](mailto:support@vrc-connections.com)
+- 📧 **お問い合わせ**: [aoi@emerauda.com](mailto:aoi@emerauda.com)
 
 ---
 
@@ -362,5 +361,42 @@ Made with ❤️ by [Aoi Emerauda](https://github.com/emerauda)
 
 </div>
 
+<style>
+body {
+  background-color: #0d1117;
+  color: #c9d1d9;
+}
+.page-header {
+  background-color: #161b22;
+  border-bottom-color: #30363d;
+}
+.project-name, .project-tagline {
+  color: #c9d1d9;
+}
+.btn {
+  background-color: #21262c;
+  border-color: rgba(240,246,252,0.1);
+  color: #c9d1d9;
+}
+.btn:hover {
+  background-color: #30363d;
+  border-color: #8b949e;
+}
+.main-content { color: #c9d1d9; }
+.main-content h1, .main-content h2, .main-content h3, .main-content h4, .main-content h5, .main-content h6 {
+  color: #c9d1d9;
+  border-bottom: 1px solid #21262d;
+}
+.main-content a { color: #58a6ff; }
+.main-content code, .main-content pre { background-color: #161b22; border: 1px solid #30363d; }
+.main-content blockquote { color: #8b949e; border-left-color: #30363d; }
+.main-content table th, .main-content table td { border: 1px solid #30363d; }
+.main-content table tr { background-color: #0d1117; border-top: 1px solid #21262d; }
+.main-content table tr:nth-child(2n) { background-color: #161b22; }
+.site-footer { border-top-color: #30363d; }
+.site-footer-owner a, .site-footer-credits a { color: #58a6ff; }
+img[alt="logo"], img[alt="Star History Chart"] { filter: invert(1) hue-rotate(180deg); }
+img[alt="スクリーンショット"], img[alt="Contributors"], img[alt="GitHub Stats"] { filter: none; }
+</style>
 <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-<script>mermaid.initialize({startOnLoad:true});</script>
+<script>mermaid.initialize({startOnLoad:true, theme: 'dark'});</script>

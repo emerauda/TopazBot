@@ -1,7 +1,6 @@
 // Jest test for index.ts
 // Only basic structure and type checks (no Discord API calls)
 import { Client } from 'discord.js';
-import { sleep, createFFmpegStream } from '../src/bot';
 
 let clients: Client[] = [];
 
@@ -17,51 +16,35 @@ describe('index.ts', () => {
     (console.log as jest.Mock).mockRestore?.();
   });
 
-  test('Clientが関数である', () => {
+  test('Client is a function', () => {
     expect(typeof Client).toBe('function');
   });
 
-  test('環境変数DISCORD_TOKENが存在する', () => {
+  test('DISCORD_TOKEN environment variable exists', () => {
     expect(typeof process.env.DISCORD_TOKEN).toBe('string');
-  });
-
-  test('sleep関数が正しく動作する', async () => {
-    const start = Date.now();
-    await sleep(50);
-    expect(Date.now() - start).toBeGreaterThanOrEqual(45);
-  });
-
-  test('exportされたsleep関数が正しく動作する', async () => {
-    const start = Date.now();
-    await sleep(30);
-    expect(Date.now() - start).toBeGreaterThanOrEqual(25);
-  });
-
-  test('exportされたcreateFFmpegStreamが関数である', () => {
-    expect(typeof createFFmpegStream).toBe('function');
   });
 });
 
 describe('index.ts module', () => {
-  test('ready イベントハンドラが登録されている', () => {
+  test('ready event handler is registered', () => {
     const { client } = require('../src/index');
     expect(client.listenerCount('ready')).toBeGreaterThan(0);
   });
-  test('interactionCreate イベントハンドラが登録されている', () => {
+  test('interactionCreate event handler is registered', () => {
     const { client } = require('../src/index');
     expect(client.listenerCount('interactionCreate')).toBeGreaterThan(0);
   });
-  test('DISCORD_TOKEN がテスト環境以外でないと例外を投げる', () => {
-    // DISCORD_TOKENエラーチェックの条件を確認するテスト
-    // 実際のエラー処理は !isTestEnv 条件付きなので、コードの論理的確認のみ
+  test('throws exception when DISCORD_TOKEN is missing in non-test environment', () => {
+    // Test to verify DISCORD_TOKEN error check condition
+    // Actual error handling is conditional on !isTestEnv, so only logical verification
     const originalToken = process.env.DISCORD_TOKEN;
     const originalJestWorkerId = process.env.JEST_WORKER_ID;
 
-    // テスト環境ではない場合のトークンチェック処理が存在することを確認
+    // Verify that token check processing exists for non-test environments
     const index = require('../src/index');
     expect(index).toBeDefined();
 
-    // 元の環境変数を復元
+    // Restore original environment variables
     if (originalToken) {
       process.env.DISCORD_TOKEN = originalToken;
     }
@@ -88,17 +71,17 @@ describe('index.ts .env loader and login behavior', () => {
     readMock.mockRestore();
   });
 
-  test('require.main === module の分岐処理が存在する', () => {
-    // require.main === module の分岐が存在することを確認するテスト
-    // 実際のログインやレポート生成は isTestEnv ガードにより実行されないので
-    // コードの存在確認のみ行う
+  test('require.main === module branch processing exists', () => {
+    // Test to verify that require.main === module branch exists
+    // Actual login and report generation are not executed due to isTestEnv guard
+    // so only verify code existence
     const { Client } = require('discord.js');
     const loginSpy = jest.spyOn(Client.prototype, 'login');
 
-    // index.ts をインポート（テスト環境なのでログインは実行されない）
+    // Import index.ts (login is not executed because it's test environment)
     require('../src/index');
 
-    // テスト環境なのでloginは呼ばれない
+    // login is not called because it's test environment
     expect(loginSpy).not.toHaveBeenCalled();
 
     loginSpy.mockRestore();

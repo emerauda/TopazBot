@@ -32,4 +32,4 @@ TopazBot respects your privacy. This Privacy Policy explains how we collect, use
 
 We may update this Privacy Policy periodically. The latest version will always be available here.
 
-If you have questions or concerns, please contact us at support@vrc-connections.com.
+If you have questions or concerns, please contact us at aoi@emerauda.com.

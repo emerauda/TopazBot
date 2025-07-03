@@ -1,4 +1,10 @@
-import { CommandInteraction, GuildMember, ChannelType, VoiceChannel } from 'discord.js';
+import {
+  CommandInteraction,
+  ChatInputCommandInteraction,
+  GuildMember,
+  ChannelType,
+  VoiceChannel,
+} from 'discord.js';
 import type { VoiceConnection, AudioPlayer as AudioPlayerType } from '@discordjs/voice';
 import {
   joinVoiceChannel,
@@ -312,4 +318,163 @@ export async function handleInteraction(interaction: any) {
     });
     await interaction.editReply('Destroyed.');
   }
+}
+
+// Individual command handlers for testing
+export async function handlePlayCommand(interaction: ChatInputCommandInteraction) {
+  if (!interaction.guildId) return;
+
+  const guildId = interaction.guildId;
+  const member = interaction.member as GuildMember;
+  const voiceChannel = member.voice.channel;
+  let state = guildAudioStates.get(guildId);
+  if (!state) {
+    state = {
+      connection: null,
+      player: null,
+      streamKey: null,
+      streamUrl: null,
+      lastActivityTime: Date.now(),
+      isPlaying: false,
+      ffmpegProcess: null,
+    };
+    guildAudioStates.set(guildId, state);
+  }
+
+  await interaction.deferReply();
+  if (!voiceChannel || voiceChannel.type !== ChannelType.GuildVoice) {
+    await interaction.editReply('You need to be in a voice channel to play music!');
+    return;
+  }
+  const vc = voiceChannel as VoiceChannel;
+  if (!vc.joinable || !vc.speakable) {
+    await interaction.editReply('Cannot join or speak in the voice channel.');
+    return;
+  }
+  if (!state.connection || state.connection.state.status === VoiceConnectionStatus.Destroyed) {
+    state.connection = joinVoiceChannel({
+      channelId: vc.id,
+      guildId: guildId,
+      adapterCreator: vc.guild.voiceAdapterCreator,
+    });
+  }
+  const streamKey = interaction.options.getString('streamkey');
+  if (!streamKey) {
+    await interaction.editReply('streamkey is not specified.');
+    return;
+  }
+  state.streamKey = streamKey;
+  state.streamUrl = `rtsp://topaz.chat/live/${streamKey}`;
+  // Prevent multiple playStream per guild
+  if (!state.isPlaying) {
+    state.isPlaying = true;
+    await interaction.editReply(`Playing stream: ${streamKey}`);
+    playStream(state, interaction).finally(() => {
+      state.isPlaying = false;
+    });
+  } else {
+    await interaction.editReply('Already playing.');
+  }
+}
+
+export async function handleStopCommand(interaction: ChatInputCommandInteraction) {
+  if (!interaction.guildId) return;
+
+  const guildId = interaction.guildId;
+  let state = guildAudioStates.get(guildId);
+  if (!state) {
+    state = {
+      connection: null,
+      player: null,
+      streamKey: null,
+      streamUrl: null,
+      lastActivityTime: Date.now(),
+      isPlaying: false,
+      ffmpegProcess: null,
+    };
+    guildAudioStates.set(guildId, state);
+  }
+
+  await interaction.deferReply();
+  if (state.ffmpegProcess) {
+    state.ffmpegProcess.kill();
+  }
+  if (state.connection) {
+    const destroyedKey = state.streamKey;
+    state.connection.destroy();
+    // Only log in non-test environment
+    if (!process.env.JEST_WORKER_ID) {
+      console.log(`${destroyedKey} is destroyed!`);
+    }
+    await interaction.editReply('Stopped playing and left the channel.');
+  } else {
+    await interaction.editReply('Not in a voice channel.');
+  }
+  // Reset all state for this guild
+  guildAudioStates.set(guildId, {
+    connection: null,
+    player: null,
+    streamKey: null,
+    streamUrl: null,
+    lastActivityTime: Date.now(),
+    isPlaying: false,
+    ffmpegProcess: null,
+  });
+}
+
+export async function handleResyncCommand(interaction: ChatInputCommandInteraction) {
+  if (!interaction.guildId) return;
+
+  const guildId = interaction.guildId;
+  const member = interaction.member as GuildMember;
+  const voiceChannel = member.voice.channel;
+  let state = guildAudioStates.get(guildId);
+  if (!state) {
+    state = {
+      connection: null,
+      player: null,
+      streamKey: null,
+      streamUrl: null,
+      lastActivityTime: Date.now(),
+      isPlaying: false,
+      ffmpegProcess: null,
+    };
+    guildAudioStates.set(guildId, state);
+  }
+
+  await interaction.deferReply();
+  if (!voiceChannel || voiceChannel.type !== ChannelType.GuildVoice) {
+    await interaction.editReply('Please join a voice channel.');
+    return;
+  }
+  const vc = voiceChannel as VoiceChannel;
+
+  // Force stop current playback if exists
+  if (state.connection) {
+    state.connection.destroy();
+  }
+  // Create new connection
+  state.connection = joinVoiceChannel({
+    channelId: vc.id,
+    guildId: guildId,
+    adapterCreator: vc.guild.voiceAdapterCreator,
+  });
+
+  // Get streamkey from command option or use previous one
+  let streamKey = interaction.options.getString('streamkey');
+  if (!streamKey) {
+    streamKey = state.streamKey ?? null;
+  }
+  if (!streamKey) {
+    await interaction.editReply('streamkey is not specified.');
+    return;
+  }
+  state.streamKey = streamKey;
+  state.streamUrl = `rtsp://topaz.chat/live/${streamKey}`;
+
+  // Force start playback
+  state.isPlaying = true;
+  playStream(state, interaction, true).finally(() => {
+    state.isPlaying = false;
+  });
 }

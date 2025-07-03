@@ -144,3 +144,9 @@ coverage/
 
 # bin
 bin/
+
+# vscode
+.vscode/
+# allow workspace-specific VS Code settings
+!.vscode/
+!.vscode/settings.json

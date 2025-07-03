@@ -5,11 +5,12 @@
 [![CircleCI](https://circleci.com/gh/emerauda/TopazBot/tree/main.svg?style=svg)](https://circleci.com/gh/emerauda/TopazBot/tree/main)
 [![codecov](https://codecov.io/gh/emerauda/TopazBot/graph/badge.svg?token=PSJ1EUT6QO)](https://codecov.io/gh/emerauda/TopazBot)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Node.js](https://img.shields.io/badge/Node.js-22.x-green.svg)](https://nodejs.org/)
+[![Contributors](https://img.shields.io/github/contributors/emerauda/TopazBot.svg)](https://github.com/emerauda/TopazBot/graphs/contributors)
+[![Node.js](https://img.shields.io/badge/Node.js-22-green.svg)](https://nodejs.org/)
 [![Discord](https://img.shields.io/badge/Discord-Bot-5865F2?style=flat&logo=discord&logoColor=white)](https://discord.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-![Screenshot](https://github.com/emerauda/TopazBot/assets/35634920/d95514b6-7993-4a35-ba02-c0f5736eb20a)
+![スクリーンショット](https://github.com/user-attachments/assets/6566930d-fee8-4ac2-965b-dfd506544979)
 
 [日本語README](./README-JP.md)
 
@@ -25,7 +26,7 @@ _"TopazBot" is under the MIT license, but "TopazChat" is not for commercial use.
 
 ### ✨ Key Features
 
-- 🧠 **High Quality**: A stereo, high-quality, low-latency music bot.
+- 🧠 **High Quality**: Stereo, high-fidelity, low-latency stream playback.
 - 🔒 **Secure**: Safe communication with Discord signature verification.
 - 🌐 **Multi-format Support**: Flexible stream processing with ffmpeg.
 
@@ -57,7 +58,7 @@ There are two ways to get started with TopazBot.
 
 This is the easiest way. You can add the bot to your Discord server using the link below:
 
-[Click here to add the bot](https://discord.com/oauth2/authorize?client_id=876143776572248074&permissions=2150631424&integration_type=0&scope=bot)
+[Click here to add the bot](https://discord.com/oauth2/authorize?client_id=876143776572248074)
 
 ### 2. Self-Hosting
 
@@ -208,6 +209,7 @@ graph TD
     TopazChat -- "RTSP Stream" --> FFmpeg
     FFmpeg -- "Opus Audio" --> TopazBot
     TopazBot -- "Sends Audio" --> DiscordVoiceChannel
+
 </div>
 
 ### 🔧 Tech Stack
@@ -272,23 +274,20 @@ Created by [Discord.js Japan user Group](https://scrapbox.io/discordjs-japan/)
 
 ---
 
-## 🤝 Contribution
+## 🤝 Contributing to TopazBot
 
-See [Contributing Guide](https://github.com/emerauda/TopazBot/blob/main/.github/CONTRIBUTING.md).
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-Contributions are welcome! Please follow these steps:
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+Don't forget to give the project a star! Thanks again!
 
-1. 🔀 Fork this repository
-2. 🌿 Create a new branch (`git checkout -b feature/amazing-feature`)
-3. 💾 Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. 📤 Push to the branch (`git push origin feature/amazing-feature`)
-5. 🔃 Create a Pull Request
+1.  Fork the Project
+2.  Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3.  Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4.  Push to the Branch (`git push origin feature/AmazingFeature`)
+5.  Open a Pull Request
 
-### 📋 Contribution Guidelines
-
-- Follow the code style defined in the ESLint configuration.
-- Add tests for new features.
-- Write clear and concise commit messages.
+Please read our [Contributing Guidelines](https://github.com/emerauda/TopazBot/blob/main/CONTRIBUTING.md) for more details on the process and what we expect.
 
 ---
 
@@ -336,7 +335,7 @@ This project is released under the MIT License. See the [LICENSE](LICENSE) file 
 
 - 🐛 **Bug Reports**: [Issues](https://github.com/emerauda/TopazBot/issues)
 - 💡 **Feature Requests**: [Discussions](https://github.com/emerauda/TopazBot/discussions)
-- 📧 **Contact**: [support@vrc-connections.com](mailto:support@vrc-connections.com)
+- 📧 **Contact**: [aoi@emerauda.com](mailto:aoi@emerauda.com)
 
 ---
 
@@ -364,5 +363,42 @@ Made with ❤️ by [Aoi Emerauda](https://github.com/emerauda)
 
 </div>
 
+<style>
+body {
+  background-color: #0d1117;
+  color: #c9d1d9;
+}
+.page-header {
+  background-color: #161b22;
+  border-bottom-color: #30363d;
+}
+.project-name, .project-tagline {
+  color: #c9d1d9;
+}
+.btn {
+  background-color: #21262c;
+  border-color: rgba(240,246,252,0.1);
+  color: #c9d1d9;
+}
+.btn:hover {
+  background-color: #30363d;
+  border-color: #8b949e;
+}
+.main-content { color: #c9d1d9; }
+.main-content h1, .main-content h2, .main-content h3, .main-content h4, .main-content h5, .main-content h6 {
+  color: #c9d1d9;
+  border-bottom: 1px solid #21262d;
+}
+.main-content a { color: #58a6ff; }
+.main-content code, .main-content pre { background-color: #161b22; border: 1px solid #30363d; }
+.main-content blockquote { color: #8b949e; border-left-color: #30363d; }
+.main-content table th, .main-content table td { border: 1px solid #30363d; }
+.main-content table tr { background-color: #0d1117; border-top: 1px solid #21262d; }
+.main-content table tr:nth-child(2n) { background-color: #161b22; }
+.site-footer { border-top-color: #30363d; }
+.site-footer-owner a, .site-footer-credits a { color: #58a6ff; }
+img[alt="logo"], img[alt="Star History Chart"] { filter: invert(1) hue-rotate(180deg); }
+img[alt="スクリーンショット"], img[alt="Contributors"], img[alt="GitHub Stats"] { filter: none; }
+</style>
 <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-<script>mermaid.initialize({startOnLoad:true});</script>
+<script>mermaid.initialize({startOnLoad:true, theme: 'dark'});</script>

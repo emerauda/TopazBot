@@ -28,4 +28,4 @@ Welcome to TopazBot. By using this bot and its related services, you agree to be
 
 We may update these terms from time to time. Changes will be posted on this page.
 
-For questions regarding these Terms of Service, contact support@vrc-connections.com.
+For questions regarding these Terms of Service, contact aoi@emerauda.com.
