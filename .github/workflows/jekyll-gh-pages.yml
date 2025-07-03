@@ -45,12 +45,15 @@ jobs:
           source: ./
           destination: site
 
+      - name: Merge coverage into site
+        run: |
+          mkdir -p site/coverage
+          cp -r coverage/lcov-report/* site/coverage/
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: |
-            site
-            coverage
+          path: site
 
   deploy:
     environment:
@@ -69,7 +72,7 @@ jobs:
           rm -rf site
           echo "Cleanup completed successfully!"
       - name: Finalize
-        run: echo "Linting completed successfully!"
+        run: echo "Deployment to GitHub Pages completed successfully!"
       - name: Notify success
         run: echo "Deployment to GitHub Pages completed successfully!"
         env:
