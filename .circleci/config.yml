@@ -58,7 +58,7 @@ jobs:
   
   test-v24:
     docker:
-      - image: cimg/base:stable
+      - image: cimg/node:24.3
     steps:
       - checkout
       - node/install:

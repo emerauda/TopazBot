@@ -43,17 +43,20 @@ jobs:
         uses: actions/jekyll-build-pages@v1
         with:
           source: ./
-          destination: ./_site
+          destination: site
 
-      - name: Merge coverage report into site
+      # Prepare coverage folder for Pages (avoid modifying site directly)
+      - name: Prepare coverage directory
         run: |
-          mkdir -p _site/coverage
-          cp -r coverage/lcov-report/* _site/coverage/
+          rm -rf coverage
+          cp -r coverage/lcov-report coverage
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: _site
+          path: |
+            site
+            coverage
 
   deploy:
     environment:
@@ -69,7 +72,7 @@ jobs:
         run: |
           rm -rf node_modules
           rm -rf coverage
-          rm -rf _site/coverage
+          rm -rf site
           echo "Cleanup completed successfully!"
       - name: Finalize
         run: echo "Linting completed successfully!"
