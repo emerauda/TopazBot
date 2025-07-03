@@ -1,4 +1,4 @@
-﻿# 📻 TopazBot - RTSP Discord Music bot for TopazChat
+﻿# ![logo](https://github.com/user-attachments/assets/22fe1af3-7d0c-48e4-bff3-3a89ba03d9cb) TopazBot - RTSP Discord Music bot for TopazChat
 
 [![Lint/Format](https://github.com/emerauda/TopazBot/actions/workflows/lint.yml/badge.svg)](https://github.com/emerauda/TopazBot/actions/workflows/lint.yml)
 [![Node.js CI](https://github.com/emerauda/TopazBot/actions/workflows/node.js.yml/badge.svg)](https://github.com/emerauda/TopazBot/actions/workflows/node.js.yml)
@@ -51,12 +51,19 @@ Join: https://discord.com/invite/fCMcJ8A
 
 ## 🚀 Quick Start
 
-### 🔗 Public TopazBot URL
+There are two ways to get started with TopazBot.
 
-You can add the bot using the URL below:
-https://discord.com/oauth2/authorize?client_id=876143776572248074&permissions=2150631424&integration_type=0&scope=bot
+### 1. Use the Public Bot
 
-### 📋 Prerequisites for Self-Hosting
+This is the easiest way. You can add the bot to your Discord server using the link below:
+
+[Click here to add the bot](https://discord.com/oauth2/authorize?client_id=876143776572248074&permissions=2150631424&integration_type=0&scope=bot)
+
+### 2. Self-Hosting
+
+You can host the bot on your own server.
+
+#### 📋 Prerequisites
 
 - Linux Server
 - ffmpeg
@@ -65,13 +72,13 @@ https://discord.com/oauth2/authorize?client_id=876143776572248074&permissions=21
 - Discord Bot Token
 - TopazChat Stream
 
-## 📦 Dependencies
+#### 📦 Dependencies
 
 This library requires one dependency from each of the categories below to support various platforms.
 The dependencies are listed in order of performance preference.
 If you cannot install one of the options, try installing another.
 
-### 🐧 Debian or Ubuntu
+##### 🐧 Debian or Ubuntu
 
 **node & npm:**
 
@@ -106,7 +113,7 @@ If you cannot install one of the options, try installing another.
 
 - `pm2`
 
-### 🛠️ Installation
+#### 🛠️ Installation
 
 ```bash
 # Clone the repository
@@ -121,7 +128,7 @@ cp .env.example .env
 # Edit the .env file and set the required environment variables
 ```
 
-### ⚙️ Configuration
+#### ⚙️ Configuration
 
 Set the following environment variable in your `.env` file:
 
@@ -129,7 +136,7 @@ Set the following environment variable in your `.env` file:
 DISCORD_TOKEN=your_discord_bot_token
 ```
 
-### 🚀 Deployment
+#### 🚀 Deployment
 
 ```bash
 # Build

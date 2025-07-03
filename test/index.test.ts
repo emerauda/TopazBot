@@ -1,6 +1,6 @@
 // Jest test for index.ts
 // Only basic structure and type checks (no Discord API calls)
-import { Client, GatewayIntentBits } from 'discord.js';
+import { Client } from 'discord.js';
 import { sleep, createFFmpegStream } from '../src/bot';
 
 let clients: Client[] = [];
@@ -80,8 +80,8 @@ describe('index.ts .env loader and login behavior', () => {
 
   test('.env loader reads file and sets environment variables', () => {
     const fs = require('fs');
-    const readMock = jest.spyOn(fs, 'readFileSync').mockReturnValue('A=1\nB="2"');
-    const { client } = require('../src/index');
+    const readMock = jest.spyOn(fs, 'readFileSync').mockReturnValue('A=1\\nB="2"');
+    require('../src/index');
     expect(readMock).toHaveBeenCalledWith('.env', 'utf-8');
     expect(process.env.A).toBe('1');
     expect(process.env.B).toBe('2');

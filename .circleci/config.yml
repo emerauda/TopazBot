@@ -2,58 +2,6 @@ version: 2.1
 orbs:
   node: circleci/node@5.2
 jobs:
-  test-v12:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - checkout
-      - node/install:
-          node-version: "12.22"
-      - run:
-          name: Install dependencies
-          command: npm install
-      - run:
-          name: Verify build
-          command: echo "Build completed successfully!"
-  test-v14:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - checkout
-      - node/install:
-          node-version: "14.21"
-      - run:
-          name: Install dependencies
-          command: npm install
-      - run:
-          name: Verify build
-          command: echo "Build completed successfully!"
-  test-v16:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - checkout
-      - node/install:
-          node-version: "16.20"
-      - run:
-          name: Install dependencies
-          command: npm install
-      - run:
-          name: Verify build
-          command: echo "Build completed successfully!"
-  test-v18:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - checkout
-      - node/install:
-          node-version: "18.20"
-      - run:
-          name: Install dependencies
-          command: npm install
-      - run:
-          name: Verify build
-          command: echo "Build completed successfully!"
   test-v20:
     docker:
       - image: cimg/base:stable
@@ -65,8 +13,22 @@ jobs:
           name: Install dependencies
           command: npm install
       - run:
+          name: Run tests
+          command: npm test
+          environment:
+            NODE_ENV: test
+            CI: true
+            TEST_ENV: true
+      - run:
+          name: Run ESLint
+          command: npm run lint
+      - run:
+          name: Run Prettier
+          command: npm run format:check
+      - run:
           name: Verify build
-          command: echo "Build completed successfully!"
+          command: echo "Build and tests completed successfully!"
+  
   test-v22:
     docker:
       - image: cimg/base:stable
@@ -78,8 +40,22 @@ jobs:
           name: Install dependencies
           command: npm install
       - run:
+          name: Run tests
+          command: npm test
+          environment:
+            NODE_ENV: test
+            CI: true
+            TEST_ENV: true
+      - run:
+          name: Run ESLint
+          command: npm run lint
+      - run:
+          name: Run Prettier
+          command: npm run format:check
+      - run:
           name: Verify build
-          command: echo "Build completed successfully!"
+          command: echo "Build and tests completed successfully!"
+  
   test-v24:
     docker:
       - image: cimg/base:stable
@@ -91,10 +67,25 @@ jobs:
           name: Install dependencies
           command: npm install
       - run:
+          name: Run tests
+          command: npm test
+          environment:
+            NODE_ENV: test
+            CI: true
+            TEST_ENV: true
+      - run:
+          name: Run ESLint
+          command: npm run lint
+      - run:
+          name: Run Prettier
+          command: npm run format:check
+      - run:
           name: Verify build
-          command: echo "Build completed successfully!"
+          command: echo "Build and tests completed successfully!"
 
 workflows:
   build_and_test:
     jobs:
+      - test-v20
       - test-v22
+      - test-v24

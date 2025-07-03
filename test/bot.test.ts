@@ -28,7 +28,7 @@ jest.mock('@discordjs/voice', () => {
       state: { status: 'playing' },
       on: jest.fn(),
     })),
-    entersState: jest.fn(async (player, status) => player),
+    entersState: jest.fn(async (player) => player),
     joinVoiceChannel: jest.fn(() => ({
       subscribe: jest.fn(),
       destroy: jest.fn(),

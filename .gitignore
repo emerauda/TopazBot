@@ -141,7 +141,6 @@ config.json
 
 # coverage
 coverage/
-!coverage/lcov-report/
 
 # bin
 bin/

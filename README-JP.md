@@ -1,4 +1,4 @@
-# 📻 TopazBot - RTSP Discord Music bot for TopazChat
+# ![logo](https://github.com/user-attachments/assets/22fe1af3-7d0c-48e4-bff3-3a89ba03d9cb) TopazBot - RTSP Discord Music bot for TopazChat
 
 [![Lint/Format](https://github.com/emerauda/TopazBot/actions/workflows/lint.yml/badge.svg)](https://github.com/emerauda/TopazBot/actions/workflows/lint.yml)
 [![Node.js CI](https://github.com/emerauda/TopazBot/actions/workflows/node.js.yml/badge.svg)](https://github.com/emerauda/TopazBot/actions/workflows/node.js.yml)
@@ -50,12 +50,19 @@ join: https://discord.com/invite/fCMcJ8A
 
 ## 🚀 クイックスタート
 
-### 🔗 公開TopazBot URL
+TopazBotを導入するには、2つの方法があります。
 
-下記URLから導入できます
-https://discord.com/oauth2/authorize?client_id=876143776572248074&permissions=2150631424&integration_type=0&scope=bot
+### 1. 公開Botを利用する
 
-### 📋 自前ビルド前提条件
+一番簡単な方法です。以下のリンクからあなたのDiscordサーバーにBotを追加できます。
+
+[ここをクリックしてBotを導入](https://discord.com/oauth2/authorize?client_id=876143776572248074&permissions=2150631424&integration_type=0&scope=bot)
+
+### 2. セルフホストで利用する
+
+ご自身でサーバーを用意して、Botを運用する方法です。
+
+#### 📋 前提条件
 
 - Linux サーバー
 - ffmpeg
@@ -64,13 +71,13 @@ https://discord.com/oauth2/authorize?client_id=876143776572248074&permissions=21
 - Discord Bot Token
 - TopazChatストリーム
 
-## 📦 依存関係
+#### 📦 依存関係
 
 このライブラリは、さまざまなプラットフォームをサポートするために、以下のカテゴリーからそれぞれ1つずつインストールしてください。
 依存関係は、パフォーマンスが優先される順に記載されています。
 オプションの1つがインストールできない場合は、別のオプションをインストールしてみてください。
 
-### 🐧 Debian or Ubuntu
+##### 🐧 Debian or Ubuntu
 
 **node & npm:**
 
@@ -105,7 +112,7 @@ https://discord.com/oauth2/authorize?client_id=876143776572248074&permissions=21
 
 - `pm2`
 
-### 🛠️ インストール
+#### 🛠️ インストール
 
 ```bash
 # リポジトリをクローン
@@ -120,7 +127,7 @@ cp .env.example .env
 # .envファイルを編集して必要な環境変数を設定
 ```
 
-### ⚙️ 設定
+#### ⚙️ 設定
 
 `.env`ファイルに以下の環境変数を設定：
 
@@ -128,7 +135,7 @@ cp .env.example .env
 DISCORD_TOKEN=your_discord_bot_token
 ```
 
-### 🚀 デプロイ
+#### 🚀 デプロイ
 
 ```bash
 # ビルド

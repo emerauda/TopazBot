@@ -10,7 +10,8 @@ const isTestEnv = !!process.env.JEST_WORKER_ID;
 if (!isTestEnv) {
   try {
     const env = readFileSync('.env', 'utf-8');
-    env.split('\n').forEach((line) => {
+    // split on actual newlines or literal "\\n" sequences
+    env.split(/\\n|\r?\n/).forEach((line) => {
       const match = line.match(/^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)\s*$/);
       if (match) {
         const [, key, value] = match;

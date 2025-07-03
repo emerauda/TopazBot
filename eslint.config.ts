@@ -17,5 +17,6 @@ export default [
     rules: {
       '@typescript-eslint/no-unused-vars': 'error',
     },
+    ignores: ['node_modules/', 'dist/', 'coverage/', 'build/', 'public/', 'docs/'],
   },
 ] as const;
