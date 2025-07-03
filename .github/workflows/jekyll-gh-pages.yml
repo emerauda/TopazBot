@@ -45,19 +45,19 @@ jobs:
           source: ./
           destination: site
 
-      - name: Allow write access to site directory
+      # Prepare a combined deploy directory (_deploy) to include site + coverage
+      - name: Prepare deploy directory
         run: |
-          chmod -R a+rw site
-
-      - name: Merge coverage into site
-        run: |
-          mkdir -p site/coverage
-          cp -r coverage/lcov-report/* site/coverage/
+          rm -rf _deploy
+          mkdir -p _deploy
+          cp -r site/* _deploy/
+          mkdir -p _deploy/coverage
+          cp -r coverage/lcov-report/* _deploy/coverage/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: site
+          path: _deploy
 
   deploy:
     environment:
