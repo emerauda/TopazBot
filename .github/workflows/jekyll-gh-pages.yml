@@ -45,11 +45,6 @@ jobs:
           source: ./
           destination: site
 
-      # Prepare coverage folder for Pages (avoid modifying site directly)
-      - name: Prepare coverage directory
-        run: |
-          cp -r coverage/lcov-report coverage
-
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
