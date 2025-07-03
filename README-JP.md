@@ -206,6 +206,7 @@ graph TD
     TopazChat -- "RTSP Stream" --> FFmpeg
     FFmpeg -- "Opus Audio" --> TopazBot
     TopazBot -- "Sends Audio" --> DiscordVoiceChannel
+
 </div>
 
 ```mermaid
@@ -361,7 +362,6 @@ TopazChatのサーバー維持費やデータ転送料について、開発者�
 ## 🌟 スター履歴
 
 [![Star History Chart](https://api.star-history.com/svg?repos=emerauda/TopazBot&type=Date&theme=dark)](https://star-history.com/#emerauda/TopazBot&Date)
-
 
 ---
 

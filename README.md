@@ -207,6 +207,7 @@ graph TD
     TopazChat -- "RTSP Stream" --> FFmpeg
     FFmpeg -- "Opus Audio" --> TopazBot
     TopazBot -- "Sends Audio" --> DiscordVoiceChannel
+
 </div>
 
 ```mermaid
