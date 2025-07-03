@@ -66,8 +66,11 @@ jobs:
           cp -r site/* _deploy/
           mkdir -p _deploy/coverage
           cp -r coverage/lcov-report/* _deploy/coverage/
-          mv _deploy/terms-of-service _deploy/terms
-          mv _deploy/privacy-policy _deploy/privacy
+          # Move legal pages from docs/ to root-level folders
+          mv _deploy/docs/terms-of-service _deploy/terms
+          mv _deploy/docs/privacy-policy _deploy/privacy
+          # Remove leftover docs folder
+          rm -rf _deploy/docs
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
