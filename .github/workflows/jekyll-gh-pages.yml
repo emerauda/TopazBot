@@ -84,12 +84,19 @@ jobs:
       - name: Add Mermaid support to HTML files
         run: |
           echo "Adding Mermaid support to HTML files..."
+          # Add Mermaid script to head section
           find site -name "*.html" -exec sed -i '/<\/head>/i\
           <script src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js"></script>\
-          <script>mermaid.initialize({startOnLoad:true});</script>' {} \;
+          <script>mermaid.initialize({startOnLoad:true, theme:"default"});</script>' {} \;
           
-          # Convert mermaid code blocks to mermaid divs
-          find site -name "*.html" -exec sed -i 's/<pre><code class="language-mermaid">/<div class="mermaid">/g; s/<\/code><\/pre>/<\/div>/g' {} \;
+          # Convert mermaid code blocks to mermaid divs - handle both variations
+          find site -name "*.html" -exec sed -i 's/<pre><code class="language-mermaid">/<div class="mermaid">/g' {} \;
+          find site -name "*.html" -exec sed -i 's/<code class="language-mermaid">/<div class="mermaid">/g' {} \;
+          find site -name "*.html" -exec sed -i 's/<\/code><\/pre>/<\/div>/g' {} \;
+          find site -name "*.html" -exec sed -i 's/<\/code>/<\/div>/g' {} \;
+          
+          echo "Checking for mermaid content in HTML files..."
+          grep -r "mermaid" site/ || echo "No mermaid content found"
 
       # Debug: List generated files
       - name: Debug Jekyll output
