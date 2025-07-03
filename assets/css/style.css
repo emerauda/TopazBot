@@ -130,8 +130,18 @@ img {
 /* Layout wrapper to center content like GitHub */
 .wrapper {
   margin: 0 auto;
-  max-width: 780px;
+  max-width: 800px;
   padding: 24px;
+}
+
+/* Force center alignment */
+.markdown-body.wrapper {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+.wrapper {
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 
 /* End layout wrapper */
