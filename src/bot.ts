@@ -239,22 +239,36 @@ export async function handleInteraction(interaction: any) {
         adapterCreator: vc.guild.voiceAdapterCreator,
       });
     }
-    const streamKey = interaction.options.get('streamkey')?.value as string;
-    if (!streamKey) {
+    const newKey = interaction.options.get('streamkey')?.value as string;
+    if (!newKey) {
       await interaction.editReply('streamkey is not specified.');
       return;
     }
-    state.streamKey = streamKey;
-    state.streamUrl = `rtsp://topaz.chat/live/${streamKey}`;
-    // Prevent multiple playStream per guild
-    if (!state.isPlaying) {
-      state.isPlaying = true;
+    const oldKey = state.streamKey;
+    // If already playing
+    if (state.isPlaying) {
+      if (newKey === oldKey) {
+        await interaction.editReply('Already playing.');
+        return;
+      }
+      // Switching to a different stream
+      if (state.ffmpegProcess) {
+        state.ffmpegProcess.kill();
+      }
+      state.streamKey = newKey;
+      state.streamUrl = `rtsp://topaz.chat/live/${newKey}`;
       playStream(state, interaction).finally(() => {
         state.isPlaying = false;
       });
-    } else {
-      await interaction.editReply('Already playing.');
+      return;
     }
+    // Starting new playback
+    state.streamKey = newKey;
+    state.streamUrl = `rtsp://topaz.chat/live/${newKey}`;
+    state.isPlaying = true;
+    playStream(state, interaction).finally(() => {
+      state.isPlaying = false;
+    });
   }
   // resync command (force reload stream)
   else if (interaction.commandName === 'resync') {

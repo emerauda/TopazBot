@@ -1,9 +1,9 @@
 {
   "name": "topazbot",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A TopazChat music bot written using @discordjs/voice",
   "scripts": {
-    "start": "node dist/index.js",
+    "start": "tsc && node dist/index.js",
     "build": "tsc",
     "dev": "ts-node src/index.ts",
     "lint": "eslint src/**/*.ts",
