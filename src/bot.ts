@@ -247,7 +247,8 @@ export async function handleInteraction(interaction: any) {
     const oldKey = state.streamKey;
     // If already playing
     if (state.isPlaying) {
-      if (newKey === oldKey) {
+      // Already playing same stream or no previous key
+      if (!oldKey || newKey === oldKey) {
         await interaction.editReply('Already playing.');
         return;
       }
