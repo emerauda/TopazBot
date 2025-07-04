@@ -256,6 +256,7 @@ npm test
 # カバレッジレポート生成
 npm run test:coverage
 ```
+
 #### カバレッジレポートは [coverage](https://emerauda.github.io/TopazBot/coverage/) で確認可能
 
 ---
