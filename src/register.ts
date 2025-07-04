@@ -6,6 +6,7 @@ import {
   Snowflake,
   Collection,
   GatewayIntentBits,
+  ApplicationCommand,
 } from 'discord.js';
 import { readFileSync } from 'fs';
 
@@ -21,7 +22,7 @@ if (!isTestEnv) {
       if (match) {
         const [, key, value] = match;
         if (!process.env[key]) {
-          process.env[key] = value.replace(/^['\"]|['\"]$/g, '');
+          process.env[key] = value.replace(/^['"]|['"]$/g, '');
         }
       }
     });
@@ -42,7 +43,7 @@ async function register(
   client: Client,
   commands: ApplicationCommandData[],
   guildID?: Snowflake
-): Promise<Collection<string, any>> {
+): Promise<Collection<string, ApplicationCommand>> {
   if (!client.application) throw new Error('Client application is not ready.');
   if (!guildID) {
     return client.application.commands.set(commands);

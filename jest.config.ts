@@ -9,7 +9,8 @@ const config: Config.InitialOptions = {
     ...tsJestTransformCfg,
   },
   collectCoverageFrom: ['src/**/*.ts'],
-  testPathIgnorePatterns: ['/node_modules/', 'coverage\\.test\\.ts$'],
+  testPathIgnorePatterns: ['/node_modules/', '/dist/', 'coverage\\.test\\.ts$'],
+  testMatch: ['<rootDir>/test/**/*.test.ts'],
 };
 
 export default config;

@@ -545,7 +545,7 @@ describe('bot.ts', () => {
         isChatInputCommand: () => false,
         guildId: 'mock-guild-id',
         deferReply: jest.fn(),
-      };
+      } as any;
 
       await handleInteraction(interaction);
 
@@ -558,7 +558,7 @@ describe('bot.ts', () => {
         isChatInputCommand: () => true,
         guildId: null,
         deferReply: jest.fn(),
-      };
+      } as any;
 
       await handleInteraction(interaction);
 

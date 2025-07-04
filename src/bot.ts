@@ -4,6 +4,7 @@ import {
   GuildMember,
   ChannelType,
   VoiceChannel,
+  Interaction,
 } from 'discord.js';
 import type { VoiceConnection, AudioPlayer as AudioPlayerType } from '@discordjs/voice';
 import {
@@ -201,10 +202,11 @@ export async function playStream(
 }
 
 // Unified command handler
-export async function handleInteraction(interaction: any) {
+export async function handleInteraction(interaction: Interaction) {
   if (!interaction.isChatInputCommand() || !interaction.guildId) return;
-  const guildId = interaction.guildId;
-  const member = interaction.member as GuildMember;
+  const chatInputInteraction = interaction as ChatInputCommandInteraction;
+  const guildId = chatInputInteraction.guildId!;
+  const member = chatInputInteraction.member as GuildMember;
   const voiceChannel = member.voice.channel;
   let state = guildAudioStates.get(guildId);
   if (!state) {
@@ -221,15 +223,15 @@ export async function handleInteraction(interaction: any) {
   }
 
   // play command
-  if (interaction.commandName === 'play') {
-    await interaction.deferReply();
+  if (chatInputInteraction.commandName === 'play') {
+    await chatInputInteraction.deferReply();
     if (!voiceChannel || voiceChannel.type !== ChannelType.GuildVoice) {
-      await interaction.editReply('Please join a voice channel.');
+      await chatInputInteraction.editReply('Please join a voice channel.');
       return;
     }
     const vc = voiceChannel as VoiceChannel;
     if (!vc.joinable || !vc.speakable) {
-      await interaction.editReply('Cannot join or speak in the voice channel.');
+      await chatInputInteraction.editReply('Cannot join or speak in the voice channel.');
       return;
     }
     if (!state.connection || state.connection.state.status === VoiceConnectionStatus.Destroyed) {
@@ -239,9 +241,9 @@ export async function handleInteraction(interaction: any) {
         adapterCreator: vc.guild.voiceAdapterCreator,
       });
     }
-    const newKey = interaction.options.get('streamkey')?.value as string;
+    const newKey = chatInputInteraction.options.get('streamkey')?.value as string;
     if (!newKey) {
-      await interaction.editReply('streamkey is not specified.');
+      await chatInputInteraction.editReply('streamkey is not specified.');
       return;
     }
     const oldKey = state.streamKey;
@@ -249,7 +251,7 @@ export async function handleInteraction(interaction: any) {
     if (state.isPlaying) {
       // Already playing same stream or no previous key
       if (!oldKey || newKey === oldKey) {
-        await interaction.editReply('Already playing.');
+        await chatInputInteraction.editReply('Already playing.');
         return;
       }
       // Switching to a different stream
@@ -258,7 +260,7 @@ export async function handleInteraction(interaction: any) {
       }
       state.streamKey = newKey;
       state.streamUrl = `rtsp://topaz.chat/live/${newKey}`;
-      playStream(state, interaction).finally(() => {
+      playStream(state, chatInputInteraction).finally(() => {
         state.isPlaying = false;
       });
       return;
@@ -267,16 +269,16 @@ export async function handleInteraction(interaction: any) {
     state.streamKey = newKey;
     state.streamUrl = `rtsp://topaz.chat/live/${newKey}`;
     state.isPlaying = true;
-    playStream(state, interaction).finally(() => {
+    playStream(state, chatInputInteraction).finally(() => {
       state.isPlaying = false;
     });
   }
   // resync command (force reload stream)
-  else if (interaction.commandName === 'resync') {
-    await interaction.deferReply();
-    const voiceChannel = (interaction.member as GuildMember).voice.channel;
+  else if (chatInputInteraction.commandName === 'resync') {
+    await chatInputInteraction.deferReply();
+    const voiceChannel = (chatInputInteraction.member as GuildMember).voice.channel;
     if (!voiceChannel || voiceChannel.type !== ChannelType.GuildVoice) {
-      await interaction.editReply('Please join a voice channel.');
+      await chatInputInteraction.editReply('Please join a voice channel.');
       return;
     }
     const vc = voiceChannel as VoiceChannel;
@@ -293,12 +295,12 @@ export async function handleInteraction(interaction: any) {
     });
 
     // Get streamkey from command option or use previous one
-    let streamKey = interaction.options.get('streamkey')?.value as string | undefined;
+    let streamKey = chatInputInteraction.options.get('streamkey')?.value as string | undefined;
     if (!streamKey) {
       streamKey = state.streamKey ?? undefined;
     }
     if (!streamKey) {
-      await interaction.editReply('streamkey is not specified.');
+      await chatInputInteraction.editReply('streamkey is not specified.');
       return;
     }
     state.streamKey = streamKey;
@@ -306,13 +308,13 @@ export async function handleInteraction(interaction: any) {
 
     // Force start playback
     state.isPlaying = true;
-    playStream(state, interaction, true).finally(() => {
+    playStream(state, chatInputInteraction, true).finally(() => {
       state.isPlaying = false;
     });
   }
   // stop command
-  else if (interaction.commandName === 'stop') {
-    await interaction.deferReply();
+  else if (chatInputInteraction.commandName === 'stop') {
+    await chatInputInteraction.deferReply();
     if (state.ffmpegProcess) {
       state.ffmpegProcess.kill();
     }
@@ -331,7 +333,7 @@ export async function handleInteraction(interaction: any) {
       isPlaying: false,
       ffmpegProcess: null,
     });
-    await interaction.editReply('Destroyed.');
+    await chatInputInteraction.editReply('Destroyed.');
   }
 }
 

@@ -35,9 +35,14 @@ _「TopazBot」はMITライセンス下にありますが、「TopazChat」は�
 
 ### 📝 詳細
 
-[TopazChat](https://github.com/TopazChat/TopazChat)は、高品質・低遅延のRTSPサーバです。個人での利用は無料です。[TopazChat ダウンロード](https://booth.pm/ja/items/1752066)
+[TopazChat](https://github.com/TopazChat/TopazChat)は、高品質・低遅延のRTSPサーバです。個人での利用は無料です。
+
+[TopazChat ダウンロード](https://booth.pm/ja/items/1752066)
+
 TopazChatの費用は、開発者のよしたかさん[@TyounanMOTI](https://github.com/TyounanMOTI)が負担しています。
+
 サーバーの維持費や音声・動画配信のデータ転送料のために寄付をお願いします！→[FANBOX](https://tyounanmoti.fanbox.cc/)
+
 TopazChatのすべてのスポンサーは、SPONSORS.txtに記載されています。
 
 ### 💬 コミュニティ
@@ -74,7 +79,9 @@ TopazBotを導入するには、2つの方法があります。
 #### 📦 依存関係
 
 このライブラリは、さまざまなプラットフォームをサポートするために、以下のカテゴリーからそれぞれ1つずつインストールしてください。
+
 依存関係は、パフォーマンスが優先される順に記載されています。
+
 オプションの1つがインストールできない場合は、別のオプションをインストールしてみてください。
 
 ##### 🐧 Debian or Ubuntu
@@ -176,10 +183,10 @@ TopazBotは以下のスラッシュコマンドに対応しています。
 - **説明**: 現在のストリーム再生を停止し、ボイスチャンネルから切断します。
 - **使い方**: `/stop`
 
-## 📜 利用規約
+## 📜 利用規約とプライバシーポリシー
 
-- [利用規約](https://emerauda.github.io/TopazBot/terms/)
-- [プライバシーポリシー](https://emerauda.github.io/TopazBot/privacy/)
+- **[利用規約](https://emerauda.github.io/TopazBot/terms/)**
+- **[プライバシーポリシー](https://emerauda.github.io/TopazBot/privacy/)**
 
 ---
 
@@ -320,7 +327,11 @@ TopazChatのサーバー維持費やデータ転送料について、開発者�
 
 ## 👥 チーム
 
+<div align="center" markdown="1">
+
 [![Contributors](https://contrib.rocks/image?repo=emerauda/TopazBot)](https://github.com/emerauda/TopazBot/graphs/contributors)
+
+</div>
 
 ---
 
@@ -344,6 +355,8 @@ TopazChatのサーバー維持費やデータ転送料について、開発者�
 
 ---
 
+<div align="center" markdown="1">
+
 **⭐ このプロジェクトが気に入ったら、スターをお願いします！ ⭐**
 
 [![GitHub stars](https://img.shields.io/github/stars/emerauda/TopazBot.svg?style=social&label=Star)](https://github.com/emerauda/TopazBot)
@@ -351,3 +364,5 @@ TopazChatのサーバー維持費やデータ転送料について、開発者�
 [![GitHub watchers](https://img.shields.io/github/watchers/emerauda/TopazBot.svg?style=social&label=Watch)](https://github.com/emerauda/TopazBot)
 
 Made with ❤️ by [Aoi Emerauda](https://github.com/emerauda)
+
+</div>

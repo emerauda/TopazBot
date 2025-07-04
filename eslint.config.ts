@@ -1,22 +1,44 @@
-import tseslint from '@typescript-eslint/eslint-plugin';
-import tsParser from '@typescript-eslint/parser';
+import globals from 'globals';
+import js from '@eslint/js';
+import prettier from 'eslint-plugin-prettier/recommended';
+import tseslint from 'typescript-eslint';
 
 export default [
   {
-    files: ['src/**/*.ts', 'test/**/*.ts'],
+    ignores: ['node_modules/', 'dist/', 'coverage/', 'build/', 'public/', 'docs/'],
+  },
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
+  prettier,
+  {
     languageOptions: {
-      parser: tsParser,
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+        ...globals.jest,
+      },
+    },
+  },
+  {
+    files: ['**/*.ts', '**/*.tsx'],
+    languageOptions: {
+      parser: tseslint.parser,
       parserOptions: {
-        ecmaVersion: 'latest',
-        sourceType: 'module',
+        project: './tsconfig.json',
       },
     },
     plugins: {
-      '@typescript-eslint': tseslint,
+      '@typescript-eslint': tseslint.plugin,
     },
     rules: {
       '@typescript-eslint/no-unused-vars': 'error',
     },
-    ignores: ['node_modules/', 'dist/', 'coverage/', 'build/', 'public/', 'docs/'],
   },
-] as const;
+  {
+    files: ['test/**/*.ts'],
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-require-imports': 'off',
+    },
+  },
+];

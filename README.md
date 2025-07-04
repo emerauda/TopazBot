@@ -35,9 +35,14 @@ _"TopazBot" is under the MIT license, but "TopazChat" is not for commercial use.
 
 ### 📝 Details
 
-[TopazChat](https://github.com/TopazChat/TopazChat) is a high-quality, low-latency RTSP server. It is free for personal use.[TopazChat Download](https://booth.pm/ja/items/1752066)
+[TopazChat](https://github.com/TopazChat/TopazChat) is a high-quality, low-latency RTSP server. It is free for personal use.
+
+[TopazChat Download](https://booth.pm/ja/items/1752066)
+
 The costs for TopazChat are covered by the developer, Hirotoshi Yoshitaka [@TyounanMOTI](https://github.com/TyounanMOTI).
+
 Please consider donating to help with server maintenance and data transfer costs for audio/video streaming! → [FANBOX](https://tyounanmoti.fanbox.cc/)
+
 All sponsors of TopazChat are listed in SPONSORS.txt.
 
 ### 💬 Community
@@ -74,7 +79,9 @@ You can host the bot on your own server.
 #### 📦 Dependencies
 
 This library requires one dependency from each of the categories below to support various platforms.
+
 The dependencies are listed in order of performance preference.
+
 If you cannot install one of the options, try installing another.
 
 ##### 🐧 Debian or Ubuntu
@@ -179,8 +186,8 @@ TopazBot supports the following slash commands.
 
 ## 📜 Legal
 
-- [Terms of Service](https://emerauda.github.io/TopazBot/terms/)
-- [Privacy Policy](https://emerauda.github.io/TopazBot/privacy/)
+- **[Terms of Service](https://emerauda.github.io/TopazBot/terms/)**
+- **[Privacy Policy](https://emerauda.github.io/TopazBot/privacy/)**
 
 ---
 
@@ -321,7 +328,11 @@ This project is released under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## 👥 Team
 
+<div align="center" markdown="1">
+
 [![Contributors](https://contrib.rocks/image?repo=emerauda/TopazBot)](https://github.com/emerauda/TopazBot/graphs/contributors)
+
+</div>
 
 ---
 
@@ -345,6 +356,8 @@ This project is released under the MIT License. See the [LICENSE](LICENSE) file 
 
 ---
 
+<div align="center" markdown="1">
+
 **⭐ If you like this project, please give it a star! ⭐**
 
 [![GitHub stars](https://img.shields.io/github/stars/emerauda/TopazBot.svg?style=social&label=Star)](https://github.com/emerauda/TopazBot)
@@ -352,3 +365,5 @@ This project is released under the MIT License. See the [LICENSE](LICENSE) file 
 [![GitHub watchers](https://img.shields.io/github/watchers/emerauda/TopazBot.svg?style=social&label=Watch)](https://github.com/emerauda/TopazBot)
 
 Made with ❤️ by [Aoi Emerauda](https://github.com/emerauda)
+
+</div>

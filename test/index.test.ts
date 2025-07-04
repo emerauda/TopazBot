@@ -2,7 +2,7 @@
 // Only basic structure and type checks (no Discord API calls)
 import { Client } from 'discord.js';
 
-let clients: Client[] = [];
+const clients: Client[] = [];
 
 describe('index.ts', () => {
   beforeAll(() => {
