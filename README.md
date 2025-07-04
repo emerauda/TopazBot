@@ -321,11 +321,7 @@ This project is released under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## 👥 Team
 
-<div align="center" markdown="1">
-
 [![Contributors](https://contrib.rocks/image?repo=emerauda/TopazBot)](https://github.com/emerauda/TopazBot/graphs/contributors)
-
-</div>
 
 ---
 
@@ -349,8 +345,6 @@ This project is released under the MIT License. See the [LICENSE](LICENSE) file 
 
 ---
 
-<div align="center" markdown="1">
-
 **⭐ If you like this project, please give it a star! ⭐**
 
 [![GitHub stars](https://img.shields.io/github/stars/emerauda/TopazBot.svg?style=social&label=Star)](https://github.com/emerauda/TopazBot)
@@ -358,5 +352,3 @@ This project is released under the MIT License. See the [LICENSE](LICENSE) file 
 [![GitHub watchers](https://img.shields.io/github/watchers/emerauda/TopazBot.svg?style=social&label=Watch)](https://github.com/emerauda/TopazBot)
 
 Made with ❤️ by [Aoi Emerauda](https://github.com/emerauda)
-
-</div>

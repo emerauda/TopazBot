@@ -1,16 +1,14 @@
-/* 
-html, body {
+html,
+body {
   background-color: #0d1117 !important;
-}*/
+}
 
-/*
 .wrapper {
   margin: 0 auto;
   max-width: 820px;
-  padding: 24px;
-}*/
+  padding: 0 10px;
+}
 
-/*
 .markdown-body.wrapper {
   margin-left: auto !important;
   margin-right: auto !important;
@@ -18,4 +16,4 @@ html, body {
 .wrapper {
   margin-left: auto !important;
   margin-right: auto !important;
-}*/
+}
