@@ -32,7 +32,7 @@ export const client = new Client({
 })();
 
 // Register basic events (tests check these listeners exist)
-client.once('ready', () => {
+client.once('clientReady', () => {
   if (!isTestEnv) console.log('Bot ready');
 });
 
