@@ -1,16 +1,15 @@
 import type { Config } from '@jest/types';
-import { createDefaultPreset } from 'ts-jest';
-
-const tsJestTransformCfg = createDefaultPreset().transform;
 
 const config: Config.InitialOptions = {
+  preset: 'ts-jest',
   testEnvironment: 'node',
+  moduleFileExtensions: ['ts', 'js', 'json', 'node'], // Note: Ensure .ts is first so ts-jest transforms TypeScript source
   transform: {
-    ...tsJestTransformCfg,
+    '^.+\\.ts$': 'ts-jest',
   },
   collectCoverageFrom: ['src/**/*.ts'],
-  testPathIgnorePatterns: ['/node_modules/', '/dist/', 'coverage\\.test\\.ts$'],
   testMatch: ['<rootDir>/test/**/*.test.ts'],
+  transformIgnorePatterns: ['<rootDir>/node_modules/'],
 };
 
-export default config;
+module.exports = config;

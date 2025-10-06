@@ -18,7 +18,11 @@ if (!isTestEnv) {
   try {
     const env = readFileSync('.env', 'utf-8');
     env.split('\n').forEach((line) => {
-      const match = line.match(/^\s*([A-Za-z_][A-ZaZ0-9_]*)\s*=\s*(.*)\s*$/);
+      // Skip empty lines and comments
+      const trimmedLine = line.trim();
+      if (!trimmedLine || trimmedLine.startsWith('#')) return;
+
+      const match = line.match(/^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)$/);
       if (match) {
         const [, key, value] = match;
         if (!process.env[key]) {

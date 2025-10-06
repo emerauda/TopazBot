@@ -136,11 +136,27 @@ cp .env.example .env
 
 #### ⚙️ Configuration
 
-Set the following environment variable in your `.env` file:
+Set the following environment variables in your `.env` file:
 
 ```env
+# Discord Bot Configuration
 DISCORD_TOKEN=your_discord_bot_token
+
+# RTSP Server Configuration (optional)
+# Default: rtsp://topaz.chat/live
+RTSP_SERVER_URL=rtsp://topaz.chat/live
+
+# Alternative examples:
+# RTSP_SERVER_URL=rtsp://example.com/stream
+# RTSP_SERVER_URL=rtsp://192.168.1.100:8554/live
 ```
+
+**Configuration Options:**
+
+- `DISCORD_TOKEN`: Your Discord bot token (required)
+- `RTSP_SERVER_URL`: RTSP server base URL (optional, defaults to `rtsp://topaz.chat/live`)
+
+When using the bot, streams will be accessed as `${RTSP_SERVER_URL}/${streamkey}`.
 
 #### 🚀 Deployment
 

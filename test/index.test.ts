@@ -25,35 +25,34 @@ describe('index.ts', () => {
   });
 });
 
+// index.ts module セクション
 describe('index.ts module', () => {
+  beforeEach(() => {
+    jest.resetModules();
+    delete process.env.JEST_WORKER_ID;
+    process.env.DISCORD_TOKEN = 'dummy_token';
+  });
   test('ready event handler is registered', () => {
-    const { client } = require('../src/index');
+    const indexModule = require('../src/index.ts');
+    const client = require('../src/index.ts').client;
     expect(client.listenerCount('ready')).toBeGreaterThan(0);
   });
   test('interactionCreate event handler is registered', () => {
-    const { client } = require('../src/index');
+    const indexModule = require('../src/index.ts');
+    const client = require('../src/index.ts').client;
     expect(client.listenerCount('interactionCreate')).toBeGreaterThan(0);
   });
   test('throws exception when DISCORD_TOKEN is missing in non-test environment', () => {
-    // Test to verify DISCORD_TOKEN error check condition
-    // Actual error handling is conditional on !isTestEnv, so only logical verification
     const originalToken = process.env.DISCORD_TOKEN;
     const originalJestWorkerId = process.env.JEST_WORKER_ID;
-
-    // Verify that token check processing exists for non-test environments
-    const index = require('../src/index');
+    const index = require('../src/index.ts');
     expect(index).toBeDefined();
-
-    // Restore original environment variables
-    if (originalToken) {
-      process.env.DISCORD_TOKEN = originalToken;
-    }
-    if (originalJestWorkerId) {
-      process.env.JEST_WORKER_ID = originalJestWorkerId;
-    }
+    if (originalToken) process.env.DISCORD_TOKEN = originalToken;
+    if (originalJestWorkerId) process.env.JEST_WORKER_ID = originalJestWorkerId;
   });
 });
 
+// index.ts .env loader and login behavior
 describe('index.ts .env loader and login behavior', () => {
   beforeEach(() => {
     jest.resetModules();
@@ -62,9 +61,12 @@ describe('index.ts .env loader and login behavior', () => {
   });
 
   test('.env loader reads file and sets environment variables', () => {
+    delete process.env.A;
+    delete process.env.B;
+
     const fs = require('fs');
-    const readMock = jest.spyOn(fs, 'readFileSync').mockReturnValue('A=1\\nB="2"');
-    require('../src/index');
+    const readMock = jest.spyOn(fs, 'readFileSync').mockReturnValue('A=1\nB="2"');
+    require('../src/index.ts');
     expect(readMock).toHaveBeenCalledWith('.env', 'utf-8');
     expect(process.env.A).toBe('1');
     expect(process.env.B).toBe('2');
@@ -72,18 +74,12 @@ describe('index.ts .env loader and login behavior', () => {
   });
 
   test('require.main === module branch processing exists', () => {
-    // Test to verify that require.main === module branch exists
-    // Actual login and report generation are not executed due to isTestEnv guard
-    // so only verify code existence
     const { Client } = require('discord.js');
     const loginSpy = jest.spyOn(Client.prototype, 'login');
 
-    // Import index.ts (login is not executed because it's test environment)
-    require('../src/index');
+    require('../src/index.ts');
 
-    // login is not called because it's test environment
     expect(loginSpy).not.toHaveBeenCalled();
-
     loginSpy.mockRestore();
   });
 });
@@ -96,13 +92,19 @@ describe('index.ts edge cases', () => {
       throw new Error('File not found');
     });
 
-    // Should not throw when .env file cannot be read
-    expect(() => require('../src/index')).not.toThrow();
+    expect(() => require('../src/index.ts')).not.toThrow();
 
     readMock.mockRestore();
   });
 
   test('environment variable parsing edge cases', () => {
+    delete process.env.VALID_VAR;
+    delete process.env.QUOTED_VAR;
+    delete process.env.SINGLE_QUOTED;
+    delete process.env.SPACED_VAR;
+    delete process.env.EMPTY_VAR;
+    delete process.env.INVALID_LINE;
+
     const fs = require('fs');
     const readMock = jest
       .spyOn(fs, 'readFileSync')
@@ -117,7 +119,7 @@ describe('index.ts edge cases', () => {
       );
 
     jest.resetModules();
-    require('../src/index');
+    require('../src/index.ts');
 
     expect(process.env.VALID_VAR).toBe('value');
     expect(process.env.QUOTED_VAR).toBe('quoted value');

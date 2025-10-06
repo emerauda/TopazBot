@@ -139,8 +139,24 @@ cp .env.example .env
 `.env`ファイルに以下の環境変数を設定：
 
 ```env
+# Discord Bot設定
 DISCORD_TOKEN=your_discord_bot_token
+
+# RTSPサーバー設定（オプション）
+# デフォルト: rtsp://topaz.chat/live
+RTSP_SERVER_URL=rtsp://topaz.chat/live
+
+# 他の例:
+# RTSP_SERVER_URL=rtsp://example.com/stream
+# RTSP_SERVER_URL=rtsp://192.168.1.100:8554/live
 ```
+
+**設定オプション:**
+
+- `DISCORD_TOKEN`: Discordボットトークン（必須）
+- `RTSP_SERVER_URL`: RTSPサーバーのベースURL（オプション、デフォルト: `rtsp://topaz.chat/live`）
+
+ボットを使用する際、ストリームは `${RTSP_SERVER_URL}/${streamkey}` としてアクセスされます。
 
 #### 🚀 デプロイ
 
