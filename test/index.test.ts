@@ -32,10 +32,10 @@ describe('index.ts module', () => {
     delete process.env.JEST_WORKER_ID;
     process.env.DISCORD_TOKEN = 'dummy_token';
   });
-  test('ready event handler is registered', () => {
+  test('clientReady event handler is registered', () => {
     const indexModule = require('../src/index.ts');
     const client = require('../src/index.ts').client;
-    expect(client.listenerCount('ready')).toBeGreaterThan(0);
+    expect(client.listenerCount('clientReady')).toBeGreaterThan(0);
   });
   test('interactionCreate event handler is registered', () => {
     const indexModule = require('../src/index.ts');

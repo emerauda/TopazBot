@@ -32,6 +32,7 @@ export const client = new Client({
 })();
 
 // Register basic events (tests check these listeners exist)
+// v15 'clientReady' イベント
 client.once('clientReady', () => {
   if (!isTestEnv) console.log('Bot ready');
 });
