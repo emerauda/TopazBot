@@ -1,7 +1,8 @@
 import { Client, GatewayIntentBits, CommandInteraction, GuildMember, VoiceBasedChannel, ChannelType, VoiceChannel } from 'discord.js';
 import type { VoiceConnection, AudioPlayer as AudioPlayerType } from '@discordjs/voice';
-import { joinVoiceChannel, createAudioPlayer, createAudioResource, entersState, AudioPlayerStatus, generateDependencyReport, VoiceConnectionStatus } from '@discordjs/voice';
+import { joinVoiceChannel, createAudioPlayer, createAudioResource, entersState, AudioPlayerStatus, generateDependencyReport, VoiceConnectionStatus, StreamType } from '@discordjs/voice';
 import { spawn, ChildProcessWithoutNullStreams } from 'child_process';
+import type { ChildProcess } from 'child_process';
 import { readFileSync } from 'fs';
 import { Readable } from 'stream';
 
@@ -37,26 +38,47 @@ function sleep(ms: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// FFmpeg stream creator
-function createFFmpegStream(streamUrl: string): Readable {
+// FFmpeg stream creator — AAC→Opus transcode with low-latency flags, output as OggOpus
+// OggOpus is passed directly to discord.js without re-transcoding via prism-media
+function createFFmpegStream(streamUrl: string): { stream: Readable; process: ChildProcess } {
     const ffmpeg = spawn('ffmpeg', [
+        '-fflags', 'nobuffer',
+        '-flags', 'low_delay',
         '-rtsp_transport', 'tcp',
         '-i', streamUrl,
-        '-f', 'adts',
-        '-c:a', 'copy',
-        'pipe:1'
+        '-vn',
+        '-c:a', 'libopus',
+        '-ar', '48000',
+        '-ac', '2',
+        '-b:a', '192k',
+        '-application', 'audio',
+        '-f', 'ogg',
+        'pipe:1',
     ]);
-    return ffmpeg.stdout as Readable;
+    ffmpeg.stderr?.on('data', (d: Buffer) => {
+        const msg = d.toString().trim();
+        // Only log errors/warnings, not progress
+        if (msg.includes('Error') || msg.includes('error') || msg.includes('Warning') || msg.includes('Discarding')) {
+            console.error(`[ffmpeg] ${msg}`);
+        }
+    });
+    ffmpeg.on('exit', (code, signal) => {
+        if (code !== 0 && code !== 255) {
+            console.warn(`[ffmpeg] exited code=${code} signal=${signal}`);
+        }
+    });
+    return { stream: ffmpeg.stdout as Readable, process: ffmpeg };
 }
 
 // Per-guild connection state
 interface GuildAudioState {
     connection: InstanceType<typeof VoiceConnection> | null;
     player: InstanceType<typeof AudioPlayerType> | null;
+    ffmpegProcess: ChildProcess | null;
     streamKey: string | null;
     streamUrl: string | null;
     lastActivityTime: number;
-    isPlaying: boolean; // Prevent multiple playStream per guild
+    isPlaying: boolean;
 }
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates] });
@@ -80,6 +102,7 @@ client.on('interactionCreate', async (interaction) => {
         state = {
             connection: null,
             player: null,
+            ffmpegProcess: null,
             streamKey: null,
             streamUrl: null,
             lastActivityTime: Date.now(),
@@ -152,14 +175,18 @@ client.on('interactionCreate', async (interaction) => {
     // stop command
     else if (interaction.commandName === `stop${number}`) {
         await interaction.deferReply();
-        // Force disconnect: destroy connection and stop playback
-        if (state.connection) {
-            state.connection.destroy();
+        if (state.ffmpegProcess) {
+            state.ffmpegProcess.kill();
         }
-        // Reset all state for this guild
+        if (state.connection) {
+            const key = state.streamKey;
+            state.connection.destroy();
+            console.log(`[${key}] stopped by user`);
+        }
         guildAudioStates.set(guildId, {
             connection: null,
             player: null,
+            ffmpegProcess: null,
             streamKey: null,
             streamUrl: null,
             lastActivityTime: Date.now(),
@@ -176,93 +203,76 @@ async function playStream(
     isResync = false
 ) {
     if (!state.connection || !state.streamUrl || !state.streamKey) return;
+    const key = state.streamKey;
 
     let first = true;
     let notified = false;
     while (true) {
-        const ffmpegStream = createFFmpegStream(state.streamUrl);
-        const resource = createAudioResource(ffmpegStream);
+        // Kill previous ffmpeg if still alive
+        if (state.ffmpegProcess) {
+            state.ffmpegProcess.kill();
+            state.ffmpegProcess = null;
+        }
+
+        const { stream: ffmpegStream, process: ffmpegProc } = createFFmpegStream(state.streamUrl);
+        state.ffmpegProcess = ffmpegProc;
+        const resource = createAudioResource(ffmpegStream, { inputType: StreamType.OggOpus });
         const player = createAudioPlayer();
         player.play(resource);
         state.player = player;
         state.connection.subscribe(player);
         state.lastActivityTime = Date.now();
 
-        let playStart: number | null = null;
         let playSucceeded = false;
 
         try {
-            // Wait for Playing state (start)
             await entersState(player, AudioPlayerStatus.Playing, 5000);
-            playStart = Date.now();
 
-            // Wait for either Idle or 2 seconds, whichever comes first
-            let playedLongEnough = false;
+            // Confirm stable playback for 1.5s
+            let stable = false;
             await Promise.race([
-                (async () => {
-                    await sleep(1500); // Wait at least 1.5 seconds
-                    playedLongEnough = true;
-                })(),
-                (async () => {
-                    await entersState(player, AudioPlayerStatus.Idle, 1500);
-                })()
+                (async () => { await sleep(1500); stable = true; })(),
+                entersState(player, AudioPlayerStatus.Idle, 1500),
             ]);
+            if (!stable) throw new Error('Stream stopped immediately');
 
-            if (!playedLongEnough) {
-                // The player became Idle before 1.5 seconds passed
-                throw new Error('Stream did not stay in playing state for at least 1 second');
-            }
-
-            // If we reach here, playback was stable for at least 1.5 seconds
             playSucceeded = true;
 
             if (first) {
                 if (interaction && !notified) {
-                    await interaction.editReply(`Playing ${state.streamKey}.`);
+                    await interaction.editReply(`Playing ${key}.`);
                     notified = true;
                 }
                 if (isResync) {
-                    console.log(`${state.streamKey} is resyncing...`);
-                    await sleep(5000); // Wait 5 second
-                    console.log(`${state.streamKey} is resynced!`);
+                    console.log(`[${key}] resyncing`);
+                    await sleep(5000);
+                    console.log(`[${key}] resynced`);
                 }
                 first = false;
             } else {
-                // When autoresuming succeeds
-                console.log(`${state.streamKey} is autoresuming...`);
-                await sleep(1000); // Wait 1 second
-                console.log(`${state.streamKey} is autoresumed!`);
+                console.log(`[${key}] autoresumed`);
             }
-            console.log(`${state.streamKey} is playing!`);
-            // Wait for Idle state (end) - no timeout to avoid timeout errors
-            await entersState(player, AudioPlayerStatus.Idle, 86400000); // 24 hours timeout
-            console.log(`${state.streamKey} is stopped!`);
+            console.log(`[${key}] playing`);
+
+            await entersState(player, AudioPlayerStatus.Idle, 86400000);
+            console.log(`[${key}] stream ended`);
         } catch (e) {
             if (!playSucceeded) {
-                if (first) {
-                    if (interaction && !notified) {
-                        await interaction.editReply(`${state.streamKey} is autoresuming...`);
-                        notified = true;
-                    } else {
-                        console.log(`${state.streamKey} is autoresuming...`);
-                    }
-                } else {
-                    console.log(`${state.streamKey} is autoresuming...`);
+                if (first && interaction && !notified) {
+                    await interaction.editReply(`${key} is autoresuming...`);
+                    notified = true;
                 }
+                console.log(`[${key}] autoresuming (stream not stable)`);
                 await sleep(10000);
                 continue;
             }
+            console.warn(`[${key}] playback error, retrying`, e instanceof Error ? e.message : e);
             await sleep(10000);
         }
 
-        // If connection still exists, try to autoresume (continue loop)
-        if (state.connection) {
-            console.log(`${state.streamKey} is autoresuming...`);
-            await sleep(5000);
-            continue;
-        } else {
-            break;
-        }
+        if (!state.connection) break;
+        console.log(`[${key}] autoresuming`);
+        await sleep(5000);
     }
 }
 
@@ -290,6 +300,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
             state = {
                 connection: null,
                 player: null,
+                ffmpegProcess: null,
                 streamKey: null,
                 streamUrl: null,
                 lastActivityTime: Date.now(),
@@ -329,10 +340,13 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
             const guildId = channel.guild.id;
             const state = guildAudioStates.get(guildId);
             if (state && state.connection) {
+                if (state.ffmpegProcess) state.ffmpegProcess.kill();
                 state.connection.destroy();
+                console.log(`[${state.streamKey}] auto-disconnected (empty channel)`);
                 guildAudioStates.set(guildId, {
                     connection: null,
                     player: null,
+                    ffmpegProcess: null,
                     streamKey: null,
                     streamUrl: null,
                     lastActivityTime: Date.now(),

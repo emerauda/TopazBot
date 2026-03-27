@@ -54,16 +54,16 @@ try installing another.
 
 **node & npm:**
 
-- `node`: >=16
+- `node`: >=18
 - `npm`: >=6
 
 **discord.js (npm install)**
 
-- `discord.js`: ^14.20.0
+- `discord.js`: ^14.25.1
 
 **@discordjs/voice (npm install):**
 
-- `@discordjs/voice`: ^0.18.0
+- `@discordjs/voice`: ^0.19.2
 
 **@discordjs/opus (npm install):**
 
@@ -72,7 +72,7 @@ try installing another.
 
 **Encryption Libraries (npm install):**
 
-- `sodium-native`: ^5.0.6
+- `sodium-native`: ^5.1.0
 
 **Opus Libraries (npm install):**
 
