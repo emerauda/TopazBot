@@ -1,14 +1,39 @@
 {
         "name": "fetherbot",
         "version": "1.2.3",
-        "description": "A TopazChat music bot written using @discordjs/voice",
+        "description": "A TopazChat RTSP to Discord voice channel relay bot using @discordjs/voice",
+        "main": "dist/index.js",
+        "private": true,
         "scripts": {
                 "start": "node dist/index.js",
                 "build": "tsc",
-                "dev": "ts-node src/index.ts"
+                "dev": "ts-node src/index.ts",
+                "register": "node register.js"
         },
+        "keywords": [
+                "discord",
+                "discord-bot",
+                "topazbot",
+                "topazhat",
+                "rtsp",
+                "voice",
+                "music-bot",
+                "opus",
+                "ffmpeg"
+        ],
         "author": "Aoi Emerauda <aoi@emerauda.com>",
         "license": "MIT",
+        "repository": {
+                "type": "git",
+                "url": "git+https://github.com/emerauda/TopazBot.git"
+        },
+        "bugs": {
+                "url": "https://github.com/emerauda/TopazBot/issues"
+        },
+        "homepage": "https://github.com/emerauda/TopazBot#readme",
+        "engines": {
+                "node": ">=18"
+        },
         "dependencies": {
                 "@discordjs/opus": "^0.10.0",
                 "@discordjs/voice": "^0.19.2",

@@ -138,3 +138,5 @@ node_modules/
 
 # config
 config.json
+
+.claude/
