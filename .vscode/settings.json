@@ -1,8 +1,0 @@
-{
-  "git.enableCommitSigning": true,
-  "git.useIntegratedTerminal": true,
-  "terminal.integrated.inheritEnv": true,
-  "terminal.integrated.env.linux": {
-    "GPG_TTY": "$(tty)"
-  }
-}
