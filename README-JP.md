@@ -93,19 +93,23 @@ TopazBotを導入するには、2つの方法があります。
 
 **discord.js (npm install)**
 
-- `discord.js`: ^14.21.0
+- `discord.js`: ^14.25.1
 
 **@discordjs/voice (npm install):**
 
-- `@discordjs/voice`: ^0.18.0
+- `@discordjs/voice`: ^0.19.2
 
 **@discordjs/opus (npm install):**
 
 - `@discordjs/opus`: "^0.10.0"
 
+**DAVE暗号化 (npm install):**
+
+- `@snazzah/davey`: ^0.1.10
+
 **Encryption Libraries (npm install):**
 
-- `sodium-native`: ^5.0.6
+- `sodium-native`: ^5.1.0
 
 **Opus Libraries (npm install):**
 
@@ -145,16 +149,21 @@ DISCORD_TOKEN=your_discord_bot_token
 # RTSPサーバー設定（オプション）
 # デフォルト: rtsp://topaz.chat/live
 RTSP_SERVER_URL=rtsp://topaz.chat/live
-
-# 他の例:
-# RTSP_SERVER_URL=rtsp://example.com/stream
-# RTSP_SERVER_URL=rtsp://192.168.1.100:8554/live
 ```
 
 **設定オプション:**
 
-- `DISCORD_TOKEN`: Discordボットトークン（必須）
-- `RTSP_SERVER_URL`: RTSPサーバーのベースURL（オプション、デフォルト: `rtsp://topaz.chat/live`）
+| 変数 | 必須 | デフォルト | 説明 |
+| --- | --- | --- | --- |
+| `DISCORD_TOKEN` | Yes | - | Discordボットトークン |
+| `RTSP_SERVER_URL` | No | `rtsp://topaz.chat/live` | RTSPサーバーのベースURL |
+| `USE_EXTERNAL_OPUS` | No | `1` | `1` = OggOpus出力（推奨）、`0` = AAC ADTSフォールバック |
+| `INPUT_IS_OPUS` | No | `0` | `1` = 入力が既にOpusの場合再エンコードをスキップ (`-c:a copy`) |
+| `FORCE_OPUS_REENCODE` | No | `0` | `1` = `INPUT_IS_OPUS=1`でも強制的にlibopusで再エンコード |
+| `LOW_LATENCY` | No | `0` | `1` = 低遅延FFmpegフラグを有効化 (nobuffer, analyzeduration=0) |
+| `OPUS_BITRATE` | No | `192k` | Opusビットレート |
+| `CHANNEL_FIX_MODE` | No | `none` | `none` / `swap` / `left` / `right` / `mix` |
+| `DEBUG_FFMPEG` | No | `0` | `1` = FFmpegの起動引数とstderrをログ出力 |
 
 ボットを使用する際、ストリームは `${RTSP_SERVER_URL}/${streamkey}` としてアクセスされます。
 
@@ -235,17 +244,18 @@ graph TD
 
 | カテゴリ           | 技術             | バージョン |
 | :----------------- | :--------------- | :--------- |
-| **言語**           | TypeScript       | ^5.8.3     |
+| **言語**           | TypeScript       | ^5.9.3     |
 | **ランタイム**     | Node.js          | >=22.x     |
-| **フレームワーク** | discord.js       | ^14.21.0   |
-| **音声処理**       | @discordjs/voice | ^0.18.0    |
+| **フレームワーク** | discord.js       | ^14.25.1   |
+| **音声処理**       | @discordjs/voice | ^0.19.2    |
+| **DAVE暗号化**     | @snazzah/davey   | ^0.1.10    |
 | **メディア処理**   | FFmpeg           | -          |
 | **RTSPサーバー**   | TopazChat        | -          |
 | **Opusライブラリ** | @discordjs/opus  | ^0.10.0    |
-| **暗号化**         | sodium-native    | ^5.0.6     |
+| **暗号化**         | sodium-native    | ^5.1.0     |
 | **パッケージ管理** | npm              | >=6        |
-| **テスト**         | Jest             | ^30.0.3    |
-| **リンター**       | ESLint           | ^9.30.1    |
+| **テスト**         | Jest             | ^30.2.0    |
+| **リンター**       | ESLint           | ^9.37.0    |
 | **フォーマッター** | Prettier         | ^3.6.2     |
 
 ---
@@ -254,18 +264,20 @@ graph TD
 
 ### 📝 スクリプト
 
-| コマンド                | 説明                         |
-| ----------------------- | ---------------------------- |
-| `npm run build`         | TypeScriptをビルド           |
-| `npm run dev`           | 開発サーバーを開始           |
-| `npm run register`      | Discordコマンドを登録        |
-| `npm run lint`          | 型チェックを実行             |
-| `npm run lint:fix`      | 型修正を実行                 |
-| `npm run format`        | コードフォーマットを適用     |
-| `npm run format:check`  | コードフォーマットをチェック |
-| `npm run test`          | テストを実行                 |
-| `npm run test:watch`    | テストをウォッチモードで実行 |
-| `npm run test:coverage` | カバレッジ付きテストを実行   |
+| コマンド                | 説明                             |
+| ----------------------- | -------------------------------- |
+| `npm run build`         | TypeScriptをビルド               |
+| `npm run start`         | ビルドしてBotを起動              |
+| `npm run dev`           | ts-nodeで開発起動              |
+| `npm run register`      | Discordスラッシュコマンドを登録 |
+| `npm run lint`          | ESLintを実行                   |
+| `npm run lint:fix`      | ESLint自動修正を実行             |
+| `npm run format`        | Prettierフォーマットを適用       |
+| `npm run format:check`  | Prettierフォーマットをチェック   |
+| `npm run typecheck`     | 型チェックのみ実行 (出力なし)     |
+| `npm run test`          | テストを実行                   |
+| `npm run test:watch`    | テストをウォッチモードで実行   |
+| `npm run test:coverage` | カバレッジ付きテストを実行     |
 
 ### 🔍 デバッグ
 

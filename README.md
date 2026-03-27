@@ -93,19 +93,23 @@ If you cannot install one of the options, try installing another.
 
 **discord.js (npm install)**
 
-- `discord.js`: ^14.21.0
+- `discord.js`: ^14.25.1
 
 **@discordjs/voice (npm install):**
 
-- `@discordjs/voice`: ^0.18.0
+- `@discordjs/voice`: ^0.19.2
 
 **@discordjs/opus (npm install):**
 
 - `@discordjs/opus`: "^0.10.0"
 
+**DAVE Encryption (npm install):**
+
+- `@snazzah/davey`: ^0.1.10
+
 **Encryption Libraries (npm install):**
 
-- `sodium-native`: ^5.0.6
+- `sodium-native`: ^5.1.0
 
 **Opus Libraries (npm install):**
 
@@ -145,16 +149,21 @@ DISCORD_TOKEN=your_discord_bot_token
 # RTSP Server Configuration (optional)
 # Default: rtsp://topaz.chat/live
 RTSP_SERVER_URL=rtsp://topaz.chat/live
-
-# Alternative examples:
-# RTSP_SERVER_URL=rtsp://example.com/stream
-# RTSP_SERVER_URL=rtsp://192.168.1.100:8554/live
 ```
 
 **Configuration Options:**
 
-- `DISCORD_TOKEN`: Your Discord bot token (required)
-- `RTSP_SERVER_URL`: RTSP server base URL (optional, defaults to `rtsp://topaz.chat/live`)
+| Variable | Required | Default | Description |
+| --- | --- | --- | --- |
+| `DISCORD_TOKEN` | Yes | - | Discord bot token |
+| `RTSP_SERVER_URL` | No | `rtsp://topaz.chat/live` | RTSP server base URL |
+| `USE_EXTERNAL_OPUS` | No | `1` | `1` = OggOpus output (recommended), `0` = AAC ADTS fallback |
+| `INPUT_IS_OPUS` | No | `0` | `1` = skip re-encode when input is already Opus (`-c:a copy`) |
+| `FORCE_OPUS_REENCODE` | No | `0` | `1` = force libopus re-encode even when `INPUT_IS_OPUS=1` |
+| `LOW_LATENCY` | No | `0` | `1` = enable low-latency FFmpeg flags (nobuffer, analyzeduration=0) |
+| `OPUS_BITRATE` | No | `192k` | Target Opus bitrate |
+| `CHANNEL_FIX_MODE` | No | `none` | `none` / `swap` / `left` / `right` / `mix` |
+| `DEBUG_FFMPEG` | No | `0` | `1` = log FFmpeg spawn args and stderr |
 
 When using the bot, streams will be accessed as `${RTSP_SERVER_URL}/${streamkey}`.
 
@@ -236,17 +245,18 @@ graph TD
 
 | Category             | Technology       | Version  |
 | :------------------- | :--------------- | :------- |
-| **Language**         | TypeScript       | ^5.8.3   |
+| **Language**         | TypeScript       | ^5.9.3   |
 | **Runtime**          | Node.js          | >=22.x   |
-| **Framework**        | discord.js       | ^14.21.0 |
-| **Audio Processing** | @discordjs/voice | ^0.18.0  |
+| **Framework**        | discord.js       | ^14.25.1 |
+| **Audio Processing** | @discordjs/voice | ^0.19.2  |
+| **DAVE Encryption**  | @snazzah/davey   | ^0.1.10  |
 | **Media Processing** | FFmpeg           | -        |
 | **RTSP Server**      | TopazChat        | -        |
 | **Opus Library**     | @discordjs/opus  | ^0.10.0  |
-| **Encryption**       | sodium-native    | ^5.0.6   |
+| **Encryption**       | sodium-native    | ^5.1.0   |
 | **Package Manager**  | npm              | >=6      |
-| **Testing**          | Jest             | ^30.0.3  |
-| **Linter**           | ESLint           | ^9.30.1  |
+| **Testing**          | Jest             | ^30.2.0  |
+| **Linter**           | ESLint           | ^9.37.0  |
 | **Formatter**        | Prettier         | ^3.6.2   |
 
 ---
@@ -255,18 +265,20 @@ graph TD
 
 ### 📝 Scripts
 
-| Command                 | Description               |
-| ----------------------- | ------------------------- |
-| `npm run build`         | Build TypeScript          |
-| `npm run dev`           | Start development server  |
-| `npm run register`      | Register Discord commands |
-| `npm run lint`          | Run type checking         |
-| `npm run lint:fix`      | Run type fixing           |
-| `npm run format`        | Apply code formatting     |
-| `npm run format:check`  | Check code formatting     |
-| `npm run test`          | Run tests                 |
-| `npm run test:watch`    | Run tests in watch mode   |
-| `npm run test:coverage` | Run tests with coverage   |
+| Command                 | Description                     |
+| ----------------------- | ------------------------------- |
+| `npm run build`         | Build TypeScript                |
+| `npm run start`         | Build and start the bot         |
+| `npm run dev`           | Start with ts-node (dev)        |
+| `npm run register`      | Register Discord slash commands |
+| `npm run lint`          | Run ESLint                      |
+| `npm run lint:fix`      | Run ESLint with auto-fix        |
+| `npm run format`        | Apply Prettier formatting       |
+| `npm run format:check`  | Check Prettier formatting       |
+| `npm run typecheck`     | Type-check without emitting     |
+| `npm run test`          | Run tests                       |
+| `npm run test:watch`    | Run tests in watch mode         |
+| `npm run test:coverage` | Run tests with coverage         |
 
 ### 🔍 Debugging
 

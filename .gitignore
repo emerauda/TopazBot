@@ -129,12 +129,14 @@ dmypy.json
 .pyre/
 
 .vs/
-.circleci/
-.github/
 .travis.yml
 
 # node
 node_modules/
+
+# TypeScript build output
+dist/
+*.tsbuildinfo
 
 # config
 config.json
