@@ -106,21 +106,21 @@ export function buildFfmpegArgs(streamUrl: string, opus: boolean): string[] {
   }
   if (lowLatency) inputFflags.push('+nobuffer');
 
+  // Note: -use_wallclock_as_timestamps is deliberately NOT used — it stamps
+  // packets with their arrival time, so network jitter produces backward
+  // timestamps ("Queue input is backward in time" / non-monotonic DTS spam).
+  // -max_delay 0 disables the RTSP demuxer's reorder buffer (default 0.5s),
+  // which is safe because the transport is TCP (already ordered).
   const preInput = [
     ...(lowLatency
-      ? [
-          '-flags',
-          'low_delay',
-          '-analyzeduration',
-          '0',
-          '-probesize',
-          '32K',
-          '-use_wallclock_as_timestamps',
-          '1',
-        ]
+      ? ['-flags', 'low_delay', '-analyzeduration', '0', '-probesize', '32K', '-max_delay', '0']
       : []),
     ...(inputFflags.length ? ['-fflags', inputFflags.join('')] : []),
   ];
+  // The ogg muxer buffers up to 1 SECOND per page by default (page_duration),
+  // which becomes permanent extra latency on a live stream. In low latency
+  // mode emit one page per opus frame (20ms) and flush each packet.
+  const oggMuxArgs = lowLatency ? ['-page_duration', '20000', '-flush_packets', '1'] : [];
   // Note: RTSP reconnection is handled by the retry loop in playStream().
   // (-reconnect and friends are HTTP-only options, so they are not used here.)
   // -nostats is important: without it ffmpeg keeps writing progress to stderr,
@@ -141,7 +141,7 @@ export function buildFfmpegArgs(streamUrl: string, opus: boolean): string[] {
     // Input is already Opus: remux into an Ogg container with copy instead of re-encoding.
     // (-ar/-ac do not apply to a copied stream, so they are omitted here.)
     if (useCopy) {
-      return [...common, '-c:a', 'copy', '-f', 'ogg', 'pipe:1'];
+      return [...common, '-c:a', 'copy', ...oggMuxArgs, '-f', 'ogg', 'pipe:1'];
     }
     // Normal path: encode with libopus at OPUS_BITRATE (default 192k)
     const channelFilter = (() => {
@@ -158,14 +158,17 @@ export function buildFfmpegArgs(streamUrl: string, opus: boolean): string[] {
           return null;
       }
     })();
-    const filterArgs = channelFilter ? ['-af', channelFilter] : [];
+    // aresample=async=1 smooths RTSP timestamp jitter into a continuous
+    // timeline before the encoder (prevents backward-in-time frames)
+    const filterChain = ['aresample=async=1', ...(channelFilter ? [channelFilter] : [])].join(',');
     return [
       ...common,
       '-ar',
       '48000',
       '-ac',
       downmixMono ? '1' : '2',
-      ...filterArgs,
+      '-af',
+      filterChain,
       '-c:a',
       'libopus',
       '-b:a',
@@ -174,6 +177,7 @@ export function buildFfmpegArgs(streamUrl: string, opus: boolean): string[] {
       'on',
       '-application',
       'lowdelay',
+      ...oggMuxArgs,
       '-f',
       'ogg',
       'pipe:1',

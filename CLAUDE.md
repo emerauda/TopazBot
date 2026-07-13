@@ -56,7 +56,7 @@ test/
 - `USE_EXTERNAL_OPUS` — `1` (default) for OggOpus output, `0` for AAC ADTS fallback
 - `INPUT_IS_OPUS` — `1` to use `-c:a copy` (no re-encode) when input is already Opus
 - `FORCE_OPUS_REENCODE` — `1` to force libopus re-encode even when INPUT_IS_OPUS=1
-- `LOW_LATENCY` — `1` for nobuffer/analyzeduration=0/probesize=32K
+- `LOW_LATENCY` — `1` for nobuffer/analyzeduration=0/probesize=32K/max_delay=0 + 20ms ogg pages
 - `OPUS_BITRATE` — Target bitrate (default: `192k`)
 - `AAC_BITRATE` — Bitrate for the AAC fallback (defaults to `OPUS_BITRATE`)
 - `CHANNEL_FIX_MODE` — `none|swap|left|right|mix` (re-encode path only)

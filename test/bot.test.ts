@@ -942,7 +942,25 @@ describe('bot.ts', () => {
       const args = build('rtsp://example.com/live/key', true);
       expect(args).toContain('libopus');
       expect(args).toContain('-ar');
-      expect(args[args.indexOf('-af') + 1]).toBe('pan=stereo|c0=c1|c1=c0');
+      expect(args[args.indexOf('-af') + 1]).toBe('aresample=async=1,pan=stereo|c0=c1|c1=c0');
+    });
+
+    it('smooths input timestamps with aresample in the re-encode path', () => {
+      const build = loadBuildFfmpegArgs({});
+      const args = build('rtsp://example.com/live/key', true);
+      expect(args[args.indexOf('-af') + 1]).toBe('aresample=async=1');
+      // Arrival-time stamping causes backward timestamps on jittery networks
+      expect(args).not.toContain('-use_wallclock_as_timestamps');
+    });
+
+    it('keeps ogg page buffering and RTSP reorder delay short in low latency mode', () => {
+      const build = loadBuildFfmpegArgs({ LOW_LATENCY: '1' });
+      const args = build('rtsp://example.com/live/key', true);
+      expect(args[args.indexOf('-page_duration') + 1]).toBe('20000');
+      expect(args[args.indexOf('-flush_packets') + 1]).toBe('1');
+      expect(args[args.indexOf('-max_delay') + 1]).toBe('0');
+      // The mux options must be on the output side (after -i)
+      expect(args.indexOf('-page_duration')).toBeGreaterThan(args.indexOf('-i'));
     });
 
     it('builds AAC fallback args when opus output is disabled', () => {
