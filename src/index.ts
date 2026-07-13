@@ -69,6 +69,14 @@ function sleep(ms: number): Promise<void> {
 // FFmpeg stream creator — AAC→Opus transcode with low-latency flags, output as OggOpus
 // OggOpus is passed directly to discord.js without re-transcoding via prism-media
 function createFFmpegStream(streamUrl: string): { stream: Readable; process: ChildProcess } {
+    // Notes:
+    // - -use_wallclock_as_timestamps is deliberately NOT used: stamping packets
+    //   with their arrival time makes network jitter produce backward timestamps
+    //   ("Queue input is backward in time" / non-monotonic DTS warnings).
+    // - -max_delay 0 disables the RTSP demuxer's 0.5s reorder buffer (safe over TCP).
+    // - The ogg muxer buffers up to 1s per page by default (page_duration), which
+    //   becomes permanent latency on a live stream — emit 20ms pages instead.
+    // - aresample=async=1 smooths RTSP timestamp jitter before the encoder.
     const ffmpeg = spawn('ffmpeg', [
         '-hide_banner',
         '-nostats',
@@ -80,17 +88,19 @@ function createFFmpegStream(streamUrl: string): { stream: Readable; process: Chi
                   '-flags', 'low_delay',
                   '-analyzeduration', '0',
                   '-probesize', '32K',
-                  '-use_wallclock_as_timestamps', '1',
+                  '-max_delay', '0',
               ]
             : []),
         '-rtsp_transport', 'tcp',
         '-i', streamUrl,
         '-vn',
+        '-af', 'aresample=async=1',
         '-c:a', 'libopus',
         '-ar', '48000',
         '-ac', '2',
         '-b:a', '192k',
         '-application', 'audio',
+        ...(lowLatency ? ['-page_duration', '20000', '-flush_packets', '1'] : []),
         '-f', 'ogg',
         'pipe:1',
     ]);

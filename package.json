@@ -1,6 +1,6 @@
 {
 	"name": "fetherbot",
-	"version": "1.4.0",
+	"version": "1.4.1",
 	"description": "A TopazChat RTSP to Discord voice channel relay bot using @discordjs/voice",
 	"main": "dist/index.js",
 	"private": true,
