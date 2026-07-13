@@ -1,0 +1,6 @@
+{
+  // Editor-facing project for test files (the CLI uses ../tsconfig.eslint.json).
+  // Without this, IDEs type-check tests against the build config, which has no jest types.
+  "extends": "../tsconfig.eslint.json",
+  "include": ["../src/**/*", "./**/*"]
+}

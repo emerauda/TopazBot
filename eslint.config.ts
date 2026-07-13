@@ -24,7 +24,8 @@ export default [
     languageOptions: {
       parser: tseslint.parser,
       parserOptions: {
-        project: './tsconfig.json',
+        // Use the wider type-check project so test files can be linted too
+        project: './tsconfig.eslint.json',
       },
     },
     plugins: {

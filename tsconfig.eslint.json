@@ -1,0 +1,11 @@
+{
+  // Type-check-only project used by ESLint and `npm run typecheck`.
+  // Unlike the build config (tsconfig.json) it also covers tests and config files.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "noEmit": true,
+    "types": ["node", "jest"]
+  },
+  "include": ["src/**/*", "test/**/*", "eslint.config.ts", "jest.config.ts"]
+}

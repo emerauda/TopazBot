@@ -5,11 +5,12 @@ const config: Config.InitialOptions = {
   testEnvironment: 'node',
   moduleFileExtensions: ['ts', 'js', 'json', 'node'], // Note: Ensure .ts is first so ts-jest transforms TypeScript source
   transform: {
-    '^.+\\.ts$': 'ts-jest',
+    // Use the test-aware tsconfig so jest globals resolve under TypeScript 6+
+    '^.+\\.ts$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.eslint.json' }],
   },
   collectCoverageFrom: ['src/**/*.ts'],
   testMatch: ['<rootDir>/test/**/*.test.ts'],
   transformIgnorePatterns: ['<rootDir>/node_modules/'],
 };
 
-module.exports = config;
+export default config;
