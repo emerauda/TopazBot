@@ -1,6 +1,6 @@
 {
 	"name": "fetherbot",
-	"version": "1.2.4",
+	"version": "1.3.0",
 	"description": "A TopazChat RTSP to Discord voice channel relay bot using @discordjs/voice",
 	"main": "dist/index.js",
 	"private": true,
@@ -32,7 +32,7 @@
 	},
 	"homepage": "https://github.com/emerauda/TopazBot#readme",
 	"engines": {
-		"node": ">=18"
+		"node": ">=22"
 	},
 	"dependencies": {
 		"@discordjs/opus": "^0.10.0",
@@ -42,9 +42,9 @@
 		"sodium-native": "^5.1.0"
 	},
 	"devDependencies": {
-		"@types/node": "^24.12.0",
+		"@types/node": "^26.1.1",
 		"ts-node": "^10.9.2",
-		"typescript": "^5.9.3"
+		"typescript": "^6.0.3"
 	},
 	"overrides": {
 		"undici": "^6.27.0",

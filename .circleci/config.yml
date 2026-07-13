@@ -1,89 +1,37 @@
 version: 2.1
 orbs:
   node: circleci/node@5.2
+# Node versions are kept in sync with "engines" in package.json (>=22)
 jobs:
-  test-v12:
+  build-v22:
     docker:
       - image: cimg/base:stable
     steps:
       - checkout
       - node/install:
-          node-version: "12.22"
+          node-version: "22.17"
       - run:
           name: Install dependencies
-          command: npm install
+          command: npm ci
       - run:
-          name: Verify build
-          command: echo "Build completed successfully!"
-  test-v14:
+          name: Build
+          command: npm run build
+  build-v24:
     docker:
       - image: cimg/base:stable
     steps:
       - checkout
       - node/install:
-          node-version: "14.21"
+          node-version: "24.12"
       - run:
           name: Install dependencies
-          command: npm install
+          command: npm ci
       - run:
-          name: Verify build
-          command: echo "Build completed successfully!"
-  test-v16:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - checkout
-      - node/install:
-          node-version: "16.20"
-      - run:
-          name: Install dependencies
-          command: npm install
-      - run:
-          name: Verify build
-          command: echo "Build completed successfully!"
-  test-v18:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - checkout
-      - node/install:
-          node-version: "18.20"
-      - run:
-          name: Install dependencies
-          command: npm install
-      - run:
-          name: Verify build
-          command: echo "Build completed successfully!"
-  test-v20:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - checkout
-      - node/install:
-          node-version: "20.12"
-      - run:
-          name: Install dependencies
-          command: npm install
-      - run:
-          name: Verify build
-          command: echo "Build completed successfully!"
-  test-v22:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - checkout
-      - node/install:
-          node-version: "22.0"
-      - run:
-          name: Install dependencies
-          command: npm install
-      - run:
-          name: Verify build
-          command: echo "Build completed successfully!"
+          name: Build
+          command: npm run build
+
 workflows:
-  build_and_test:
+  build:
     jobs:
-      - test-v16
-      - test-v18
-      - test-v20
-      - test-v22
+      - build-v22
+      - build-v24

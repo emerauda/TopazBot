@@ -2,9 +2,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ FetherBot ]
   pull_request:
-    branches: [ main ]
+    branches: [ FetherBot ]
 
 jobs:
   build:
@@ -12,7 +12,8 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x, 18.x, 20.x, 22.x]
+        # Keep in sync with "engines" in package.json (>=22)
+        node-version: [ 22.x, 24.x ]
 
     steps:
     - uses: actions/checkout@v4
@@ -21,6 +22,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Install dependencies
-      run: npm install
-    - name: Check for build success
-      run: echo "Build completed successfully!"
+      run: npm ci
+    - name: Build the project
+      run: npm run build

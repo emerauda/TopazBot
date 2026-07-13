@@ -41,6 +41,7 @@ node register.js [guildId]   # register slash commands
 | `STREAM` | Stream name prefix (required, e.g. `maitake`) |
 | `NUMBER` | Bot number used as the command-name suffix (optional, e.g. `2`; empty → `play`/`resync`/`stop`) |
 | `TARGET_VOICE_CHANNEL_ID` | Voice channel to auto-join (empty disables auto-join) |
+| `RTSP_SERVER_URL` | RTSP base URL (default: `rtsp://topaz.chat/live`) |
 
 ## Key Design Decisions
 
@@ -57,6 +58,8 @@ node register.js [guildId]   # register slash commands
 - **Auto join/leave**: `voiceStateUpdate` watches `TARGET_VOICE_CHANNEL_ID`.
 - **Disconnect recovery**: connections get the standard Disconnected handler
   (5s grace for channel moves, destroy on real kicks → the loop exits).
+- **Graceful shutdown**: SIGINT/SIGTERM stop all guild sessions before exit, so
+  PM2 restarts never leave orphan ffmpeg processes or voice connections.
 
 ## Common Issues
 

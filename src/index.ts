@@ -53,7 +53,9 @@ if (!stream) {
     throw new Error('STREAM is not set in environment variables.');
 }
 const STATIC_STREAM_KEY = `${stream}${number}`;
-const STREAM_URL = `rtsp://topaz.chat/live/${STATIC_STREAM_KEY}`;
+// RTSP server base URL (optimized for TopazChat, but any RTSP server works)
+const RTSP_SERVER_URL = process.env.RTSP_SERVER_URL || 'rtsp://topaz.chat/live';
+const STREAM_URL = `${RTSP_SERVER_URL}/${STATIC_STREAM_KEY}`;
 
 // Utility sleep function
 function sleep(ms: number): Promise<void> {
@@ -492,5 +494,22 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
 client.once('clientReady', () => {
     console.log(`Logged in as ${client.user?.tag}! client ready...`);
 });
+
+// Graceful shutdown (PM2 sends SIGINT on stop/restart): stop all guild
+// sessions so no ffmpeg processes or voice connections are left behind.
+function shutdownAllGuilds(): void {
+    for (const state of guildAudioStates.values()) {
+        stopGuildSession(state);
+    }
+    guildAudioStates.clear();
+}
+
+const shutdown = (signal: NodeJS.Signals) => {
+    console.log(`Received ${signal}, shutting down...`);
+    shutdownAllGuilds();
+    void client.destroy().finally(() => process.exit(0));
+};
+process.once('SIGINT', shutdown);
+process.once('SIGTERM', shutdown);
 
 client.login(token);
