@@ -1,50 +1,68 @@
-# CLAUDE.md — TopazBot
+# CLAUDE.md — TopazBot (FetherBot branch)
 
 ## Project Overview
 
-TopazChat の RTSP ストリームを Discord ボイスチャンネルに中継する Discord Bot。
-FFmpeg で RTSP (AAC) → OggOpus にトランスコードし、`@discordjs/voice` で Discord に送信する。
+A Discord bot that relays a TopazChat RTSP stream into a Discord voice channel.
+FFmpeg transcodes RTSP (AAC) → OggOpus, which is sent to Discord via `@discordjs/voice`.
+
+This is the **legacy single-guild branch** (fixed stream key, auto-join via
+`voiceStateUpdate`). The multi-guild slash-command version with tests lives on
+the **main branch**.
 
 ## Architecture
 
-- **`src/index.ts`** — メインのボットエントリポイント（PM2 でデプロイ）。環境変数 `NUMBER`/`STREAM` でストリームキーを構成。コマンド名は `play{N}`, `resync{N}`, `stop{N}`。
-- **`src/bot.ts`** — テスト対応版（jest 用）。汎用的な `/play streamkey` コマンド方式。多数の環境変数で動作をカスタマイズ可能。
-- **`register.js`** — Discord スラッシュコマンドの登録スクリプト（レガシー JS）。
+- **`src/index.ts`** — the whole bot (deployed with PM2). The stream key is
+  `STREAM + NUMBER` from the environment; command names are `play{N}`,
+  `resync{N}`, `stop{N}`.
+- **`register.js`** — slash command registration script (reads `.env`, registers
+  the `{N}`-suffixed guild-only commands; run with `node register.js [guildId]`).
 
 ## Tech Stack
 
 - TypeScript, Node.js (ES2020 target, CommonJS)
-- discord.js v14, @discordjs/voice (Voice Gateway v8, DAVE encryption)
+- discord.js v14, @discordjs/voice (Voice Gateway v8, DAVE encryption via @snazzah/davey)
 - FFmpeg (libopus), @discordjs/opus, sodium-native
 
 ## Build & Run
 
 ```bash
 npm install
-npm run build     # tsc → dist/
-npm start         # node dist/index.js
-npm run dev       # ts-node src/index.ts
+npm run build                # tsc → dist/
+npm start                    # node dist/index.js
+npm run dev                  # ts-node src/index.ts
+node register.js [guildId]   # register slash commands
 ```
 
 ## Environment Variables
 
 | Variable | Description |
 |---|---|
-| `DISCORD_TOKEN` | Bot token (必須) |
-| `NUMBER` | ボット番号 (コマンド名接尾辞、例: `2`) |
-| `STREAM` | ストリーム名プレフィックス (例: `maitake`) |
-| `TARGET_VOICE_CHANNEL_ID` | 自動参加するVCのID (空欄で無効) |
+| `DISCORD_TOKEN` | Bot token (required) |
+| `STREAM` | Stream name prefix (required, e.g. `maitake`) |
+| `NUMBER` | Bot number used as the command-name suffix (optional, e.g. `2`; empty → `play`/`resync`/`stop`) |
+| `TARGET_VOICE_CHANNEL_ID` | Voice channel to auto-join (empty disables auto-join) |
 
 ## Key Design Decisions
 
-- **OggOpus 直接出力**: FFmpeg で AAC→Opus トランスコードし `-f ogg` で出力。`StreamType.OggOpus` で discord.js に渡すことで prism-media の再トランスコードを回避。
-- **低遅延フラグ**: FFmpeg に `-fflags nobuffer -flags low_delay` を指定。
-- **FFmpeg プロセス管理**: `GuildAudioState.ffmpegProcess` で追跡し、stop/resync 時に確実に kill。
-- **自動再接続**: playStream ループで FFmpeg/プレーヤーの異常終了を検知し、10秒待機後に自動リトライ。
-- **自動参加/退出**: `voiceStateUpdate` で TARGET_VOICE_CHANNEL_ID を監視。
+- **Direct OggOpus output**: FFmpeg transcodes AAC→Opus and outputs `-f ogg`;
+  passing `StreamType.OggOpus` to discord.js avoids a second prism-media transcode.
+- **Low-latency flags**: `-fflags nobuffer -flags low_delay` on the input side.
+- **Session epochs**: every `playStream()` start and `stopGuildSession()` bumps
+  `state.epoch`; stale loops observe the change and exit. This is how stop,
+  resync and the empty-channel auto-leave actually terminate playback.
+- **FFmpeg lifecycle**: the per-iteration process is killed in a `finally`
+  block; stderr is consumed continuously and progress is suppressed with
+  `-nostats` so the pipe buffer can never stall ffmpeg.
+- **Auto-resume**: playback failures retry every 10s while the connection is alive.
+- **Auto join/leave**: `voiceStateUpdate` watches `TARGET_VOICE_CHANNEL_ID`.
+- **Disconnect recovery**: connections get the standard Disconnected handler
+  (5s grace for channel moves, destroy on real kicks → the loop exits).
 
 ## Common Issues
 
-- **Voice Gateway バージョン**: Discord は Voice Gateway v8 を要求する。`@discordjs/voice` は `^0.19.2` 以上が必要（0.18.x 以下は v4 で接続失敗する）。
-- **FFmpeg の `-c:a copy -f adts` は使用不可**: 入力は AAC だが、Discord は Opus のみ対応。必ず Opus へのトランスコードが必要。
-- **`connecting -> signalling` ループ**: @discordjs/voice のバージョンが古い場合に発生。パッケージ更新で解決。
+- **Voice Gateway version**: Discord requires Voice Gateway v8 — `@discordjs/voice`
+  must be `^0.19.2` or newer (older versions fail with a
+  `connecting → signalling` loop).
+- **`-c:a copy -f adts` cannot be used**: the input is AAC but Discord only
+  accepts Opus, so transcoding is mandatory.
+- **DAVE encryption**: provided by `@snazzah/davey` (a direct dependency).
