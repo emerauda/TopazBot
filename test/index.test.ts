@@ -25,7 +25,7 @@ describe('index.ts', () => {
   });
 });
 
-// index.ts module セクション
+// index.ts module section
 describe('index.ts module', () => {
   beforeEach(() => {
     jest.resetModules();
@@ -33,22 +33,25 @@ describe('index.ts module', () => {
     process.env.DISCORD_TOKEN = 'dummy_token';
   });
   test('clientReady event handler is registered', () => {
-    const indexModule = require('../src/index.ts');
     const client = require('../src/index.ts').client;
     expect(client.listenerCount('clientReady')).toBeGreaterThan(0);
   });
   test('interactionCreate event handler is registered', () => {
-    const indexModule = require('../src/index.ts');
     const client = require('../src/index.ts').client;
     expect(client.listenerCount('interactionCreate')).toBeGreaterThan(0);
   });
-  test('throws exception when DISCORD_TOKEN is missing in non-test environment', () => {
-    const originalToken = process.env.DISCORD_TOKEN;
-    const originalJestWorkerId = process.env.JEST_WORKER_ID;
-    const index = require('../src/index.ts');
-    expect(index).toBeDefined();
-    if (originalToken) process.env.DISCORD_TOKEN = originalToken;
-    if (originalJestWorkerId) process.env.JEST_WORKER_ID = originalJestWorkerId;
+  test('module loads without login or throwing when DISCORD_TOKEN is missing', () => {
+    // The DISCORD_TOKEN check only runs when index.ts is executed directly
+    // (require.main === module), so requiring it from a test must not throw.
+    delete process.env.DISCORD_TOKEN;
+    const { Client } = require('discord.js');
+    const loginSpy = jest.spyOn(Client.prototype, 'login');
+
+    expect(() => require('../src/index.ts')).not.toThrow();
+    expect(loginSpy).not.toHaveBeenCalled();
+
+    loginSpy.mockRestore();
+    process.env.DISCORD_TOKEN = 'dummy_token';
   });
 });
 

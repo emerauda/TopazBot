@@ -3,11 +3,12 @@ import {
   handleStopCommand,
   handleResyncCommand,
   handleInteraction,
-  createFFmpegStream,
   sleep,
   guildAudioStates,
   playStream,
+  shutdownAllGuilds,
 } from '../src/bot';
+import type { GuildAudioState } from '../src/bot';
 import { joinVoiceChannel, VoiceConnectionStatus, AudioPlayerStatus } from '@discordjs/voice';
 import type {
   ChatInputCommandInteraction,
@@ -117,19 +118,13 @@ describe('bot.ts', () => {
     expect(Date.now() - start).toBeGreaterThanOrEqual(45);
   });
 
-  test('createFFmpegStream is a function', () => {
-    expect(typeof createFFmpegStream).toBe('function');
-  });
-
   describe('handlePlayCommand', () => {
     it('should return error message when user is not in a voice channel', async () => {
       const interaction = createMockInteraction();
       interaction.member = { voice: { channel: null } } as GuildMember;
 
       await handlePlayCommand(interaction);
-      expect(interaction.editReply).toHaveBeenCalledWith(
-        'You need to be in a voice channel to play music!'
-      );
+      expect(interaction.editReply).toHaveBeenCalledWith('Please join a voice channel.');
     });
 
     it('should return already playing message when already playing', async () => {
@@ -184,7 +179,7 @@ describe('bot.ts', () => {
       await handleStopCommand(interaction);
 
       expect(mockDestroy).toHaveBeenCalled();
-      expect(interaction.editReply).toHaveBeenCalledWith('Stopped playing and left the channel.');
+      expect(interaction.editReply).toHaveBeenCalledWith('Destroyed.');
     });
 
     it('should reply message when bot is not in voice channel', async () => {
@@ -308,14 +303,6 @@ describe('bot.ts', () => {
     });
   });
 
-  describe('createFFmpegStream', () => {
-    it('should return empty stream in test environment', () => {
-      const stream = createFFmpegStream('rtsp://test.com/stream');
-      expect(stream).toBeDefined();
-      expect(stream.readable).toBe(true);
-    });
-  });
-
   describe('handlePlayCommand - additional edge cases', () => {
     it('should return error when voice channel is not joinable', async () => {
       const interaction = createMockInteraction();
@@ -376,6 +363,24 @@ describe('bot.ts', () => {
       expect(interaction.editReply).toHaveBeenCalledWith('streamkey is not specified.');
     });
 
+    it('should attach a Disconnected recovery handler to new connections', async () => {
+      const interaction = createMockInteraction();
+      const mockConnection = {
+        subscribe: jest.fn(),
+        on: jest.fn(),
+        state: { status: VoiceConnectionStatus.Ready },
+        destroy: jest.fn(),
+      };
+      mockJoinVoiceChannel.mockReturnValue(mockConnection);
+
+      await handlePlayCommand(interaction);
+
+      expect(mockConnection.on).toHaveBeenCalledWith(
+        VoiceConnectionStatus.Disconnected,
+        expect.any(Function)
+      );
+    });
+
     it('should handle destroyed connection state', async () => {
       const interaction = createMockInteraction();
       const mockConnection = {
@@ -407,7 +412,7 @@ describe('bot.ts', () => {
       await handlePlayCommand(interaction);
 
       expect(mockJoinVoiceChannel).toHaveBeenCalled();
-      expect(interaction.editReply).toHaveBeenCalledWith('Playing stream: test-stream-key');
+      expect(interaction.editReply).toHaveBeenCalledWith('Playing test-stream-key.');
     });
   });
 
@@ -495,6 +500,7 @@ describe('bot.ts', () => {
         } as unknown as GuildMember,
         options: {
           get: jest.fn().mockReturnValue({ value: 'test-stream-key' }),
+          getString: jest.fn().mockReturnValue('test-stream-key'),
           ...options,
         },
         deferReply: jest.fn().mockResolvedValue(undefined),
@@ -537,7 +543,35 @@ describe('bot.ts', () => {
       await handleInteraction(interaction);
 
       expect(interaction.deferReply).toHaveBeenCalled();
+      // Stopping without an active connection reports it explicitly
+      expect(interaction.editReply).toHaveBeenCalledWith('Not in a voice channel.');
+    });
+
+    it('should destroy connection when stopping through handleInteraction', async () => {
+      const interaction = createMockChatInputCommand('stop');
+      const mockConnection = {
+        destroy: jest.fn(),
+        subscribe: jest.fn(),
+        on: jest.fn(),
+        state: { status: VoiceConnectionStatus.Ready },
+      };
+      guildAudioStates.set('mock-guild-id', {
+        connection: mockConnection as any,
+        player: null,
+        streamKey: 'test-key',
+        streamUrl: 'rtsp://topaz.chat/live/test-key',
+        lastActivityTime: Date.now(),
+        isPlaying: true,
+        ffmpegProcess: null,
+      });
+
+      await handleInteraction(interaction);
+
+      expect(mockConnection.destroy).toHaveBeenCalled();
       expect(interaction.editReply).toHaveBeenCalledWith('Destroyed.');
+      const state = guildAudioStates.get('mock-guild-id');
+      expect(state?.isPlaying).toBe(false);
+      expect(state?.streamKey).toBeNull();
     });
 
     it('should return early for non-chat input commands', async () => {
@@ -568,7 +602,7 @@ describe('bot.ts', () => {
 
     it('should handle play command with missing streamkey', async () => {
       const interaction = createMockChatInputCommand('play');
-      interaction.options.get = jest.fn().mockReturnValue(null);
+      interaction.options.getString = jest.fn().mockReturnValue(null);
 
       await handleInteraction(interaction);
 
@@ -586,7 +620,7 @@ describe('bot.ts', () => {
 
     it('should handle resync command with missing streamkey', async () => {
       const interaction = createMockChatInputCommand('resync');
-      interaction.options.get = jest.fn().mockReturnValue(null);
+      interaction.options.getString = jest.fn().mockReturnValue(null);
 
       await handleInteraction(interaction);
 
@@ -761,6 +795,163 @@ describe('bot.ts', () => {
       // Should handle resync case
       expect(mockInteraction.editReply).toHaveBeenCalledWith('Playing test-key.');
       expect(mockConnection.destroy).toHaveBeenCalled();
+    });
+
+    it('should invalidate an older playStream session when a new one starts (epoch)', async () => {
+      const mockConnection = {
+        subscribe: jest.fn(),
+        on: jest.fn(),
+        state: { status: VoiceConnectionStatus.Ready },
+        destroy: jest.fn(),
+      };
+      const mockState: GuildAudioState = {
+        connection: mockConnection as any,
+        player: null,
+        streamKey: 'test-key',
+        streamUrl: 'rtsp://test.com/stream',
+        lastActivityTime: Date.now(),
+        isPlaying: false,
+        ffmpegProcess: null,
+      };
+      const mockInteraction = createMockInteraction();
+
+      await playStream(mockState, mockInteraction);
+      const firstEpoch = mockState.epoch ?? 0;
+      await playStream(mockState, mockInteraction);
+
+      // Each session takes ownership by bumping the epoch
+      expect(mockState.epoch).toBe(firstEpoch + 1);
+    });
+  });
+
+  describe('shutdownAllGuilds', () => {
+    it('should stop all sessions, destroy connections and clear the map', () => {
+      const kill = jest.fn();
+      const destroy = jest.fn();
+      const stop = jest.fn();
+      guildAudioStates.set('g1', {
+        connection: { destroy } as any,
+        player: { stop } as any,
+        streamKey: 'key1',
+        streamUrl: 'rtsp://example.com/live/key1',
+        lastActivityTime: Date.now(),
+        isPlaying: true,
+        ffmpegProcess: { kill } as any,
+        epoch: 3,
+      });
+      guildAudioStates.set('g2', {
+        connection: null,
+        player: null,
+        streamKey: null,
+        streamUrl: null,
+        lastActivityTime: Date.now(),
+        isPlaying: false,
+        ffmpegProcess: null,
+      });
+
+      shutdownAllGuilds();
+
+      expect(kill).toHaveBeenCalled();
+      expect(stop).toHaveBeenCalled();
+      expect(destroy).toHaveBeenCalled();
+      expect(guildAudioStates.size).toBe(0);
+    });
+  });
+
+  describe('buildFfmpegArgs', () => {
+    // buildFfmpegArgs reads its configuration from module-level constants that are
+    // frozen at import time, so each scenario reloads the module with its own env.
+    const ENV_KEYS = [
+      'USE_EXTERNAL_OPUS',
+      'INPUT_IS_OPUS',
+      'FORCE_OPUS_REENCODE',
+      'DOWNMIX_MONO',
+      'COPY_WITH_DISCARDCORRUPT',
+      'CHANNEL_FIX_MODE',
+      'LOW_LATENCY',
+      'OPUS_BITRATE',
+      'AAC_BITRATE',
+      'PLAY_WAIT_MS',
+      'RESUME_WAIT_MS',
+    ];
+
+    const loadBuildFfmpegArgs = (env: Record<string, string>) => {
+      const saved: Record<string, string | undefined> = {};
+      for (const key of ENV_KEYS) {
+        saved[key] = process.env[key];
+        delete process.env[key];
+      }
+      for (const [key, value] of Object.entries(env)) {
+        process.env[key] = value;
+      }
+      let build: (streamUrl: string, opus: boolean) => string[] = () => [];
+      jest.isolateModules(() => {
+        build = require('../src/bot').buildFfmpegArgs;
+      });
+      for (const key of ENV_KEYS) {
+        if (saved[key] === undefined) delete process.env[key];
+        else process.env[key] = saved[key]!;
+      }
+      return build;
+    };
+
+    it('places -fflags before -i (input side) in re-encode mode', () => {
+      const build = loadBuildFfmpegArgs({ LOW_LATENCY: '1' });
+      const args = build('rtsp://example.com/live/key', true);
+      const fflagsIndex = args.indexOf('-fflags');
+      expect(fflagsIndex).toBeGreaterThanOrEqual(0);
+      expect(fflagsIndex).toBeLessThan(args.indexOf('-i'));
+      expect(args[fflagsIndex + 1]).toBe('+genpts+discardcorrupt+nobuffer');
+      // No stray -fflags on the output side
+      expect(args.lastIndexOf('-fflags')).toBe(fflagsIndex);
+    });
+
+    it('does not include HTTP-only -reconnect options', () => {
+      const build = loadBuildFfmpegArgs({});
+      const args = build('rtsp://example.com/live/key', true);
+      expect(args).not.toContain('-reconnect');
+      expect(args).not.toContain('-reconnect_streamed');
+      expect(args).not.toContain('-reconnect_delay_max');
+    });
+
+    it('suppresses ffmpeg progress stats to avoid stderr backpressure', () => {
+      const build = loadBuildFfmpegArgs({});
+      const args = build('rtsp://example.com/live/key', true);
+      expect(args).toContain('-nostats');
+      expect(args.indexOf('-nostats')).toBeLessThan(args.indexOf('-i'));
+    });
+
+    it('omits -ar/-ac in copy mode and keeps discardcorrupt on the input side', () => {
+      const build = loadBuildFfmpegArgs({ INPUT_IS_OPUS: '1', COPY_WITH_DISCARDCORRUPT: '1' });
+      const args = build('rtsp://example.com/live/key', true);
+      expect(args).toContain('copy');
+      expect(args).not.toContain('-ar');
+      expect(args).not.toContain('-ac');
+      const fflagsIndex = args.indexOf('-fflags');
+      expect(fflagsIndex).toBeGreaterThanOrEqual(0);
+      expect(fflagsIndex).toBeLessThan(args.indexOf('-i'));
+      expect(args[fflagsIndex + 1]).toBe('+genpts+discardcorrupt');
+    });
+
+    it('applies -ar/-ac and the pan filter when re-encode is forced', () => {
+      const build = loadBuildFfmpegArgs({
+        INPUT_IS_OPUS: '1',
+        FORCE_OPUS_REENCODE: '1',
+        CHANNEL_FIX_MODE: 'swap',
+      });
+      const args = build('rtsp://example.com/live/key', true);
+      expect(args).toContain('libopus');
+      expect(args).toContain('-ar');
+      expect(args[args.indexOf('-af') + 1]).toBe('pan=stereo|c0=c1|c1=c0');
+    });
+
+    it('builds AAC fallback args when opus output is disabled', () => {
+      const build = loadBuildFfmpegArgs({});
+      const args = build('rtsp://example.com/live/key', false);
+      expect(args).toContain('adts');
+      expect(args).toContain('aac');
+      // Without low latency mode there is nothing to put in -fflags
+      expect(args).not.toContain('-fflags');
     });
   });
 });

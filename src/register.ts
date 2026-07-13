@@ -3,37 +3,17 @@
 import {
   Client,
   ApplicationCommandData,
+  ApplicationCommandOptionType,
+  InteractionContextType,
   Snowflake,
   Collection,
   GatewayIntentBits,
   ApplicationCommand,
 } from 'discord.js';
-import { readFileSync } from 'fs';
-
-// Inlined test environment check
-const isTestEnv = !!process.env.JEST_WORKER_ID;
+import { loadEnvFile } from './env';
 
 // .env loader (skipped in test environment)
-if (!isTestEnv) {
-  try {
-    const env = readFileSync('.env', 'utf-8');
-    env.split('\n').forEach((line) => {
-      // Skip empty lines and comments
-      const trimmedLine = line.trim();
-      if (!trimmedLine || trimmedLine.startsWith('#')) return;
-
-      const match = line.match(/^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)$/);
-      if (match) {
-        const [, key, value] = match;
-        if (!process.env[key]) {
-          process.env[key] = value.replace(/^['"]|['"]$/g, '');
-        }
-      }
-    });
-  } catch {
-    // Do nothing
-  }
-}
+loadEnvFile();
 
 // Read token from environment variable; skip validation in test environment
 const token = process.env.DISCORD_TOKEN;
@@ -56,13 +36,15 @@ async function register(
   return guild.commands.set(commands);
 }
 
+// All commands operate on voice channels, so they only make sense inside guilds
 const playCommand: ApplicationCommandData = {
   name: 'play',
   description: 'Play TopazChat music',
+  contexts: [InteractionContextType.Guild],
   options: [
     {
       name: 'streamkey',
-      type: 3, // STRING
+      type: ApplicationCommandOptionType.String,
       description: 'The StreamKey of the music to play',
       required: true,
     },
@@ -71,10 +53,20 @@ const playCommand: ApplicationCommandData = {
 const resyncCommand: ApplicationCommandData = {
   name: 'resync',
   description: 'Resync TopazChat music',
+  contexts: [InteractionContextType.Guild],
+  options: [
+    {
+      name: 'streamkey',
+      type: ApplicationCommandOptionType.String,
+      description: 'The StreamKey to resync (defaults to the last played one)',
+      required: false,
+    },
+  ],
 };
 const stopCommand: ApplicationCommandData = {
   name: 'stop',
   description: 'Stop TopazChat music',
+  contexts: [InteractionContextType.Guild],
 };
 const commands: ApplicationCommandData[] = [playCommand, resyncCommand, stopCommand];
 
