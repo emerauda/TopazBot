@@ -42,12 +42,16 @@ node register.js [guildId]   # register slash commands
 | `NUMBER` | Bot number used as the command-name suffix (optional, e.g. `2`; empty → `play`/`resync`/`stop`) |
 | `TARGET_VOICE_CHANNEL_ID` | Voice channel to auto-join (empty disables auto-join) |
 | `RTSP_SERVER_URL` | RTSP base URL (default: `rtsp://topaz.chat/live`) |
+| `LOW_LATENCY` | Low latency mode, enabled by default; set `0` to disable |
 
 ## Key Design Decisions
 
 - **Direct OggOpus output**: FFmpeg transcodes AAC→Opus and outputs `-f ogg`;
   passing `StreamType.OggOpus` to discord.js avoids a second prism-media transcode.
-- **Low-latency flags**: `-fflags nobuffer -flags low_delay` on the input side.
+- **Low latency by default**: `LOW_LATENCY` (default `1`) adds input-side
+  `-fflags +nobuffer -flags low_delay -analyzeduration 0 -probesize 32K
+  -use_wallclock_as_timestamps 1`. Unlike main (opt-in), this branch opts out
+  with `LOW_LATENCY=0`.
 - **Session epochs**: every `playStream()` start and `stopGuildSession()` bumps
   `state.epoch`; stale loops observe the change and exit. This is how stop,
   resync and the empty-channel auto-leave actually terminate playback.

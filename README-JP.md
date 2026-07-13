@@ -141,6 +141,7 @@ $ /stop{NUMBER}
 | `NUMBER` | No | コマンド名の接尾辞（例: `2` → `/play2`）。空なら `/play` |
 | `TARGET_VOICE_CHANNEL_ID` | No | ユーザー入室時に自動参加するVCのID（空で無効） |
 | `RTSP_SERVER_URL` | No | RTSPベースURL（既定: `rtsp://topaz.chat/live`） |
+| `LOW_LATENCY` | No | 低遅延モード。既定で有効（`1`）。`0` で無効化 |
 
 `TARGET_VOICE_CHANNEL_ID` にユーザーが入ると自動参加し、チャンネルが無人になると自動退出します。配信が中断している間は自動で再開を試み、SIGINT/SIGTERM（`pm2 stop`/`pm2 restart` など）では FFmpeg プロセスと接続をすべて後始末してから終了します。
 

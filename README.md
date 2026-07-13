@@ -151,6 +151,7 @@ $ /stop{NUMBER}
 | `NUMBER` | No | Command-name suffix (e.g. `2` → `/play2`); empty for `/play` |
 | `TARGET_VOICE_CHANNEL_ID` | No | Voice channel to auto-join when a user enters (empty disables) |
 | `RTSP_SERVER_URL` | No | RTSP base URL (default: `rtsp://topaz.chat/live`) |
+| `LOW_LATENCY` | No | Low latency mode, enabled by default (`1`); set `0` to disable |
 
 The bot auto-joins `TARGET_VOICE_CHANNEL_ID` when a user enters it and leaves
 automatically when the channel becomes empty. Playback auto-resumes while the

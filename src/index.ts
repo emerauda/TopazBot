@@ -56,6 +56,10 @@ const STATIC_STREAM_KEY = `${stream}${number}`;
 // RTSP server base URL (optimized for TopazChat, but any RTSP server works)
 const RTSP_SERVER_URL = process.env.RTSP_SERVER_URL || 'rtsp://topaz.chat/live';
 const STREAM_URL = `${RTSP_SERVER_URL}/${STATIC_STREAM_KEY}`;
+// Low latency mode — enabled by default on this branch; set LOW_LATENCY=0 to
+// disable. Without analyzeduration=0/probesize, ffmpeg buffers up to ~5s of
+// stream analysis at startup and that buffer becomes permanent extra latency.
+const lowLatency = process.env.LOW_LATENCY !== '0';
 
 // Utility sleep function
 function sleep(ms: number): Promise<void> {
@@ -69,8 +73,16 @@ function createFFmpegStream(streamUrl: string): { stream: Readable; process: Chi
         '-hide_banner',
         '-nostats',
         '-loglevel', 'warning',
-        '-fflags', 'nobuffer',
-        '-flags', 'low_delay',
+        // Input-side low latency flags (must stay before -i)
+        ...(lowLatency
+            ? [
+                  '-fflags', '+nobuffer',
+                  '-flags', 'low_delay',
+                  '-analyzeduration', '0',
+                  '-probesize', '32K',
+                  '-use_wallclock_as_timestamps', '1',
+              ]
+            : []),
         '-rtsp_transport', 'tcp',
         '-i', streamUrl,
         '-vn',
