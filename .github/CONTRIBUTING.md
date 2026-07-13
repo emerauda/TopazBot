@@ -1,11 +1,5 @@
 # 🤝 Contributing to TopazBot
 
-[English](#-contributing-to-topazbot) | [日本語](#-TopazBotへのコントリビューション)
-
----
-
-## 🤝 Contributing to TopazBot
-
 First off, thank you for considering contributing to TopazBot! It's people like you that make this project great. All contributions are welcome, from documentation improvements to new features.
 
 ### 📜 Code of Conduct
@@ -58,60 +52,3 @@ npm run format
 ```
 
 Thank you for your contribution! ❤️
-
----
-
-## 🤝 TopazBotへのコントリビューション
-
-まずはじめに、TopazBotへの貢献をご検討いただき、誠にありがとうございます！このプロジェクトは、あなたのような方々のおかげで成り立っています。ドキュメントの改善から新機能の実装まで、あらゆるコントリビューションを歓迎します。
-
-### 📜 行動規範
-
-このプロジェクトおよび参加者全員は、[行動規範](CODE_OF_CONDUCT.md)に従うものとします。参加することにより、この規範を遵守することに同意したとみなされます。許容できない行動は [aoi@emerauda.com](mailto:aoi@emerauda.com) までご報告ください。
-
-### 🤔 貢献の方法
-
-TopazBotに貢献するには、さまざまな方法があります。
-
--   🐛 **バグ報告**: バグを発見した場合は、[GitHub Issues](https://github.com/emerauda/TopazBot/issues) を利用して報告してください。
--   ✨ **機能提案**: 新機能のアイデアがある場合は、[GitHub Issues](https://github.com/emerauda/TopazBot/issues) で提案してください。
--   📝 **ドキュメント作成**: ドキュメントの改善はいつでも大歓迎です。
--   💻 **プルリクエストの送信**: コードで貢献したい場合、あなたの助けを心から歓迎します。
-
-### 🚀 プルリクエストのプロセス
-
-1.  **リポジトリをフォーク**し、`main` ブランチから新しいブランチを作成します。
-2.  **開発環境をセットアップ**します。
-    ```bash
-    # 依存関係をインストール
-    npm install
-    # 環境変数を設定
-    cp .env.example .env
-    # .env にあなたのDiscordボットトークンを編集
-    ```
-3.  **変更を加えます**。コーディングスタイルに従ってください。
-    ```bash
-    # リンターとフォーマッターを実行
-    npm run lint:fix
-    npm run format
-    ```
-4.  変更に対する**テストを追加**します。これは、将来のバージョンでバグを再発させないために重要です。
-    ```bash
-    # テストを実行
-    npm test
-    ```
-5.  **テストスイートがパスすること**、およびコードにリンティングエラーがないことを確認します。
-6.  **明確で簡潔なコミットメッセージ**を記述します。
-7.  **あなたのフォークにプッシュ**し、`main` ブランチへのプルリクエストを送信します。
-8.  **レビューを待ちます**。メンテナーがあなたのプルリクエストを確認し、変更を提案する場合があります。
-
-### 🎨 コーディングスタイル
-
-ESLintとPrettierによって強制されるコーディングスタイルに従ってください。以下のコマンドを実行することで、多くのスタイル問題を自動的に修正できます。
-
-```bash
-npm run lint:fix
-npm run format
-```
-
-ご協力に感謝します！ ❤️

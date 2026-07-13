@@ -12,7 +12,8 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [ 20.x, 22.x, 24.x ]
+        # Keep in sync with "engines" in package.json (>=22)
+        node-version: [ 22.x, 24.x ]
 
     steps:
     - uses: actions/checkout@v4
@@ -21,13 +22,13 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Install dependencies
-      run: npm install
+      run: npm ci
     - name: Run ESLint
       run: npm run lint
     - name: Run Prettier
       run: npm run format:check
-    - name: Verify build
-      run: echo "Build and tests completed successfully!"
+    - name: Run typecheck
+      run: npm run typecheck
 
     - name: Cleanup
       run: |
@@ -38,4 +39,4 @@ jobs:
     - name: Notify success
       run: echo "All checks passed successfully!"
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

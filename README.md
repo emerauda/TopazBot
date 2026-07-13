@@ -11,7 +11,7 @@
 
 ![Screenshot](docs/assets/screenshot.png)
 
-[日本語README](./README-JP.md)
+[Japanese README (日本語)](./README-JP.md)
 
 ---
 
@@ -26,7 +26,7 @@ _"TopazBot" is under the MIT license, but "TopazChat" is not for commercial use.
 ### ✨ Key Features
 
 - 🧠 **High Quality**: Stereo, high-fidelity, low-latency stream playback.
-- 🔒 **Secure**: Safe communication with Discord signature verification.
+- 🔒 **Secure**: End-to-end encrypted voice with DAVE (Discord Audio Video Encryption).
 - 🌐 **Multi-format Support**: Flexible stream processing with ffmpeg.
 
 ---
@@ -89,11 +89,11 @@ If you cannot install one of the options, try installing another.
 **node & npm:**
 
 - `node`: >=22
-- `npm`: >=6
+- `npm`: >=10
 
 **discord.js (npm install)**
 
-- `discord.js`: ^14.25.1
+- `discord.js`: ^14.26.5
 
 **@discordjs/voice (npm install):**
 
@@ -105,7 +105,7 @@ If you cannot install one of the options, try installing another.
 
 **DAVE Encryption (npm install):**
 
-- `@snazzah/davey`: ^0.1.10
+- `@snazzah/davey`: ^0.1.12
 
 **Encryption Libraries (npm install):**
 
@@ -162,7 +162,12 @@ RTSP_SERVER_URL=rtsp://topaz.chat/live
 | `FORCE_OPUS_REENCODE` | No | `0` | `1` = force libopus re-encode even when `INPUT_IS_OPUS=1` |
 | `LOW_LATENCY` | No | `0` | `1` = enable low-latency FFmpeg flags (nobuffer, analyzeduration=0) |
 | `OPUS_BITRATE` | No | `192k` | Target Opus bitrate |
-| `CHANNEL_FIX_MODE` | No | `none` | `none` / `swap` / `left` / `right` / `mix` |
+| `AAC_BITRATE` | No | `OPUS_BITRATE` | Bitrate for the AAC fallback (`USE_EXTERNAL_OPUS=0`) |
+| `CHANNEL_FIX_MODE` | No | `none` | `none` / `swap` / `left` / `right` / `mix` (re-encode path only) |
+| `DOWNMIX_MONO` | No | `0` | `1` = downmix input to mono (`-ac 1`, re-encode path only) |
+| `COPY_WITH_DISCARDCORRUPT` | No | `0` | `1` = discard corrupt frames / regenerate PTS in copy mode too |
+| `PLAY_WAIT_MS` | No | `2000` / `300` | Stabilization wait after playback starts (low-latency default: 300) |
+| `RESUME_WAIT_MS` | No | `3000` / `500` | Wait before an auto-resume retry (low-latency default: 500) |
 | `DEBUG_FFMPEG` | No | `0` | `1` = log FFmpeg spawn args and stderr |
 
 When using the bot, streams will be accessed as `${RTSP_SERVER_URL}/${streamkey}`.
@@ -200,12 +205,22 @@ TopazBot supports the following slash commands.
 ### 🔄 `/resync`
 
 - **Description**: Attempts to reconnect if the connection is unstable or the stream is interrupted.
-- **Usage**: `/resync`
+- **Usage**: `/resync` or `/resync StreamKey: <your_stream_key>`
+- **Parameters**:
+  - `StreamKey` (optional): Stream key to resync. Defaults to the last played one.
 
 ### ⏹️ `/stop`
 
 - **Description**: Stops the current stream playback and disconnects from the voice channel.
 - **Usage**: `/stop`
+
+### 🎚️ Playback Behavior
+
+- **Auto-resume**: If the stream is interrupted (e.g. the streamer restarts), the bot keeps the connection and resumes playback automatically when the stream comes back.
+- **Auto-disconnect**: If no playback succeeds for 30 minutes (e.g. the streamer never comes back), the bot leaves the voice channel automatically. Healthy long-running streams are never cut off.
+- **Stream switching**: Running `/play` with a different stream key while playing switches to the new stream.
+- **Failure handling**: If the first playback attempt fails, the bot reports the error and leaves the voice channel.
+- **Graceful shutdown**: On SIGINT/SIGTERM (e.g. `pm2 stop`/`pm2 restart`), all sessions are cleaned up — no orphan FFmpeg processes or voice connections are left behind.
 
 ---
 
@@ -245,19 +260,19 @@ graph TD
 
 | Category             | Technology       | Version  |
 | :------------------- | :--------------- | :------- |
-| **Language**         | TypeScript       | ^5.9.3   |
+| **Language**         | TypeScript       | ^6.0.3   |
 | **Runtime**          | Node.js          | >=22.x   |
-| **Framework**        | discord.js       | ^14.25.1 |
+| **Framework**        | discord.js       | ^14.26.5 |
 | **Audio Processing** | @discordjs/voice | ^0.19.2  |
-| **DAVE Encryption**  | @snazzah/davey   | ^0.1.10  |
+| **DAVE Encryption**  | @snazzah/davey   | ^0.1.12  |
 | **Media Processing** | FFmpeg           | -        |
 | **RTSP Server**      | TopazChat        | -        |
 | **Opus Library**     | @discordjs/opus  | ^0.10.0  |
 | **Encryption**       | sodium-native    | ^5.1.0   |
-| **Package Manager**  | npm              | >=6      |
-| **Testing**          | Jest             | ^30.2.0  |
-| **Linter**           | ESLint           | ^9.37.0  |
-| **Formatter**        | Prettier         | ^3.6.2   |
+| **Package Manager**  | npm              | >=10     |
+| **Testing**          | Jest             | ^30.4.2  |
+| **Linter**           | ESLint           | ^10.7.0  |
+| **Formatter**        | Prettier         | ^3.9.5   |
 
 ---
 
@@ -293,13 +308,13 @@ npm test
 npm run test:coverage
 ```
 
-#### The coverage report can be viewed at [coverage](https://emerauda.github.io/TopazBot/coverage/)
+#### The coverage report can be viewed on [Codecov](https://codecov.io/gh/emerauda/TopazBot)
 
 ---
 
 ## 📂 Code structure
 
-The code for this bot is specific to TopazChat.
+The code for this bot is optimized for TopazChat, but it also works with other RTSP servers via the `RTSP_SERVER_URL` environment variable.
 
 Here is the code I used for reference: [discordjs-japan/Playing Audio](https://scrapbox.io/discordjs-japan/%E9%9F%B3%E5%A3%B0%E3%82%92%E5%86%8D%E7%94%9F%E3%81%99%E3%82%8B) (in Japanese)
 
@@ -320,7 +335,7 @@ Don't forget to give the project a star! Thanks again!
 4.  Push to the Branch (`git push origin feature/AmazingFeature`)
 5.  Open a Pull Request
 
-Please read our [Contributing Guidelines](https://github.com/emerauda/TopazBot/blob/main/CONTRIBUTING.md) for more details on the process and what we expect.
+Please read our [Contributing Guidelines](https://github.com/emerauda/TopazBot/blob/main/.github/CONTRIBUTING.md) for more details on the process and what we expect.
 
 ---
 
