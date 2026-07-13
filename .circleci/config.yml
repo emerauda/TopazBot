@@ -1,15 +1,14 @@
 version: 2.1
-orbs:
-  node: circleci/node@5.2
-# Node versions are kept in sync with "engines" in package.json (>=22)
+# Node versions are kept in sync with "engines" in package.json (>=22).
+# cimg/node images ship a modern compiler toolchain, which is required to
+# build @discordjs/opus from source when no prebuilt binary matches the ABI
+# (cimg/base is Ubuntu 20.04 whose g++ does not understand -std=gnu++20).
 jobs:
   build-v22:
     docker:
-      - image: cimg/base:stable
+      - image: cimg/node:22.23
     steps:
       - checkout
-      - node/install:
-          node-version: "22.17"
       - run:
           name: Install dependencies
           command: npm ci
@@ -18,11 +17,9 @@ jobs:
           command: npm run build
   build-v24:
     docker:
-      - image: cimg/base:stable
+      - image: cimg/node:24.18
     steps:
       - checkout
-      - node/install:
-          node-version: "24.12"
       - run:
           name: Install dependencies
           command: npm ci
