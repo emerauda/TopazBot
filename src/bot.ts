@@ -88,8 +88,17 @@ if (
   );
 }
 
+// Set when ffmpeg reports that the input cannot be copy-remuxed into Ogg,
+// i.e. INPUT_IS_OPUS=1 was configured but the RTSP source is not actually
+// Opus (TopazChat, for example, delivers AAC). Later attempts then re-encode.
+let copyRemuxUnsupported = false;
+
+export function disableCopyRemux(): void {
+  copyRemuxUnsupported = true;
+}
+
 export function buildFfmpegArgs(streamUrl: string, opus: boolean): string[] {
-  const useCopy = opus && inputIsOpus && !forceOpusReencode;
+  const useCopy = opus && inputIsOpus && !forceOpusReencode && !copyRemuxUnsupported;
 
   // -fflags (genpts/discardcorrupt/nobuffer) are demuxer flags, so they must be
   // placed before -i (input side). They have no effect on the output side.
@@ -388,19 +397,27 @@ export async function playStream(
       if (isStale() || !state.connection) break;
 
       // Spawn FFmpeg and track the process for cleanup.
-      // stderr is only piped when debugging — an unread pipe would fill up
-      // and block ffmpeg once its 64KB buffer is full.
+      // stderr is always consumed (an unread pipe would fill up and block
+      // ffmpeg once its 64KB buffer is full) and scanned for the copy-mode
+      // failure marker; the content is only logged when debugging.
       const debugFfmpeg = process.env.DEBUG_FFMPEG === '1';
       const ffmpegArgs = buildFfmpegArgs(state.streamUrl!, useExternalOpus);
-      const ffmpeg = spawn('ffmpeg', ffmpegArgs, {
-        stdio: ['ignore', 'pipe', debugFfmpeg ? 'pipe' : 'ignore'],
-      });
+      const ffmpeg = spawn('ffmpeg', ffmpegArgs, { stdio: ['ignore', 'pipe', 'pipe'] });
       if (debugFfmpeg) {
         console.log('[ffmpeg spawn playStream]', ffmpeg.spawnargs.join(' '));
-        ffmpeg.stderr?.on('data', (d) => {
-          console.log('[ffmpeg stderr playStream]', d.toString().trim());
-        });
       }
+      ffmpeg.stderr?.on('data', (d) => {
+        const msg = d.toString();
+        if (debugFfmpeg) console.log('[ffmpeg stderr playStream]', msg.trim());
+        // INPUT_IS_OPUS=1 but the source does not actually deliver Opus: the
+        // ogg muxer rejects the copied stream. Re-encode from the next attempt.
+        if (!copyRemuxUnsupported && msg.includes('Unsupported codec id')) {
+          disableCopyRemux();
+          console.warn(
+            '[config] INPUT_IS_OPUS=1 but the RTSP source is not Opus — falling back to libopus re-encode. Set INPUT_IS_OPUS=0 to remove this warning.'
+          );
+        }
+      });
       state.ffmpegProcess = ffmpeg;
 
       const resource = createAudioResource(ffmpeg.stdout!, {

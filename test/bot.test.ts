@@ -963,6 +963,33 @@ describe('bot.ts', () => {
       expect(args.indexOf('-page_duration')).toBeGreaterThan(args.indexOf('-i'));
     });
 
+    it('falls back to libopus re-encode after copy remux is marked unsupported', () => {
+      const saved: Record<string, string | undefined> = {};
+      for (const key of ENV_KEYS) {
+        saved[key] = process.env[key];
+        delete process.env[key];
+      }
+      process.env.INPUT_IS_OPUS = '1';
+      let mod!: typeof import('../src/bot');
+      jest.isolateModules(() => {
+        mod = require('../src/bot');
+      });
+      for (const key of ENV_KEYS) {
+        if (saved[key] === undefined) delete process.env[key];
+        else process.env[key] = saved[key]!;
+      }
+
+      const before = mod.buildFfmpegArgs('rtsp://example.com/live/key', true);
+      expect(before).toContain('copy');
+
+      // Simulate ffmpeg reporting "Unsupported codec id" (source is not Opus)
+      mod.disableCopyRemux();
+
+      const after = mod.buildFfmpegArgs('rtsp://example.com/live/key', true);
+      expect(after).not.toContain('copy');
+      expect(after).toContain('libopus');
+    });
+
     it('builds AAC fallback args when opus output is disabled', () => {
       const build = loadBuildFfmpegArgs({});
       const args = build('rtsp://example.com/live/key', false);

@@ -47,14 +47,15 @@ test/
 - Channel fix modes: none, swap, left, right, mix (via `-af pan=...`) — re-encode path only
 - `-fflags` (genpts/discardcorrupt/nobuffer) are demuxer flags and must stay before `-i`;
   RTSP reconnection is handled by the retry loop in `playStream()`, not by FFmpeg options
-- ffmpeg is spawned with `-nostats` and stderr ignored unless `DEBUG_FFMPEG=1` — an unread
+- ffmpeg is spawned with `-nostats`; stderr is always consumed (scanned for the copy-mode
+  failure marker, logged when `DEBUG_FFMPEG=1`) — an unread
   stderr pipe would fill up and block ffmpeg (64KB pipe buffer)
 
 ### Environment Variables (see .env.example)
 - `DISCORD_TOKEN` — Bot token (required)
 - `RTSP_SERVER_URL` — Base RTSP URL (default: `rtsp://topaz.chat/live`)
 - `USE_EXTERNAL_OPUS` — `1` (default) for OggOpus output, `0` for AAC ADTS fallback
-- `INPUT_IS_OPUS` — `1` to use `-c:a copy` (no re-encode) when input is already Opus
+- `INPUT_IS_OPUS` — `1` to copy-remux when the source really delivers Opus; auto-falls back to re-encode on mismatch (TopazChat delivers AAC → keep `0`)
 - `FORCE_OPUS_REENCODE` — `1` to force libopus re-encode even when INPUT_IS_OPUS=1
 - `LOW_LATENCY` — `1` for nobuffer/analyzeduration=0/probesize=32K/max_delay=0 + 20ms ogg pages
 - `OPUS_BITRATE` — Target bitrate (default: `192k`)

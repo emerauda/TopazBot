@@ -158,7 +158,7 @@ RTSP_SERVER_URL=rtsp://topaz.chat/live
 | `DISCORD_TOKEN` | Yes | - | Discordボットトークン |
 | `RTSP_SERVER_URL` | No | `rtsp://topaz.chat/live` | RTSPサーバーのベースURL |
 | `USE_EXTERNAL_OPUS` | No | `1` | `1` = OggOpus出力（推奨）、`0` = AAC ADTSフォールバック |
-| `INPUT_IS_OPUS` | No | `0` | `1` = 入力が既にOpusの場合再エンコードをスキップ (`-c:a copy`) |
+| `INPUT_IS_OPUS` | No | `0` | `1` = 入力が本当にOpusの場合のみ無変換コピー（TopazChatはAACなので `0` のまま。誤設定時は自動フォールバック） |
 | `FORCE_OPUS_REENCODE` | No | `0` | `1` = `INPUT_IS_OPUS=1`でも強制的にlibopusで再エンコード |
 | `LOW_LATENCY` | No | `0` | `1` = 低遅延FFmpegフラグを有効化 (nobuffer, analyzeduration=0) |
 | `OPUS_BITRATE` | No | `192k` | Opusビットレート |

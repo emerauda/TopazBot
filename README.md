@@ -158,7 +158,7 @@ RTSP_SERVER_URL=rtsp://topaz.chat/live
 | `DISCORD_TOKEN` | Yes | - | Discord bot token |
 | `RTSP_SERVER_URL` | No | `rtsp://topaz.chat/live` | RTSP server base URL |
 | `USE_EXTERNAL_OPUS` | No | `1` | `1` = OggOpus output (recommended), `0` = AAC ADTS fallback |
-| `INPUT_IS_OPUS` | No | `0` | `1` = skip re-encode when input is already Opus (`-c:a copy`) |
+| `INPUT_IS_OPUS` | No | `0` | `1` = copy-remux only if the source really delivers Opus (TopazChat is AAC → keep `0`; auto-fallback on mismatch) |
 | `FORCE_OPUS_REENCODE` | No | `0` | `1` = force libopus re-encode even when `INPUT_IS_OPUS=1` |
 | `LOW_LATENCY` | No | `0` | `1` = enable low-latency FFmpeg flags (nobuffer, analyzeduration=0) |
 | `OPUS_BITRATE` | No | `192k` | Target Opus bitrate |
