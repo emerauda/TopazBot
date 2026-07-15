@@ -9,6 +9,12 @@ updates:
         update-types:
           - minor
           - patch
+    ignore:
+      # ts-jest (<7) and typescript-eslint (<6.1) do not support TypeScript 7
+      # yet — jest fails at transform and eslint crashes on config load.
+      # Remove this once the toolchain catches up.
+      - dependency-name: typescript
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
