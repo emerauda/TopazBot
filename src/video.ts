@@ -77,6 +77,12 @@ const noTranscode = process.env.NO_TRANSCODE === '1';
 // copy makes it cheap and lets us apply the same low latency flags as the audio
 // bot. stderr is always drained so its pipe buffer can never stall ffmpeg.
 function spawnRtspRemux(): ChildProcess {
+  // In noTranscoding mode discord-video-stream applies its own h264_metadata
+  // bitstream filter to inject SEI messages Discord expects. That filter
+  // cannot parse H.264 filler NAL units (type 12) — which OBS emits under
+  // CBR to pad the bitrate — and dies with "Failed to read access unit".
+  // Strip type 12 units here so the copied stream is safe to feed downstream.
+  const bsf = noTranscode ? ['-bsf:v', 'filter_units=remove_types=12'] : [];
   const args = [
     '-hide_banner',
     '-nostats',
@@ -89,6 +95,7 @@ function spawnRtspRemux(): ChildProcess {
     STREAM_URL,
     '-c',
     'copy',
+    ...bsf,
     '-f',
     'mpegts',
     'pipe:1',
