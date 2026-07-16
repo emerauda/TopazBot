@@ -11,7 +11,13 @@
  *           --> Discord Go Live, via @dank074/discord-video-stream.
  */
 import { Client } from 'discord.js-selfbot-v13';
-import { Streamer, prepareStream, playStream, Utils, Encoders } from '@dank074/discord-video-stream';
+import {
+  Streamer,
+  prepareStream,
+  playStream,
+  Utils,
+  Encoders,
+} from '@dank074/discord-video-stream';
 import { spawn } from 'child_process';
 import type { ChildProcess } from 'child_process';
 import { readFileSync } from 'fs';
@@ -59,6 +65,11 @@ const bitrateVideoMax = parseInt(process.env.VIDEO_BITRATE_MAX || '7500', 10); /
 const videoCodec = Utils.normalizeVideoCodec(process.env.VIDEO_CODEC || 'H264');
 const lowLatency = process.env.LOW_LATENCY !== '0';
 const debug = process.env.DEBUG_FFMPEG === '1';
+// Skip the VPS-side H.264 encode entirely and pass the RTSP stream straight to
+// Discord. Requires the source (OBS) to already emit Discord-compatible H.264:
+// baseline/main profile, no B-frames, 1s keyframe interval, CBR, yuv420p.
+// Discord will glitch or refuse the stream if these are not satisfied.
+const noTranscode = process.env.NO_TRANSCODE === '1';
 
 // --- FFmpeg RTSP intake --------------------------------------------------
 // Pull RTSP over TCP and remux (no re-encode) into MPEG-TS on stdout. The heavy
@@ -100,19 +111,28 @@ async function streamOnce(): Promise<void> {
   const ffmpeg = spawnRtspRemux();
   currentFfmpeg = ffmpeg;
 
-  const encoder = Encoders.software({
-    x264: { preset: 'superfast' },
-    x265: { preset: 'superfast' },
-  });
+  // In noTranscoding mode every video-related option is ignored by
+  // prepareStream — Discord receives the source frames verbatim. Otherwise
+  // fall back to the software H.264/H.265 encoder.
+  const encoder = noTranscode
+    ? undefined
+    : Encoders.software({
+        x264: { preset: 'superfast' },
+        x265: { preset: 'superfast' },
+      });
 
   const { command, output } = prepareStream(ffmpeg.stdout!, {
-    encoder,
-    width,
-    height,
-    frameRate,
-    bitrateVideo,
-    bitrateVideoMax,
-    videoCodec,
+    ...(noTranscode
+      ? { noTranscoding: true }
+      : {
+          encoder,
+          width,
+          height,
+          frameRate,
+          bitrateVideo,
+          bitrateVideoMax,
+          videoCodec,
+        }),
   });
 
   command.on('error', (err: unknown) => {
@@ -172,7 +192,13 @@ function shutdown(signal: NodeJS.Signals): void {
   } catch {
     /* not connected */
   }
-  void streamer.client.destroy().finally(() => process.exit(0));
+  // selfbot-v13's destroy() is synchronous (returns void).
+  try {
+    streamer.client.destroy();
+  } catch {
+    /* already destroyed */
+  }
+  process.exit(0);
 }
 process.once('SIGINT', shutdown);
 process.once('SIGTERM', shutdown);
