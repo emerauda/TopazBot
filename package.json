@@ -47,7 +47,10 @@
   },
   "overrides": {
     "undici": "^6.27.0",
-    "tar": "^7.5.20"
+    "tar": "^7.5.20",
+    "@dank074/discord-video-stream": {
+      "sharp": "0.33.5"
+    }
   },
   "dependencies": {
     "@dank074/discord-video-stream": "^6.0.0",
