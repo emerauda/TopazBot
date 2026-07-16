@@ -83,6 +83,25 @@ function spawnRtspRemux(): ChildProcess {
   // CBR to pad the bitrate — and dies with "Failed to read access unit".
   // Strip type 12 units here so the copied stream is safe to feed downstream.
   const bsf = noTranscode ? ['-bsf:v', 'filter_units=remove_types=12'] : [];
+  // Aggressive low-latency intake: skip the RTSP demuxer's default 0.5s reorder
+  // buffer (max_delay 0, safe over TCP) and its stream-analysis phase
+  // (analyzeduration 0). On the mux side, MPEG-TS defaults to a 700ms muxdelay
+  // buffer — a huge hidden latency cost — so pin it to 0 and flush every packet.
+  const inputLL = lowLatency
+    ? [
+        '-fflags',
+        '+nobuffer',
+        '-flags',
+        'low_delay',
+        '-analyzeduration',
+        '0',
+        '-probesize',
+        '32K',
+        '-max_delay',
+        '0',
+      ]
+    : [];
+  const outputLL = lowLatency ? ['-muxdelay', '0', '-muxpreload', '0', '-flush_packets', '1'] : [];
   const args = [
     '-hide_banner',
     '-nostats',
@@ -90,12 +109,13 @@ function spawnRtspRemux(): ChildProcess {
     'warning',
     '-rtsp_transport',
     'tcp',
-    ...(lowLatency ? ['-fflags', '+nobuffer', '-flags', 'low_delay', '-probesize', '32K'] : []),
+    ...inputLL,
     '-i',
     STREAM_URL,
     '-c',
     'copy',
     ...bsf,
+    ...outputLL,
     '-f',
     'mpegts',
     'pipe:1',
